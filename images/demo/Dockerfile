@@ -9,11 +9,6 @@
 FROM stkaes/logjam-builder
 MAINTAINER Stefan Kaes
 
-ADD ./opt-logjam-tools.tar.gz /
-ADD ./opt-logjam-ruby.tar.gz /
-ADD ./opt-logjam-app.tar.gz /
-ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
 # ----------------------------
 # data stores
 # ----------------------------
@@ -22,6 +17,12 @@ RUN apt-get -y --no-install-recommends install mongodb memcached && apt-get clea
 # ----------------------------
 # logjam
 # ----------------------------
+ADD ./opt-logjam-tools.tar.gz /
+ADD ./opt-logjam-ruby.tar.gz /
+ADD ./opt-logjam-app.tar.gz /
+
+ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 RUN apt-get install -y runit && apt-get clean
 ADD ./install-services.sh /docker/install-services.sh
 RUN /bin/bash -l -c /docker/install-services.sh
