@@ -1,11 +1,9 @@
 #!/bin/bash
 set -e
 
-mkdir /home/logjam
-cd /home/logjam
 git clone https://github.com/skaes/logjam-tools.git
 cd logjam-tools
-./bin/install-libs
-sh autogen.sh
+./bin/install-libs --prefix /opt/logjam
+sh autogen.sh --prefix=/opt/logjam
 make
 make install
