@@ -27,10 +27,10 @@ echo '#!/bin/sh' >/etc/service/logjam/log/run
 echo 'exec svlogd -ttt ./logs' >>/etc/service/logjam/log/run
 chmod 755 /etc/service/logjam/log/run
 
-mkdir -p /home/logjam/logjam_app/service
+mkdir -p /opt/logjam/app/service
 echo '#!/bin/sh' >/etc/service/logjam/run
 echo 'exec 2>&1' >>/etc/service/logjam/run
-echo 'exec runsvdir /home/logjam/logjam_app/service \"................................................................................................\"' >>/etc/service/logjam/run
+echo 'exec runsvdir /opt/logjam/app/service .........................................' >>/etc/service/logjam/run
 chmod 755 /etc/service/logjam/run
 
 mkdir -p /etc/service/rails/log/logs
@@ -41,9 +41,9 @@ chmod 755 /etc/service/rails/log/run
 echo '#!/bin/bash -l' >/etc/service/rails/run
 echo 'sv start mongodb || exit 1' >>/etc/service/rails/run
 echo 'exec 2>&1' >>/etc/service/rails/run
-echo 'cd /home/logjam/logjam_app' >>/etc/service/rails/run
-echo 'exec rails s --binding 0.0.0.0' >>/etc/service/rails/run
+echo 'cd /opt/logjam/app' >>/etc/service/rails/run
+echo 'exec bundle exec rails s --binding 0.0.0.0' >>/etc/service/rails/run
 chmod 755 /etc/service/rails/run
 
-cd /home/logjam/logjam_app
+cd /opt/logjam/app
 rake logjam:daemons:install

@@ -4,7 +4,7 @@ rescue LoadError
   $stderr.puts "Please install bundler"
 end
 
-IMAGES = %w(builder tools ruby demo)
+IMAGES = %w(builder tools ruby code demo)
 ROOT = File.expand_path("..", __FILE__)
 
 def image_name(name)
@@ -66,6 +66,18 @@ namespace :ruby do
   end
 end
 
+namespace :code do
+  task :build => "builder:build" do
+    build_image("code")
+  end
+  task :test => :build do
+    test_image("code")
+  end
+  task :export => :build do
+    run_image("code", "tar czf /exports/opt-logjam-app.tar.gz /opt/logjam/app")
+  end
+end
+
 namespace :demo do
   desc "build the demo image"
   task :build => "tools:build" do
@@ -78,12 +90,12 @@ namespace :demo do
 
   desc "run a demo container"
   task :run do
-    system "docker run --rm -it -p 3000:3000 -p 8080:8080 --name logjam #{image_name 'demo'}"
+    system "docker run --rm -it -p 3000:3000 -p 8080:8080 --name demo #{image_name 'demo'}"
   end
 
   desc "attach to running logjam container"
   task :attach do
-    system "docker exec -it logjam bash"
+    system "docker exec -it demo bash"
   end
 end
 
@@ -91,10 +103,10 @@ desc "build all images"
 task :build => IMAGES.map{|d| "#{d}:build"}
 
 desc "export libraries and ruby"
-task :export => %w(ruby:export tools:export)
+task :export => %w(ruby:export tools:export code:export)
 
 desc "export libraries and ruby"
-task :import => :export do
+task :import do
   system "cp -p exports/*.gz images/demo/"
 end
 

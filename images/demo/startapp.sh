@@ -1,2 +1,3 @@
 #!/bin/bash -l
-exec bundle exec foreman start
+echo "starting services"
+exec runsvdir -P /etc/service ......................................................
