@@ -118,7 +118,7 @@ namespace :app do
 
   desc "run a app container"
   task :run do
-    system "docker run --rm -it -p 80:80 -p 8080:8080 --name app #{image_name 'app'}"
+    system "docker run --rm -it -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --name logjam #{image_name 'app'}"
   end
 
   desc "attach to running app container"
@@ -173,3 +173,9 @@ end
 
 task :run => "demo:run"
 task :default => :build
+
+namespace :mongo do
+  task :run do
+    system "docker run -d -p 27017:27017 --name logjamdb mongo:3.0.2"
+  end
+end

@@ -1,10 +1,10 @@
 # VERSION         0.1
 # DOCKER-VERSION  1.6.0
-# AUTHORS:        Stefan Kaes <skaes@railsexpress.de>, Jochen Kramer <freetwix@web.de>
+# AUTHORS:        Stefan Kaes <skaes@railsexpress.de>
 # DESCRIPTION:    logjam demo
 #
 # TO_BUILD:            docker build -t=stkaes/logjam-app .
-# TO_RUN_INTERACTIVE:  docker run --rm -i -t -p 80:80 -p 8080:8080 --link whatever:logjamdb stkaes/logjamdemo
+# TO_RUN_INTERACTIVE:  docker run --rm -it -p 80:80 -p 8080:8080 --link some-mongo-instance:logjamdb stkaes/logjamdemo
 # ----------------------------
 FROM stkaes/logjam-runtime
 MAINTAINER Stefan Kaes
@@ -29,6 +29,7 @@ ADD ./opt-logjam-app.tar.gz /
 ADD ./opt-logjam-passenger.tar.gz /
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV LOGJAM_PRODUCTION_DB logjamdb
 
 ADD ./etc /etc
 RUN a2enmod passenger
