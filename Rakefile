@@ -4,7 +4,7 @@ rescue LoadError
   $stderr.puts "Please install bundler"
 end
 
-IMAGES = %w(builder tools ruby code passenger runtime demo)
+IMAGES = %w(builder tools ruby code passenger runtime app demo)
 ROOT = File.expand_path("..", __FILE__)
 
 def image_name(name)
@@ -91,7 +91,7 @@ namespace :passenger do
   task :run do
     system "docker run --rm -it -P --name passenger #{image_name 'passenger'}"
   end
-  desc "attach to running demo container"
+  desc "attach to running passenger container"
   task :attach do
     system "docker exec -it passenger bash"
   end
@@ -103,6 +103,27 @@ namespace :runtime do
   end
   task :test => :build do
     test_image("runtime")
+  end
+end
+
+namespace :app do
+  desc "build the app image"
+  task :build => "runtime:build" do
+    build_image("app")
+  end
+
+  task :test => :build do
+    test_image("app")
+  end
+
+  desc "run a app container"
+  task :run do
+    system "docker run --rm -it -p 80:80 -p 8080:8080 --name app #{image_name 'app'}"
+  end
+
+  desc "attach to running app container"
+  task :attach do
+    system "docker exec -it app bash"
   end
 end
 
@@ -135,7 +156,7 @@ task :export => %w(ruby:export tools:export code:export)
 
 desc "import libraries and ruby"
 task :import do
-  system "cp -p exports/*.gz images/demo/"
+  system "cp -p exports/*.gz images/app/"
 end
 
 desc "clean unused images and containers"
