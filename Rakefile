@@ -4,7 +4,7 @@ rescue LoadError
   $stderr.puts "Please install bundler"
 end
 
-IMAGES = %w(builder tools ruby code passenger demo)
+IMAGES = %w(builder tools ruby code passenger runtime demo)
 ROOT = File.expand_path("..", __FILE__)
 
 def image_name(name)
@@ -97,9 +97,18 @@ namespace :passenger do
   end
 end
 
+namespace :runtime do
+  task :build do
+    build_image("runtime")
+  end
+  task :test => :build do
+    test_image("runtime")
+  end
+end
+
 namespace :demo do
   desc "build the demo image"
-  task :build => "tools:build" do
+  task :build => "runtime:build" do
     build_image("demo")
   end
 

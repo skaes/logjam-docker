@@ -6,7 +6,7 @@
 # TO_BUILD:            docker build -t=stkaes/logjamdemo .
 # TO_RUN_INTERACTIVE:  docker run --rm -i -t -p 3000:3000 -p 8080:8080 stkaes/logjamdemo
 # ----------------------------
-FROM stkaes/logjam-builder
+FROM stkaes/logjam-runtime
 MAINTAINER Stefan Kaes
 
 # ----------------------------
@@ -30,13 +30,13 @@ ADD ./opt-logjam-passenger.tar.gz /
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN apt-get install -y runit && apt-get clean
 ADD ./etc /etc
 RUN a2enmod passenger
 RUN a2dissite 000-default
 RUN a2ensite logjam
 
 WORKDIR /opt/logjam/app
+ENV RAILS_ENV production
 RUN bundle exec rake logjam:daemons:install
 ADD ./startapp.sh /docker/startapp.sh
 CMD /docker/startapp.sh
