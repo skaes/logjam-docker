@@ -42,7 +42,7 @@ echo '#!/bin/bash -l' >/etc/service/rails/run
 echo 'sv start mongodb || exit 1' >>/etc/service/rails/run
 echo 'exec 2>&1' >>/etc/service/rails/run
 echo 'cd /opt/logjam/app' >>/etc/service/rails/run
-echo 'exec bundle exec rails s --binding 0.0.0.0' >>/etc/service/rails/run
+echo 'exec bundle exec rails s --binding 0.0.0.0 --environment production' >>/etc/service/rails/run
 chmod 755 /etc/service/rails/run
 
 cd /opt/logjam/app
