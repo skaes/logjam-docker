@@ -15,20 +15,30 @@ MAINTAINER Stefan Kaes
 RUN apt-get -y --no-install-recommends install mongodb memcached && apt-get clean
 
 # ----------------------------
+# web server
+# ----------------------------
+RUN apt-get -y --no-install-recommends install apache2 && apt-get clean
+RUN a2enmod expires headers rewrite
+
+# ----------------------------
 # logjam
 # ----------------------------
 ADD ./opt-logjam-tools.tar.gz /
 ADD ./opt-logjam-ruby.tar.gz /
 ADD ./opt-logjam-app.tar.gz /
+ADD ./opt-logjam-passenger.tar.gz /
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN apt-get install -y runit && apt-get clean
-ADD ./install-services.sh /docker/install-services.sh
-RUN /bin/bash -l -c /docker/install-services.sh
+ADD ./etc /etc
+RUN a2enmod passenger
+RUN a2dissite 000-default
+RUN a2ensite logjam
 
 WORKDIR /opt/logjam/app
+RUN bundle exec rake logjam:daemons:install
 ADD ./startapp.sh /docker/startapp.sh
 CMD /docker/startapp.sh
 
-EXPOSE 3000 8080
+EXPOSE 80 8080

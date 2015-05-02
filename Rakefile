@@ -86,7 +86,7 @@ namespace :passenger do
     test_image("passenger")
   end
   task :export => :build do
-    run_image("passenger", "tar czf /exports/opt-logjam-passenger.tar.gz /root/passenger")
+    run_image("passenger", "tar czf /exports/opt-logjam-passenger.tar.gz /opt/logjam/bin/passenger* /opt/logjam/lib/ruby/gems/2.2.0/gems/passenger* /opt/logjam/lib/ruby/gems/2.2.0/gems/rack* /opt/logjam/lib/ruby/gems/2.2.0/gems/daemon* /etc/apache2/mods-available/passenger.load")
   end
   task :run do
     system "docker run --rm -it -P --name passenger #{image_name 'passenger'}"
@@ -109,7 +109,7 @@ namespace :demo do
 
   desc "run a demo container"
   task :run do
-    system "docker run --rm -it -p 3000:3000 -p 8080:8080 --name demo #{image_name 'demo'}"
+    system "docker run --rm -it -p 80:80 -p 8080:8080 --name demo #{image_name 'demo'}"
   end
 
   desc "attach to running demo container"

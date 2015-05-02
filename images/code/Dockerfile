@@ -9,6 +9,8 @@
 FROM stkaes/logjam-ruby
 MAINTAINER Stefan Kaes
 
+ENV LOGJAM_REVISION 9b63dcde01ab802495f6078f34215cea6a990693
+
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 ADD ./install-code.sh /docker/install-code.sh
