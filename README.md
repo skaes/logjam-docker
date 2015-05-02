@@ -12,14 +12,14 @@ for the docker aficionado:
 ## Running an All In One Container
 
 ````bash
-docker run -d -it -p 80:80 -p 8080:8080 --name demo stkaes/logjam-demo
+docker run -d -p 80:80 -p 8080:8080 --name demo stkaes/logjam-demo
 ````
 
 ## Running a Separate Mongodb Container
 
 ````bash
 docker run -d -p 27017:27017 --name logjamdb mongo
-docker run -d -it -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --name logjam stkaes/logjam-app
+docker run -d -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --name logjam stkaes/logjam-app
 ````
 
 ## Customization
