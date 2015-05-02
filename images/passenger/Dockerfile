@@ -19,6 +19,9 @@ RUN gem install passenger -v 4.0.59
 
 ADD ./install-passenger-apache2-module.sh /docker/install-passenger-apache2-module.sh
 RUN /docker/install-passenger-apache2-module.sh
+ADD ./minify-passenger-apache2-module.sh /docker/minify-passenger-apache2-module.sh
+RUN /docker/minify-passenger-apache2-module.sh
+
 ADD ./passenger.load /etc/apache2/mods-available/passenger.load
 
 CMD /usr/sbin/apachectl -D FOREGROUND
