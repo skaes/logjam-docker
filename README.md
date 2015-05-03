@@ -17,8 +17,9 @@ docker run -d -p 80:80 -p 8080:8080 --name demo stkaes/logjam-demo
 
 ## Running a Separate Mongodb Container
 
+## With Standard Ports
 ````bash
-docker run -d -p 27017:27017 --name logjamdb mongo
+docker run -d -P --name logjamdb mongo
 docker run -d -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --name logjam stkaes/logjam-app
 ````
 

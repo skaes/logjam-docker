@@ -9,7 +9,5 @@
 FROM stkaes/logjam-app
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
-ENV LOGJAM_PRODUCTION_DB localhost
-
 RUN apt-get -y --no-install-recommends install mongodb && apt-get clean
 ADD ./service/mongodb /etc/service/mongodb

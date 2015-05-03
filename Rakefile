@@ -3,9 +3,15 @@ begin
 rescue LoadError
   $stderr.puts "Please install bundler"
 end
+require "ansi"
 
 IMAGES = %w(builder tools ruby code passenger runtime app demo)
 ROOT = File.expand_path("..", __FILE__)
+
+def system(cmd)
+  puts ANSI.green{cmd}
+  Kernel.system cmd
+end
 
 def image_name(name)
   "stkaes/logjam-#{name}"
@@ -123,7 +129,7 @@ namespace :app do
 
   desc "attach to running app container"
   task :attach do
-    system "docker exec -it app bash"
+    system "docker exec -it logjam bash"
   end
 end
 
@@ -174,8 +180,9 @@ end
 task :run => "demo:run"
 task :default => :build
 
-namespace :mongo do
+desc "start a logjamdb instance"
+namespace :logjamdb do
   task :run do
-    system "docker run -d -p 27017:27017 --name logjamdb mongo:3.0.2"
+    system "docker run -d -P --name logjamdb mongo:3.0.2"
   end
 end

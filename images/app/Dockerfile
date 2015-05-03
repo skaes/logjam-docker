@@ -29,7 +29,6 @@ ADD ./opt-logjam-app.tar.gz /
 ADD ./opt-logjam-passenger.tar.gz /
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ENV LOGJAM_PRODUCTION_DB logjamdb
 
 ADD ./etc /etc
 RUN a2enmod passenger
