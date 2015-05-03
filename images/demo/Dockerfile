@@ -11,3 +11,6 @@ MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
 RUN apt-get -y --no-install-recommends install mongodb && apt-get clean
 ADD ./service/mongodb /etc/service/mongodb
+
+RUN apt-get -y --no-install-recommends install memcached && apt-get clean
+ADD ./service/memcached /etc/service/memcached

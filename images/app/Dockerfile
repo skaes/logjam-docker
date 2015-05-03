@@ -10,11 +10,6 @@ FROM stkaes/logjam-runtime
 MAINTAINER Stefan Kaes
 
 # ----------------------------
-# memcache
-# ----------------------------
-RUN apt-get -y --no-install-recommends install memcached && apt-get clean
-
-# ----------------------------
 # web server
 # ----------------------------
 RUN apt-get -y --no-install-recommends install apache2 && apt-get clean

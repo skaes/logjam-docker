@@ -3,24 +3,24 @@
 A collection of docker files and support scripts to build and run a
 dockerized instance of logjam_app
 
-# Running Dockerized Logjam
+# Running dockerized logjam
 
 Assuming you have docker installed on your system, there are two
 options, the advantages/disvantages of which are left as an exercise
 for the docker aficionado:
 
-## Running an All In One Container
+## Running an all in one container
 
 ````bash
 docker run -d -p 80:80 -p 8080:8080 --name demo stkaes/logjam-demo
 ````
 
-## Running a Separate Mongodb Container
+## Running with separate mongodb and memcached containers
 
-## With Standard Ports
 ````bash
-docker run -d -P --name logjamdb mongo
-docker run -d -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --name logjam stkaes/logjam-app
+docker run -d -P --name logjamdb mongo:3.0.2
+docker run -d -P --name memcache memcached:1.4.24
+docker run -d -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --link memcache:logjamcache --name logjam stkaes/logjam-app
 ````
 
 ## Customization
