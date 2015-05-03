@@ -1,0 +1,10 @@
+/opt/logjam/app/log/*.log {
+  daily
+  rotate 7
+  compress
+  sharedscripts
+  missingok
+  postrotate
+    touch /opt/logjam/app/tmp/restart.txt
+  endscript
+}
