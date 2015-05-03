@@ -30,3 +30,6 @@ need to write a new [Dockerfile](example/Dockerfile) building on
 stkaes/logjam-app and add a new
 [initializer file for logjam streams](example/user_streams.rb) on top
 of the existing declarations.
+
+At some point in the future, logjam will have a UI to add new apps
+on the fly. But for now, this seems OK.
