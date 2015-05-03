@@ -26,5 +26,7 @@ docker run -d -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --link memcache:log
 ## Customization
 
 In order to add new applications to be monitored by logjam, you will
-need to write a new Dockerfile and mount a modified initializer file
-for logjam streams on top.
+need to write a new [Dockerfile](example/Dockerfile) building on
+stkaes/logjam-app and add a new
+[initializer file for logjam streams](example/user_streams.rb) on top
+of the existing declarations.
