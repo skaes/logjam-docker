@@ -1,10 +1,10 @@
 # VERSION         0.1
 # DOCKER-VERSION  1.6.0
 # AUTHORS:        Stefan Kaes <skaes@railsexpress.de>
-# DESCRIPTION:    logjam demo
+# DESCRIPTION:    logjam app
 #
 # TO_BUILD:            docker build -t=stkaes/logjam-app .
-# TO_RUN_INTERACTIVE:  docker run --rm -it -p 80:80 -p 8080:8080 --link some-mongo-instance:logjamdb stkaes/logjamdemo
+# TO_RUN_INTERACTIVE:  docker run --rm -it -p 80:80 -p 8080:8080 --link some-mongo-instance:logjamdb --link some-memcache-instance:logjamcache stkaes/logjamdemo
 # ----------------------------
 FROM stkaes/logjam-runtime
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>

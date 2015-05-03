@@ -9,5 +9,7 @@
 FROM stkaes/logjam-builder
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
+ENV LOGJAM_TOOLS_REVISION b491e5522e25b01a63735ecc82b3eb0583585c83
+
 ADD ./install-logjam-tools.sh /docker/install-logjam-tools.sh
 RUN /bin/bash -l -c /docker/install-logjam-tools.sh
