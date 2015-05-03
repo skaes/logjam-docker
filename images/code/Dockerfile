@@ -7,9 +7,9 @@
 # TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/logjam-code /bin/bash
 # ----------------------------
 FROM stkaes/logjam-ruby
-MAINTAINER Stefan Kaes
+MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
-ENV LOGJAM_REVISION b736294a3f585de0585a258983363fc23a869fbf
+ENV LOGJAM_REVISION 3a7683af9b1ecd5d64bbe8561a74fa808d19ec92
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 

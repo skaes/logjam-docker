@@ -7,7 +7,7 @@
 # TO_RUN_INTERACTIVE:  docker run --rm -it -p 80:80 -p 8080:8080 --link some-mongo-instance:logjamdb stkaes/logjamdemo
 # ----------------------------
 FROM stkaes/logjam-runtime
-MAINTAINER Stefan Kaes
+MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
 # ----------------------------
 # web server
@@ -18,10 +18,17 @@ RUN a2enmod expires headers rewrite
 # ----------------------------
 # logjam
 # ----------------------------
+RUN addgroup --gid 500 logjam ; mkdir -p /opt/logjam/app
+RUN adduser --gecos '' --no-create-home --home /opt/logjam/app --disabled-login --disabled-password --uid 500 --gid 500 logjam
 ADD ./opt-logjam-tools.tar.gz /
 ADD ./opt-logjam-ruby.tar.gz /
 ADD ./opt-logjam-app.tar.gz /
 ADD ./opt-logjam-passenger.tar.gz /
+
+# for passenger user switching to work, we need this:
+RUN addgroup --gid 500 logjam; \
+    adduser --gecos '' --no-create-home --home /opt/logjam/app --disabled-login --disabled-password --uid 500 --gid 500 logjam;\
+    chown -R logjam:logjam /opt/logjam/app
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 

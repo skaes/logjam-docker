@@ -7,7 +7,7 @@
 # TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/tools /bin/bash
 # ----------------------------
 FROM stkaes/logjam-builder
-MAINTAINER Stefan Kaes
+MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
 ADD ./install-logjam-tools.sh /docker/install-logjam-tools.sh
 RUN /bin/bash -l -c /docker/install-logjam-tools.sh

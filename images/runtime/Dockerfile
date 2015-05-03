@@ -7,7 +7,7 @@
 # TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/runtime
 # ----------------------------
 FROM ubuntu:14.04
-MAINTAINER Stefan Kaes
+MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
 # ----------------------------
 # Environment (can be used in scripts)

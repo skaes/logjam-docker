@@ -7,7 +7,7 @@
 # TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/ruby /bin/bash
 # ----------------------------
 FROM stkaes/logjam-builder
-MAINTAINER Stefan Kaes
+MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
 RUN apt-get install -y --no-install-recommends ruby
 ADD ./install-ruby.sh /docker/install-ruby.sh
