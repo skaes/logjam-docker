@@ -33,7 +33,6 @@ RUN a2ensite logjam
 
 WORKDIR /opt/logjam/app
 ENV RAILS_ENV production
-RUN bundle exec rake logjam:daemons:install
 
 # we want to run passenger as user logjam, so fix permissions
 RUN addgroup --gid 500 logjam; \

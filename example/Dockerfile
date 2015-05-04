@@ -7,5 +7,3 @@ FROM stkaes/logjam-app
 MAINTAINER Lion King <lionking@savanna.africa>
 
 ADD ./user_streams.rb /opt/logjam/app/config/initializers/user_streams.rb
-RUN bundle exec rake logjam:daemons:install
-RUN chown -R logjam.logjam /opt/logjam/app/service
