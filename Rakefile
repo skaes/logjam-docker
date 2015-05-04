@@ -145,7 +145,7 @@ namespace :demo do
 
   desc "run a demo container"
   task :run do
-    system "docker run --rm -it -p 80:80 -p 8080:8080 --name demo #{image_name 'demo'}"
+    system "docker run --rm -it -p 80:80 -p 8080:8080 -p 9605:9605--name demo #{image_name 'demo'}"
   end
 
   desc "attach to running demo container"

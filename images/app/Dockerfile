@@ -45,4 +45,8 @@ RUN bundle exec whenever --user logjam --update-crontab --roles cron,worker
 ADD ./startapp.sh /docker/startapp.sh
 CMD /docker/startapp.sh
 
+# application http socket port and websocket port
 EXPOSE 80 8080
+
+# importer zeromq pull socket port
+EXPOSE 9605
