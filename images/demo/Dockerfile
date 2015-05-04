@@ -9,7 +9,7 @@
 FROM stkaes/logjam-app
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
-RUN apt-get -y --no-install-recommends install mongodb && apt-get clean
+RUN apt-get -y --no-install-recommends install mongodb-server && apt-get clean
 ADD ./service/mongodb /etc/service/mongodb
 
 RUN apt-get -y --no-install-recommends install memcached && apt-get clean
