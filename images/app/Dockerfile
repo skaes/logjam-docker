@@ -41,6 +41,7 @@ RUN addgroup --gid 500 logjam; \
     chown -R logjam.logjam /opt/logjam/app/service /opt/logjam/app/tmp /opt/logjam/app/log
 
 RUN bundle exec whenever --user logjam --update-crontab --roles cron,worker
+RUN LOGJAM_PRODUCTION_DB=DB_PLACE_HOLDER bundle exec rake logjam:daemons:install
 
 ADD ./startapp.sh /docker/startapp.sh
 CMD /docker/startapp.sh
