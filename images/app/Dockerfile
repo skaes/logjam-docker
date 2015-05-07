@@ -38,10 +38,10 @@ ENV RAILS_ENV production
 RUN addgroup --gid 500 logjam; \
     adduser --gecos '' --no-create-home --home /opt/logjam/app --disabled-login --disabled-password --uid 500 --gid 500 logjam; \
     chown logjam.logjam /opt/logjam/app/config.ru; \
-    chown -R logjam.logjam /opt/logjam/app/service /opt/logjam/app/tmp /opt/logjam/app/log
+    chown -R logjam.logjam /opt/logjam/app/tmp /opt/logjam/app/log
 
 RUN bundle exec whenever --user logjam --update-crontab --roles cron,worker
-RUN LOGJAM_PRODUCTION_DB=DB_PLACE_HOLDER bundle exec rake logjam:daemons:install
+RUN LOGJAM_PRODUCTION_DB=DB_PLACE_HOLDER bundle exec rake logjam:daemons:install ; chown -R logjam.logjam /opt/logjam/app/service
 
 ADD ./startapp.sh /docker/startapp.sh
 CMD /docker/startapp.sh
