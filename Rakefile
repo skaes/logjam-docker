@@ -154,6 +154,28 @@ namespace :demo do
   end
 end
 
+namespace :develop do
+  desc "build the develop image"
+  task :build => "builder:build" do
+    system "tar cp `find images -type f | egrep -v 'Dockerfile|develop|demo'` | tar xpf - -C images/develop --strip-components 2"
+    build_image("develop")
+  end
+
+  task :test => :build do
+    test_image("develop")
+  end
+
+  desc "run a develop container"
+  task :run do
+    system "docker run --rm -it -p 80:80 -p 8080:8080 -p 9605:9605 --name develop -h develop.local #{image_name 'develop'}"
+  end
+
+  desc "attach to running develop container"
+  task :attach do
+    system "docker exec -it develop bash"
+  end
+end
+
 desc "build all images"
 task :build => IMAGES.map{|d| "#{d}:build"}
 
