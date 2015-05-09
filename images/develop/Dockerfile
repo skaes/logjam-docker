@@ -79,3 +79,5 @@ EXPOSE 80 8080
 
 # importer zeromq pull socket port
 EXPOSE 9605
+
+RUN apt-get install -y --no-install-recommends emacs23-nox
