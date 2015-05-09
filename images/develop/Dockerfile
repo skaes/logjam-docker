@@ -53,9 +53,11 @@ ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin
 
 ADD ./etc /etc
 ADD ./root /root
-RUN a2enmod passenger
+RUN a2enmod expires headers rewrite passenger
 RUN a2dissite 000-default
 RUN a2ensite logjam
+
+RUN apt-get install -y --no-install-recommends runit sudo lsof curl wget htop gawk
 
 WORKDIR /opt/logjam/app
 ENV RAILS_ENV production

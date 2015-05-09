@@ -37,3 +37,5 @@ build/
 Gemfile.lock
 
 *.gz
+
+/images/develop/*

@@ -5,7 +5,7 @@ rescue LoadError
 end
 require "ansi"
 
-IMAGES = %w(builder tools ruby code passenger runtime app demo)
+IMAGES = %w(builder tools ruby code passenger runtime app demo develop)
 ROOT = File.expand_path("..", __FILE__)
 
 def system(cmd)
@@ -155,9 +155,13 @@ namespace :demo do
 end
 
 namespace :develop do
+  desc "copy build scripts"
+  task :scripts do
+    system "tar cp `find images -type f | egrep -v 'Dockerfile|develop|demo|.tar.gz'` | tar xpf - -C images/develop --strip-components 2"
+  end
+
   desc "build the develop image"
-  task :build => "builder:build" do
-    system "tar cp `find images -type f | egrep -v 'Dockerfile|develop|demo'` | tar xpf - -C images/develop --strip-components 2"
+  task :build => ["builder:build", :scripts] do
     build_image("develop")
   end
 
