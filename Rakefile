@@ -171,7 +171,7 @@ namespace :develop do
 
   desc "run a develop container"
   task :run do
-    system "docker run --rm -it -p 80:80 -p 8080:8080 -p 9605:9605 --name develop -h develop.local #{image_name 'develop'}"
+    system "docker run --rm -it -p 80:80 -p 8080:8080 -p 9605:9605 --link logjamdb:logjamdb --link memcache:logjamcache --name develop -h develop.local #{image_name 'develop'}"
   end
 
   desc "attach to running develop container"
