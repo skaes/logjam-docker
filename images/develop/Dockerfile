@@ -10,6 +10,11 @@ FROM stkaes/logjam-builder
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
 # ----------------------------
+# tools and runtime support
+# ----------------------------
+RUN apt-get install -y --no-install-recommends runit sudo lsof curl wget htop gawk emacs23-nox
+
+# ----------------------------
 # ruby
 # ----------------------------
 RUN apt-get install -y --no-install-recommends ruby
@@ -33,9 +38,15 @@ RUN /docker/install-passenger-apache2-module.sh
 ADD ./passenger.load /etc/apache2/mods-available/passenger.load
 
 # ----------------------------
-# logjam tools
+# logjam - libraries
 # ----------------------------
 ENV LOGJAM_TOOLS_REVISION 8b752e9ce6e4cba727f9b75058a14e9c8813d375
+ADD ./install-logjam-libs.sh /docker/install-logjam-libs.sh
+RUN /bin/bash -l -c /docker/install-logjam-libs.sh
+
+# ----------------------------
+# logjam - binaries
+# ----------------------------
 ADD ./install-logjam-tools.sh /docker/install-logjam-tools.sh
 RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 
@@ -57,8 +68,6 @@ RUN a2enmod expires headers rewrite passenger
 RUN a2dissite 000-default
 RUN a2ensite logjam
 
-RUN apt-get install -y --no-install-recommends runit sudo lsof curl wget htop gawk
-
 WORKDIR /opt/logjam/app
 ENV RAILS_ENV production
 
@@ -79,5 +88,3 @@ EXPOSE 80 8080
 
 # importer zeromq pull socket port
 EXPOSE 9605
-
-RUN apt-get install -y --no-install-recommends emacs23-nox

@@ -23,7 +23,7 @@ docker run -d -P --name memcache memcached:1.4.24
 docker run -d -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --link memcache:logjamcache --name logjam stkaes/logjam-app
 ````
 
-## Customization
+# Customization
 
 In order to add new applications to be monitored by logjam, you will
 need to write a new [Dockerfile](example/Dockerfile) building on

@@ -5,7 +5,6 @@ rescue LoadError
 end
 require "ansi"
 
-IMAGES = %w(builder tools ruby code passenger runtime app demo develop)
 ROOT = File.expand_path("..", __FILE__)
 
 def system(cmd)
@@ -43,16 +42,25 @@ namespace :builder do
   task :build do
     build_image("builder")
   end
-  task :test => :build do
+  task :test do
     test_image("builder")
   end
 end
 
-namespace :tools do
+namespace :libs do
   task :build => "builder:build" do
+    build_image("libs")
+  end
+  task :test do
+    test_image("libs")
+  end
+end
+
+namespace :tools do
+  task :build => "libs:build" do
     build_image("tools")
   end
-  task :test => :build do
+  task :test do
     test_image("tools")
   end
   task :export => :build do
@@ -64,7 +72,7 @@ namespace :ruby do
   task :build => "builder:build" do
     build_image("ruby")
   end
-  task :test => :build do
+  task :test do
     test_image("ruby")
   end
   task :export => :build do
@@ -73,10 +81,10 @@ namespace :ruby do
 end
 
 namespace :code do
-  task :build => "builder:build" do
+  task :build => "ruby:build" do
     build_image("code")
   end
-  task :test => :build do
+  task :test do
     test_image("code")
   end
   task :export => :build do
@@ -85,14 +93,21 @@ namespace :code do
 end
 
 namespace :passenger do
-  task :build => "builder:build" do
+  task :build => "ruby:build" do
     build_image("passenger")
   end
-  task :test => :build do
+  task :test do
     test_image("passenger")
   end
   task :export => :build do
-    run_image("passenger", "tar czf /exports/opt-logjam-passenger.tar.gz /opt/logjam/bin/passenger* /opt/logjam/lib/ruby/gems/2.2.0/gems/passenger* /opt/logjam/lib/ruby/gems/2.2.0/gems/rack* /opt/logjam/lib/ruby/gems/2.2.0/gems/daemon* /etc/apache2/mods-available/passenger.load")
+    exports = %w(
+      /opt/logjam/bin/passenger*
+      /opt/logjam/lib/ruby/gems/2.2.0/gems/passenger*
+      /opt/logjam/lib/ruby/gems/2.2.0/gems/rack*
+      /opt/logjam/lib/ruby/gems/2.2.0/gems/daemon*
+      /etc/apache2/mods-available/passenger.load
+    )
+    run_image("passenger", "tar czf /exports/opt-logjam-passenger.tar.gz #{exports.join(' ')}")
   end
   task :run do
     system "docker run --rm -it -P --name passenger #{image_name 'passenger'}"
@@ -107,7 +122,7 @@ namespace :runtime do
   task :build do
     build_image("runtime")
   end
-  task :test => :build do
+  task :test do
     test_image("runtime")
   end
 end
@@ -118,12 +133,13 @@ namespace :app do
     build_image("app")
   end
 
-  task :test => :build do
+  task :test do
     test_image("app")
   end
 
   desc "run a app container"
   task :run do
+    system "docker rm logjam"
     system "docker run --rm -it -h logjam.local -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --link memcache:logjamcache --name logjam #{image_name 'app'}"
   end
 
@@ -135,11 +151,11 @@ end
 
 namespace :demo do
   desc "build the demo image"
-  task :build => "runtime:build" do
+  task :build => "app:build" do
     build_image("demo")
   end
 
-  task :test => :build do
+  task :test do
     test_image("demo")
   end
 
@@ -165,7 +181,7 @@ namespace :develop do
     build_image("develop")
   end
 
-  task :test => :build do
+  task :test do
     test_image("develop")
   end
 
@@ -180,13 +196,34 @@ namespace :develop do
   end
 end
 
+namespace :logjamdb do
+  desc "start a logjamdb instance"
+  task :run do
+    system "docker run -d -P --name logjamdb mongo:3.0.2"
+  end
+end
+
+namespace :memcache do
+  desc "start a memcached instance"
+  task :run do
+    system "docker run -d -P --name memcache memcached:1.4.24"
+  end
+end
+
+desc "build all end user images"
+task :runnables => %w[app:build demo:build develop:build]
+
 desc "build all images"
-task :build => IMAGES.map{|d| "#{d}:build"}
+task :build => %w[code:build passenger:build tools:build] do
+  Rake::Task[:export].invoke
+  Rake::Task[:import].invoke
+  Rake::Task[:runnables].invoke
+end
 
 desc "export libraries and ruby"
-task :export => %w(ruby:export tools:export code:export)
+task :export => %w(ruby:export tools:export code:export passenger:export)
 
-desc "import libraries and ruby"
+desc "import libraries and ruby into build context for app:build"
 task :import do
   system "cp -p exports/*.gz images/app/"
 end
@@ -206,16 +243,8 @@ end
 task :run => "demo:run"
 task :default => :build
 
-desc "start a logjamdb instance"
-namespace :logjamdb do
-  task :run do
-    system "docker run -d -P --name logjamdb mongo:3.0.2"
-  end
-end
-
-desc "start a memcached instance"
-namespace :memcache do
-  task :run do
-    system "docker run -d -P --name memcache memcached:1.4.24"
-  end
+desc "upload images to registry"
+task :upload do
+  system "docker push stkaes/logjam-app"
+  system "docker push stkaes/logjam-demo"
 end
