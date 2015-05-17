@@ -15,6 +15,13 @@ MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 RUN apt-get install -y --no-install-recommends runit sudo lsof curl wget htop gawk emacs23-nox
 
 # ----------------------------
+# performance tools
+# ----------------------------
+RUN apt-get install -y --no-install-recommends libunwind8 libunwind8-dev graphviz ghostscript
+RUN git clone https://github.com/skaes/gperftools.git
+RUN cd gperftools && sh autogen.sh && ./configure --prefix=/usr && make && make install
+
+# ----------------------------
 # ruby
 # ----------------------------
 RUN apt-get install -y --no-install-recommends ruby
