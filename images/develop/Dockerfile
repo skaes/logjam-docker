@@ -35,10 +35,8 @@ RUN gem install -q bundler
 # ----------------------------
 # web server
 # ----------------------------
-RUN apt-get install -y apache2
-RUN apt-get install -y apache2-mpm-worker
-RUN apt-get install -y apache2-threaded-dev
-RUN apt-get install -y libapr1-dev
+RUN apt-get install -y --no-install-recommends \
+    apache2 apache2-mpm-worker apache2-threaded-dev libapr1-dev
 RUN gem install passenger -v 4.0.59
 ADD ./install-passenger-apache2-module.sh /docker/install-passenger-apache2-module.sh
 RUN /docker/install-passenger-apache2-module.sh
@@ -47,13 +45,14 @@ ADD ./passenger.load /etc/apache2/mods-available/passenger.load
 # ----------------------------
 # logjam - libraries
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION 8b752e9ce6e4cba727f9b75058a14e9c8813d375
+ENV LOGJAM_TOOLS_REVISION 321cac81b08c229a9da10002f9cfb6dcb8ce73b7
 ADD ./install-logjam-libs.sh /docker/install-logjam-libs.sh
 RUN /bin/bash -l -c /docker/install-logjam-libs.sh
 
 # ----------------------------
 # logjam - binaries
 # ----------------------------
+ENV LOGJAM_TOOLS_REVISION 321cac81b08c229a9da10002f9cfb6dcb8ce73b7
 ADD ./install-logjam-tools.sh /docker/install-logjam-tools.sh
 RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 
