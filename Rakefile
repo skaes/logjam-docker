@@ -254,3 +254,8 @@ task :upload do
   system "docker push stkaes/logjam-app"
   system "docker push stkaes/logjam-demo"
 end
+
+desc "regenerate TLS certificates (e.g. after IP change)"
+task :certify do
+  system "boot2docker ssh 'sudo /etc/init.d/docker restart'"
+end
