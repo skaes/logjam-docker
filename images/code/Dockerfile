@@ -8,6 +8,7 @@
 # ----------------------------
 FROM stkaes/logjam-ruby
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
+ENV DEBIAN_FRONTEND noninteractive
 
 ENV LOGJAM_REVISION a27bb18624899a0e0944caaa4f8a801136fa9fa2
 
@@ -17,3 +18,6 @@ ADD ./install-code.sh /docker/install-code.sh
 RUN /bin/bash -l -c /docker/install-code.sh
 
 WORKDIR /opt/logjam/app
+
+# restore DEBIAN_FRONTEND to default value
+ENV DEBIAN_FRONTEND newt

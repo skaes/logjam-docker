@@ -8,11 +8,11 @@
 # ----------------------------
 FROM ubuntu:14.04
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
+ENV DEBIAN_FRONTEND noninteractive
 
 # ----------------------------
 # Environment (can be used in scripts)
 # ----------------------------
-ENV DEBIAN_FRONTEND noninteractive
 ENV HOME /root
 WORKDIR /root
 
@@ -32,3 +32,6 @@ RUN apt-get install -y \
   libreadline6 libncurses5 libffi6 \
   libxml2 libxslt1.1 libcurl3 \
   libicu52 libsqlite3-0 && apt-get clean
+
+# restore DEBIAN_FRONTEND to default value
+ENV DEBIAN_FRONTEND newt

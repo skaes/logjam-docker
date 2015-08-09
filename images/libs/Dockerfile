@@ -8,8 +8,12 @@
 # ----------------------------
 FROM stkaes/logjam-builder
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
+ENV DEBIAN_FRONTEND noninteractive
 
 ENV LOGJAM_TOOLS_REVISION a033b2d17ad3611859fef439b676b004985c3d49
 
 ADD ./install-logjam-libs.sh /docker/install-logjam-libs.sh
 RUN /bin/bash -l -c /docker/install-logjam-libs.sh
+
+# restore DEBIAN_FRONTEND to default value
+ENV DEBIAN_FRONTEND newt

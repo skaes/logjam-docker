@@ -8,9 +8,13 @@
 # ----------------------------
 FROM stkaes/logjam-app
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -y --no-install-recommends install mongodb-server && apt-get clean
 ADD ./service/mongodb /etc/service/mongodb
 
 RUN apt-get -y --no-install-recommends install memcached && apt-get clean
 ADD ./service/memcached /etc/service/memcached
+
+# restore DEBIAN_FRONTEND to default value
+ENV DEBIAN_FRONTEND newt

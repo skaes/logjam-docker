@@ -8,6 +8,7 @@
 # ----------------------------
 FROM stkaes/logjam-ruby
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
+ENV DEBIAN_FRONTEND noninteractive
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
@@ -27,3 +28,6 @@ ADD ./passenger.load /etc/apache2/mods-available/passenger.load
 CMD /usr/sbin/apachectl -D FOREGROUND
 
 EXPOSE 80
+
+# restore DEBIAN_FRONTEND to default value
+ENV DEBIAN_FRONTEND newt

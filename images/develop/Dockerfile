@@ -8,6 +8,7 @@
 # ----------------------------
 FROM stkaes/logjam-builder
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
+ENV DEBIAN_FRONTEND noninteractive
 
 # ----------------------------
 # tools and runtime support
@@ -94,3 +95,6 @@ EXPOSE 80 8080
 
 # importer zeromq pull socket port
 EXPOSE 9605
+
+# restore DEBIAN_FRONTEND to default value
+ENV DEBIAN_FRONTEND newt
