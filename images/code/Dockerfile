@@ -9,7 +9,7 @@
 FROM stkaes/logjam-ruby
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 
-ENV LOGJAM_REVISION 7a5fc22033dc35dd9c48e1893afaa6c41b785c2c
+ENV LOGJAM_REVISION a27bb18624899a0e0944caaa4f8a801136fa9fa2
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
