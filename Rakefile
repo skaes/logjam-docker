@@ -199,7 +199,10 @@ end
 namespace :logjamdb do
   desc "start a logjamdb instance"
   task :run do
-    system "docker run -d -P --name logjamdb mongo:3.0.2"
+    system "docker run -d -P --name logjamdb mongo:3.0.5"
+  end
+  task :stop do
+    system "docker stop logjamdb"
   end
 end
 
@@ -207,6 +210,9 @@ namespace :memcache do
   desc "start a memcached instance"
   task :run do
     system "docker run -d -P --name memcache memcached:1.4.24"
+  end
+  task :stop do
+    system "docker stop memcache"
   end
 end
 
