@@ -38,4 +38,9 @@ Gemfile.lock
 
 *.gz
 
-/images/develop/*
+# ignore develop artefacts
+/images/develop/etc
+/images/develop/gemrc
+/images/develop/*.sh
+/images/develop/passenger.load
+/images/develop/root
