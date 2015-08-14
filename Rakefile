@@ -26,7 +26,9 @@ end
 
 def build_image(name)
   Dir.chdir(image_dir(name)) do
-    system "docker build -t=#{image_name(name)} ."
+    unless system "docker build -t=#{image_name(name)} ."
+      fail "could not build #{image_name(name)}"
+    end
   end
 end
 
@@ -35,7 +37,9 @@ def test_image(name)
 end
 
 def run_image(name, arg)
-  system "docker run --rm -it -v #{export_dir}:/exports #{image_name(name)} /bin/bash -l -c '#{arg}'"
+  unless system "docker run --rm -it -v #{export_dir}:/exports #{image_name(name)} /bin/bash -l -c '#{arg}'"
+    fail "running image #{image_name(name)} failed"
+  end
 end
 
 namespace :builder do
