@@ -1,0 +1,22 @@
+memcache:
+  container_name: memcache
+  image: memcached:1.4.24
+
+logjamdb:
+  container_name: logjamdb
+  image: mongo:3.0.5
+
+demo:
+  container_name: logjam-demo
+  domainname: logjam-demo.local
+  image: stkaes/logjam-app
+  links:
+    - memcache:logjamcache
+    - logjamdb:logjamdb
+  ports:
+    - "80:80"
+    - "8080:8080"
+    - "9605:9605"
+  tty: true
+  environment:
+    TZ: Europe/Berlin

@@ -5,22 +5,19 @@ dockerized instance of logjam_app
 
 # Running dockerized logjam
 
-Assuming you have docker installed on your system, there are two
-options, the advantages/disvantages of which are left as an exercise
-for the docker aficionado:
-
-## Running an all in one container
+Assuming you have `docker` and `docker-compose` installed on your
+system you can run the app with a single command (after downloading
+`docker-compose.yml`):
 
 ````bash
-docker run -d -p 80:80 -p 8080:8080 --name demo stkaes/logjam-demo
+docker-compose up -d
 ````
 
-## Running with separate mongodb and memcached containers
+* you might want to change the TZ setting in `docker-compose.yml`
+* you might want to specifiy a larger timeout when shutting down
 
 ````bash
-docker run -d -P --name logjamdb mongo:3.0.2
-docker run -d -P --name memcache memcached:1.4.24
-docker run -d -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --link memcache:logjamcache --name logjam stkaes/logjam-app
+docker-compose stop --timeout 30
 ````
 
 # Customization
