@@ -153,31 +153,10 @@ namespace :app do
   end
 end
 
-namespace :demo do
-  desc "build the demo image"
-  task :build => "app:build" do
-    build_image("demo")
-  end
-
-  task :test do
-    test_image("demo")
-  end
-
-  desc "run a demo container"
-  task :run do
-    system "docker run --rm -it -p 80:80 -p 8080:8080 -p 9605:9605 --name demo -h demo.local #{image_name 'demo'}"
-  end
-
-  desc "attach to running demo container"
-  task :attach do
-    system "docker exec -it demo bash"
-  end
-end
-
 namespace :develop do
   desc "copy build scripts"
   task :scripts do
-    system "tar cp `find images -type f | egrep -v 'Dockerfile|develop|demo|.tar.gz'` | tar xpf - -C images/develop --strip-components 2"
+    system "tar cp `find images -type f | egrep -v 'Dockerfile|develop|.tar.gz'` | tar xpf - -C images/develop --strip-components 2"
   end
 
   desc "build the develop image"
@@ -221,7 +200,7 @@ namespace :memcache do
 end
 
 desc "build all end user images"
-task :runnables => %w[app:build demo:build develop:build]
+task :runnables => %w[app:build develop:build]
 
 desc "build all images"
 task :build => %w[code:build passenger:build tools:build] do
@@ -250,16 +229,22 @@ task :realclean => :clean do
   system "docker images | awk '/stkaes/ {print $3;}' | xargs docker rmi"
 end
 
-task :run => "demo:run"
+task :start do
+  system("docker-compose up -d")
+end
+
+task :stop do
+  system("docker-compose stop")
+end
+
 task :default => :build
 
 desc "upload images to registry"
 task :upload do
   system "docker push stkaes/logjam-app"
-  system "docker push stkaes/logjam-demo"
 end
 
 desc "regenerate TLS certificates (e.g. after IP change)"
 task :certify do
-  system "boot2docker ssh 'sudo /etc/init.d/docker restart'"
+  system "docker-machine regenerate-certs default"
 end

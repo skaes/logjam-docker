@@ -11,14 +11,12 @@ system you can run the app with a single command (after downloading
 
 ````bash
 docker-compose up -d
+# ...
+docker-compose stop
 ````
 
-* you might want to change the TZ setting in `docker-compose.yml`
-* you might want to specifiy a larger timeout when shutting down
+Note: you might want to change the `TZ` setting in `docker-compose.yml`
 
-````bash
-docker-compose stop --timeout 30
-````
 
 # Customization
 
