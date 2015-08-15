@@ -10,7 +10,7 @@ FROM stkaes/logjam-ruby
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV LOGJAM_REVISION a27bb18624899a0e0944caaa4f8a801136fa9fa2
+ENV LOGJAM_REVISION cea8a804f10a1de9be4c03a36ce437eeff38ca0e
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
