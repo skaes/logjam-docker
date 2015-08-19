@@ -8,7 +8,9 @@ require "ansi"
 ROOT = File.expand_path("..", __FILE__)
 
 def system(cmd)
+  puts
   puts ANSI.green{cmd}
+  puts
   Kernel.system cmd
 end
 
