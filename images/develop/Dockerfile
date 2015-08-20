@@ -13,6 +13,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # ----------------------------
 # tools and runtime support
 # ----------------------------
+RUN apt-get update
 RUN apt-get install -y --no-install-recommends runit sudo lsof curl wget htop gawk emacs23-nox
 
 # ----------------------------

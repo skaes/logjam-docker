@@ -12,6 +12,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
+RUN apt-get update
 RUN apt-get install -y apache2
 RUN apt-get install -y apache2-mpm-worker
 RUN apt-get install -y apache2-threaded-dev
