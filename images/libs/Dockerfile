@@ -10,7 +10,7 @@ FROM stkaes/logjam-builder
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV LOGJAM_TOOLS_REVISION 540d4e6be1aecccb60d274606b34d28247f0bf85
+ENV LOGJAM_LIBS_REVISION 540d4e6be1aecccb60d274606b34d28247f0bf85
 
 ADD ./install-logjam-libs.sh /docker/install-logjam-libs.sh
 RUN /bin/bash -l -c /docker/install-logjam-libs.sh
