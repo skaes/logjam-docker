@@ -61,7 +61,7 @@ RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 # ----------------------------
 # logjam - app
 # ----------------------------
-ENV LOGJAM_REVISION 77df04ee4dee602676cd8dbbf98320d8de514d4e
+ENV LOGJAM_REVISION bdfc1abfeaa310530a41f79ea3ddb5abeb9751d1
 ADD ./install-code.sh /docker/install-code.sh
 RUN /bin/bash -l -c /docker/install-code.sh
 
