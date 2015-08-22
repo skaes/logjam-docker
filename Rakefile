@@ -146,7 +146,7 @@ namespace :app do
   desc "run a app container"
   task :run do
     system "docker rm logjam"
-    system "docker run --rm -it -h logjam.local -p 80:80 -p 8080:8080 --link logjamdb:logjamdb --link memcache:logjamcache --name logjam #{image_name 'app'}"
+    system "docker run --rm -it -h logjam.local -p 80:80 -p 8080:8080 -p 9605:9605 -p 9705:9705 --link logjamdb:logjamdb --link memcache:logjamcache --name logjam #{image_name 'app'}"
   end
 
   desc "attach to running app container"
@@ -172,7 +172,7 @@ namespace :develop do
 
   desc "run a develop container"
   task :run do
-    system "docker run --rm -it -p 80:80 -p 8080:8080 -p 9605:9605 --link logjamdb:logjamdb --link memcache:logjamcache --name develop -h develop.local #{image_name 'develop'}"
+    system "docker run --rm -it -p 80:80 -p 8080:8080 -p 9605:9605 -p 9705:9705 --link logjamdb:logjamdb --link memcache:logjamcache --name develop -h develop.local #{image_name 'develop'}"
   end
 
   desc "attach to running develop container"

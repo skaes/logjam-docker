@@ -53,5 +53,8 @@ EXPOSE 80 8080
 # importer zeromq pull socket port
 EXPOSE 9605
 
+# logjam frontend timings collector
+EXPOSE 9705
+
 # restore DEBIAN_FRONTEND to default value
 ENV DEBIAN_FRONTEND newt

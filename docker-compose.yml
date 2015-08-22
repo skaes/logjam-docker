@@ -17,6 +17,7 @@ demo:
     - "80:80"
     - "8080:8080"
     - "9605:9605"
+    - "9705:9705"
   tty: true
   environment:
     TZ: Europe/Berlin
