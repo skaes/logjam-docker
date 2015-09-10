@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-apt-get -y --no-install-recommends install nodejs && apt-get clean
+PATH=/opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 mkdir -p /opt/logjam
 cd /opt/logjam

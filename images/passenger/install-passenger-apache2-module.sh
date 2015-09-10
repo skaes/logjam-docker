@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PATH=/opt/logjam/bin:$PATH
+
 # sanitize environment for passenger-install
 source /etc/apache2/envvars
 mkdir -p $APACHE_LOG_DIR $APACHE_LOCK_DIR $APACHE_RUN_DIR

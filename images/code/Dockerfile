@@ -10,6 +10,8 @@ FROM stkaes/logjam-ruby
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN apt-get -y --no-install-recommends install nodejs && apt-get clean
+
 ENV LOGJAM_REVISION 0c2a7ab9fa206df6bba34fc5818787c9315d7538
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

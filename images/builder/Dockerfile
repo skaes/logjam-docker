@@ -27,12 +27,36 @@ RUN locale-gen en_US.UTF-8 && \
 # development packages
 # ----------------------------
 RUN apt-get install -y \
-  build-essential autoconf automake libtool pkg-config checkinstall patch \
-  sudo lsof curl wget git-core git htop gawk bison \
-  zlib1g-dev libyaml-dev libssl-dev libgdbm-dev \
-  libreadline-dev libncurses5-dev libffi-dev \
-  libxml2-dev libxslt-dev libcurl4-openssl-dev \
-  libicu-dev libsqlite3-dev
+    autoconf \
+    automake \
+    bison \
+    build-essential \
+    checkinstall \
+    curl \
+    dpkg-dev \
+    gawk \
+    git \
+    git-core \
+    htop \
+    libcurl4-openssl-dev \
+    libffi-dev \
+    libgdbm-dev \
+    libgmp-dev \
+    libicu-dev \
+    libncurses5-dev\
+    libreadline-dev \
+    libsqlite3-dev\
+    libssl-dev \
+    libtool \
+    libxml2-dev \
+    libxslt-dev \
+    libyaml-dev \
+    lsof \
+    patch \
+    pkg-config \
+    sudo \
+    wget \
+    zlib1g-dev
 
 # restore DEBIAN_FRONTEND to default value
 ENV DEBIAN_FRONTEND newt

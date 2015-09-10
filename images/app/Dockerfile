@@ -36,8 +36,7 @@ WORKDIR /opt/logjam/app
 ENV RAILS_ENV production
 
 # we want to run passenger as user logjam, so fix permissions
-RUN addgroup --gid 500 logjam; \
-    adduser --gecos '' --no-create-home --home /opt/logjam/app --disabled-login --disabled-password --uid 500 --gid 500 logjam; \
+RUN adduser --gecos '' --no-create-home --home /opt/logjam/app --disabled-login --disabled-password logjam; \
     chown logjam.logjam /opt/logjam/app/config.ru; \
     chown -R logjam.logjam /opt/logjam/app/tmp /opt/logjam/app/log
 
