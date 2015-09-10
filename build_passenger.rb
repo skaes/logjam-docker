@@ -27,8 +27,7 @@ depends "logjam-ruby"
 depends "apache2"
 depends "apache2-mpm-worker"
 
-before_build "apt-get update && apt-get -y install curl"
-before_build "curl -s https://packagecloud.io/install/repositories/stkaes/logjam/script.deb.sh | bash"
+before_build "echo 'deb [trusted=yes] http://railsexpress.de/packages/ubuntu/trusty ./' >> /etc/apt/sources.list"
 
 add "images/passenger/install-passenger-apache2-module.sh", ".install-passenger-apache2-module.sh"
 add "images/passenger/minify-passenger-apache2-module.sh", ".minify-passenger-apache2-module.sh"

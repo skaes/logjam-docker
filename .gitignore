@@ -44,3 +44,7 @@ Gemfile.lock
 /images/develop/*.sh
 /images/develop/passenger.load
 /images/develop/root
+
+# ignore package files
+/packages/*.deb
+/packages/*.gz

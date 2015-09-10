@@ -14,8 +14,7 @@ depends "logrotate"
 depends "runit"
 depends "adduser"
 
-before_build "apt-get update && apt-get -y install curl"
-before_build "curl -s https://packagecloud.io/install/repositories/stkaes/logjam/script.deb.sh | bash"
+before_build "echo 'deb [trusted=yes] http://railsexpress.de/packages/ubuntu/trusty ./' >> /etc/apt/sources.list"
 
 add "images/app/etc/apache2/mods-available/passenger.conf", ".passenger.conf"
 run "cp", ".passenger.conf", "/etc/apache2/mods-available/passenger.conf"

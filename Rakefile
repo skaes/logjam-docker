@@ -253,34 +253,29 @@ task :certify do
 end
 
 namespace :package do
-  desc "build logjam tools package"
-  task :tools do
-    system "fpm-dockery cook --keep --update=always ubuntu:14.04 build_tools.rb"
+  def cook(package)
+    system "fpm-dockery cook --keep --update=always ubuntu:14.04 build_#{package}.rb"
+    system "mv *.deb packages"
+    system "docker run -it -v `pwd`/packages:/root/tmp stkaes/logjam-builder bash -c 'cd tmp && dpkg-scanpackages . /dev/null | gzip >Packages.gz'"
+    system "rsync -vrlptDz -e ssh packages/* railsexpress.de:/var/www/packages/ubuntu/trusty"
   end
 
-  desc "build logjam tools package"
-  task :ruby do
-    system "fpm-dockery cook --keep --update=always ubuntu:14.04 build_ruby.rb"
+  def packages
+    [:tools, :ruby, :code, :passenger, :app]
   end
 
-  desc "build logjam code package"
-  task :code do
-    system "fpm-dockery cook --keep --update=always ubuntu:14.04 build_code.rb"
-  end
-
-  desc "build logjam passenger package"
-  task :passenger do
-    system "fpm-dockery cook --keep --update=always ubuntu:14.04 build_passenger.rb"
-  end
-
-  desc "build logjam app package"
-  task :app do
-    system "fpm-dockery cook --keep --update=always ubuntu:14.04 build_app.rb"
+  packages.each do |n|
+    desc "build logjam #{p} package"
+    task n do
+      cook n
+    end
   end
 
   desc "upload images to railsexpress"
   task :upload do
-    system "docker run -it -v `pwd`:/root/tmp stkaes/logjam-builder bash -c 'dpkg-scanpackages tmp /dev/null | gzip >tmp/Packages.gz'"
-    system "scp *.deb Packages.gz root@railsexpress.de:/var/www/packages/ubuntu/trusty"
+    system "rsync -vrlptDz -e ssh packages/* railsexpress.de:/var/www/packages/ubuntu/trusty"
   end
+
+  desc "cook all packages"
+  task :all => packages
 end

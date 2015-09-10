@@ -24,8 +24,7 @@ build_depends "zlib1g-dev"
 
 depends "logjam-ruby"
 
-before_build "apt-get update && apt-get -y install curl"
-before_build "curl -s https://packagecloud.io/install/repositories/stkaes/logjam/script.deb.sh | bash"
+before_build "echo 'deb [trusted=yes] http://railsexpress.de/packages/ubuntu/trusty ./' >> /etc/apt/sources.list"
 
 add "images/code/install-code.sh", ".install-code.sh"
 
