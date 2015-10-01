@@ -20,11 +20,22 @@ Note: you might want to change the `TZ` setting in `docker-compose.yml`
 
 # Customization
 
-In order to add new applications to be monitored by logjam, you will
-need to write a new [Dockerfile](example/Dockerfile) building on
-stkaes/logjam-app and add a new
+There are currently two ways to add applications to be monitored to logjam.
+
+If you set `LOGJAM_USER_STREAMS` to a comma separated list of stream
+names, logjam will process incoming messages from those applications.
+
+````
+LOGJAM_USER_STREAMS="gazelles-production,antelopes-production,zebras-production"
+````
+
+The second option is to write a custom
+[Dockerfile](example/Dockerfile), building on `stkaes/logjam-app` and
+adding a custom
 [initializer file for logjam streams](example/user_streams.rb) on top
 of the existing declarations.
 
-At some point in the future, logjam will have a UI to add new apps
-on the fly. But for now, this seems OK.
+## TODO
+
+At some point in the future, logjam will have a UI to add new apps on
+the fly. But for now, this seems OK.

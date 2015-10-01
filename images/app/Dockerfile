@@ -50,10 +50,8 @@ RUN adduser --gecos '' --no-create-home --home /opt/logjam/app --disabled-login 
 # setup cron jobs
 RUN bundle exec whenever --user logjam --update-crontab --roles cron,worker
 
-# install daemons. this needs to be run again in any derived container
-# after adding user configuration parameters.
+# add script to install daemons. will be run by startapp.sh
 ADD ./install-daemons.sh /docker/install-daemons.sh
-RUN /docker/install-daemons.sh
 
 # startapp.sh starts runit and all services
 ADD ./startapp.sh /docker/startapp.sh
