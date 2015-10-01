@@ -43,6 +43,7 @@ RUN apt-get install -y --no-install-recommends \
     libcurl3 \
     libffi6 \
     libgdbm3 \
+    libgmp10 \
     libicu52 \
     libncurses5 \
     libreadline6 \

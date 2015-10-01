@@ -23,6 +23,13 @@ ADD ./opt-logjam-tools.tar.gz /
 ADD ./opt-logjam-ruby.tar.gz /
 ADD ./opt-logjam-app.tar.gz /
 ADD ./opt-logjam-passenger.tar.gz /
+# RUN apt-get update && apt-get -y --no-install-recommends install \
+#     logjam-libs \
+#     logjam-tools \
+#     logjam-ruby \
+#     logjam-code \
+#     logjam-passenger \
+#     && apt-get clean
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
@@ -40,9 +47,15 @@ RUN adduser --gecos '' --no-create-home --home /opt/logjam/app --disabled-login 
     chown logjam.logjam /opt/logjam/app/config.ru; \
     chown -R logjam.logjam /opt/logjam/app/tmp /opt/logjam/app/log
 
+# setup cron jobs
 RUN bundle exec whenever --user logjam --update-crontab --roles cron,worker
-RUN LOGJAM_PRODUCTION_DB=DB_PLACE_HOLDER bundle exec rake logjam:daemons:install ; chown -R logjam.logjam /opt/logjam/app/service
 
+# install daemons. this needs to be run again in any derived container
+# after adding user configuration parameters.
+ADD ./install-daemons.sh /docker/install-daemons.sh
+RUN /docker/install-daemons.sh
+
+# startapp.sh starts runit and all services
 ADD ./startapp.sh /docker/startapp.sh
 CMD /docker/startapp.sh
 
