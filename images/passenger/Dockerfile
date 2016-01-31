@@ -17,7 +17,7 @@ RUN apt-get install -y apache2
 RUN apt-get install -y apache2-mpm-worker
 RUN apt-get install -y apache2-threaded-dev
 RUN apt-get install -y libapr1-dev
-RUN gem install passenger -v 4.0.59
+RUN gem install passenger -v 4.0.60
 
 ADD ./install-passenger-apache2-module.sh /docker/install-passenger-apache2-module.sh
 RUN /docker/install-passenger-apache2-module.sh

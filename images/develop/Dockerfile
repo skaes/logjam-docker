@@ -39,7 +39,7 @@ RUN gem install -q bundler
 # ----------------------------
 RUN apt-get install -y --no-install-recommends \
     apache2 apache2-mpm-worker apache2-threaded-dev libapr1-dev
-RUN gem install passenger -v 4.0.59
+RUN gem install passenger -v 4.0.60
 ADD ./install-passenger-apache2-module.sh /docker/install-passenger-apache2-module.sh
 RUN /docker/install-passenger-apache2-module.sh
 ADD ./passenger.load /etc/apache2/mods-available/passenger.load
