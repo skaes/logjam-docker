@@ -270,7 +270,7 @@ namespace :package do
   end
 
   packages.each do |n|
-    desc "build logjam #{p} package"
+    desc "build logjam #{n} package"
     task n do
       begin
         cook n
