@@ -6,6 +6,7 @@ end
 require "ansi"
 
 ROOT = File.expand_path("..", __FILE__)
+LOGJAM_PACKAGE_HOST = ENV['LOGJAM_PACKAGE_HOST'].to_s
 
 def system(cmd)
   puts
@@ -253,11 +254,15 @@ task :certify do
 end
 
 namespace :package do
+  def system(cmd)
+    raise "build failed!" unless Kernel.system cmd
+  end
+
   def cook(package)
     system "fpm-dockery cook --keep --update=always ubuntu:14.04 build_#{package}.rb"
     system "mv *.deb packages"
     system "docker run -it -v `pwd`/packages:/root/tmp stkaes/logjam-builder bash -c 'cd tmp && dpkg-scanpackages . /dev/null | gzip >Packages.gz'"
-    system "rsync -vrlptDz -e ssh packages/* railsexpress.de:/var/www/packages/ubuntu/trusty"
+    system "rsync -vrlptDz -e ssh packages/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/trusty"
   end
 
   def packages
@@ -267,13 +272,17 @@ namespace :package do
   packages.each do |n|
     desc "build logjam #{p} package"
     task n do
-      cook n
+      begin
+        cook n
+      rescue => e
+        $stderr.puts e.message
+      end
     end
   end
 
-  desc "upload images to railsexpress"
+  desc "upload images to package host"
   task :upload do
-    system "rsync -vrlptDz -e ssh packages/* railsexpress.de:/var/www/packages/ubuntu/trusty"
+    system "rsync -vrlptDz -e ssh packages/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/trusty"
   end
 
   desc "cook all packages"
