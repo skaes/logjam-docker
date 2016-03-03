@@ -19,10 +19,14 @@ RUN a2enmod expires headers rewrite
 # ----------------------------
 # logjam
 # ----------------------------
+
+# this install the code from local tar files we just extracted from containers:
 ADD ./opt-logjam-tools.tar.gz /
 ADD ./opt-logjam-ruby.tar.gz /
 ADD ./opt-logjam-app.tar.gz /
 ADD ./opt-logjam-passenger.tar.gz /
+
+# this installs packages from ubuntu packages:
 # RUN apt-get update && apt-get -y --no-install-recommends install \
 #     logjam-libs \
 #     logjam-tools \
