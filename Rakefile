@@ -238,6 +238,12 @@ task :realclean => :clean do
   system "docker images | awk '/stkaes/ {print $3;}' | xargs docker rmi"
 end
 
+desc "delete all containers and images"
+task :ultraclean do
+  system "docker ps -a -q | xargs docker rm -f"
+  system "docker images -q | xargs docker rmi -f"
+end
+
 task :start do
   system("docker-compose up -d")
 end
