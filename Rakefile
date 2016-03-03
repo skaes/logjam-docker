@@ -296,6 +296,16 @@ namespace :package do
     system "rsync -vrlptDz -e ssh packages/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/trusty"
   end
 
+  namespace :cloud do
+    desc "upload images to packagecloud.io"
+    task :upload do
+      packages.each do |package|
+        deb = `ls packages/logjam-#{package}*.deb`.chomp.split("\n").last
+        system "package_cloud push stkaes/logjam/ubuntu/14.04 #{deb}"
+      end
+    end
+  end
+
   desc "cook all packages"
   task :all => packages
 end
