@@ -8,11 +8,16 @@ require "ansi"
 ROOT = File.expand_path("..", __FILE__)
 LOGJAM_PACKAGE_HOST = ENV['LOGJAM_PACKAGE_HOST'].to_s
 
-def system(cmd)
-  puts
-  puts ANSI.green{cmd}
-  puts
-  Kernel.system cmd
+module LogSystemCommands
+  def system(cmd)
+    puts
+    puts ANSI.green{cmd}
+    puts
+    Kernel.system cmd
+  end
+end
+class << self
+  prepend LogSystemCommands
 end
 
 def image_name(name)
