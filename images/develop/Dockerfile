@@ -91,7 +91,7 @@ RUN bundle exec whenever --user logjam --update-crontab --roles cron,worker
 
 ADD ./install-daemons.sh /docker/install-daemons.sh
 ADD ./startapp.sh /docker/startapp.sh
-CMD /docker/startapp.sh
+CMD ["/docker/startapp.sh"]
 
 # application http socket port and websocket port
 EXPOSE 80 8080
