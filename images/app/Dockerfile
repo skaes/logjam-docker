@@ -1,5 +1,5 @@
 # VERSION         0.1
-# DOCKER-VERSION  1.7.1
+# DOCKER-VERSION  1.10.2
 # AUTHORS:        Stefan Kaes <skaes@railsexpress.de>
 # DESCRIPTION:    logjam app
 #
