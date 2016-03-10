@@ -4,7 +4,7 @@ memcache:
 
 logjamdb:
   container_name: logjamdb
-  image: mongo:3.0.5
+  image: mongo:3.0.10
 
 demo:
   container_name: logjam-demo
