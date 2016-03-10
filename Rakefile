@@ -201,7 +201,7 @@ end
 namespace :memcache do
   desc "start a memcached instance"
   task :run do
-    system "docker run -d -P --name memcache memcached:1.4.24"
+    system "docker run -d -P --name memcache memcached:1.4.25"
   end
   task :stop do
     system "docker stop memcache"

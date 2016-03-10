@@ -1,6 +1,6 @@
 memcache:
   container_name: memcache
-  image: memcached:1.4.24
+  image: memcached:1.4.25
 
 logjamdb:
   container_name: logjamdb
