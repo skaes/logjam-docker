@@ -12,7 +12,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -y --no-install-recommends install nodejs && apt-get clean
 
-ENV LOGJAM_REVISION 0bc53811de849aef753d4d3a61a873568eba2e70
+ENV LOGJAM_REVISION a2825b2359b864192df5680bf6d9e80006e8964b
 
 
 
