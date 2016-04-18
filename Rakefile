@@ -314,7 +314,7 @@ def get_latest_commit(repo)
   `curl -s https://api.github.com/repos/skaes/#{repo}/commits/master | grep '"sha":' | head -1 | awk '{print $2;}' | sed 's/[^0-9a-f]//g'`.chomp
 end
 
-desc "update commit references for logjam app and tools and optionalla LIBS=0|1"
+desc "update commit references for logjam app and tools and optionally LIBS=0|1"
 task :update_refs do
   files = `grep -rl _REVISION images`.gsub("\n", " ")
   logjam_sha = get_latest_commit("logjam_app")
