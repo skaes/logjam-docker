@@ -264,50 +264,58 @@ task :certify do
   system "docker-machine regenerate-certs default"
 end
 
+UBUNTU_VERSION_NAME = { "14.04" => "trusty", "12.04" => "precise" }
+
 namespace :package do
   def system(cmd)
     raise "build failed!" unless Kernel.system cmd
   end
 
-  def cook(package)
-    system "fpm-dockery cook --keep --update=always ubuntu:14.04 build_#{package}.rb"
-    system "mv *.deb packages"
-    system "docker run -it -v `pwd`/packages:/root/tmp stkaes/logjam-builder bash -c 'cd tmp && dpkg-scanpackages . /dev/null | gzip >Packages.gz'"
-    system "rsync -vrlptDz -e ssh packages/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/trusty"
+  def cook(package, version, name)
+    system "fpm-dockery cook --keep --update=always ubuntu:#{version} build_#{package}.rb"
+    system "mv *.deb packages/#{name}/"
+    system "docker run -it -v `pwd`/packages/#{name}:/root/tmp stkaes/logjam-builder bash -c 'cd tmp && dpkg-scanpackages . /dev/null | gzip >Packages.gz'"
+    system "rsync -vrlptDz -e ssh packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"
   end
 
   def packages
     [:tools, :ruby, :code, :passenger, :app]
   end
 
-  packages.each do |n|
-    desc "build logjam #{n} package"
-    task n do
-      begin
-        cook n
-      rescue => e
-        $stderr.puts e.message
+  UBUNTU_VERSION_NAME.each do |version, name|
+    packages.each do |package|
+      namespace name do
+        desc "build ubuntu #{version} logjam #{p} package"
+        task package do
+          begin
+            cook package, version, name
+          rescue => e
+            $stderr.puts e.message
+          end
+        end
       end
     end
   end
 
   desc "upload images to package host"
   task :upload do
-    system "rsync -vrlptDz -e ssh packages/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/trusty"
+    system "rsync -vrlptDz -e ssh packages/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu"
   end
 
   namespace :cloud do
     desc "upload images to packagecloud.io"
     task :upload do
       packages.each do |package|
-        deb = `ls packages/logjam-#{package}*.deb`.chomp.split("\n").last
-        system "package_cloud push stkaes/logjam/ubuntu/14.04 #{deb}"
+        UBUNTU_VERSION_NAME.each do |version, name|
+          deb = `ls packages/#{name}/logjam-#{package}*.deb 2>/dev/null`.chomp.split("\n").last
+          system "package_cloud push stkaes/logjam/ubuntu/#{name} #{deb}" unless deb.nil?
+        end
       end
     end
   end
 
   desc "cook all packages"
-  task :all => packages
+  task :all => packages.map{|p| "trusty:#{p}"} + %w(precise:tools)
 end
 
 def get_latest_commit(repo)

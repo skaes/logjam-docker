@@ -24,7 +24,7 @@ build_depends "zlib1g-dev"
 
 depends "logjam-ruby"
 
-before_build "echo 'deb [trusted=yes] http://railsexpress.de/packages/ubuntu/trusty ./' >> /etc/apt/sources.list"
+before_build "echo 'deb [trusted=yes] http://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
 
 add "images/code/install-code.sh", ".install-code.sh"
 
