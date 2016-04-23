@@ -229,7 +229,7 @@ end
 desc "clean unused images and containers"
 task :clean do
   system "docker ps -a | awk '/Exited/ {print $1;}' | xargs docker rm"
-  system "docker images | awk '/none/ {print $3;}' | xargs docker rmi"
+  system "docker images | awk '/none|fpm-dockery/ {print $3;}' | xargs docker rmi"
 end
 
 desc "clean, but also remove all stkaes containers"
