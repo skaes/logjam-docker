@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "rake"
+gem "rake", "~> 10.5.0"
 gem "ansi"
 gem "package_cloud"
 # gem "fpm-dockery", :git => "https://github.com/xing/fpm-dockery.git"
