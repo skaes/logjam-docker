@@ -1,23 +1,25 @@
-memcache:
-  container_name: memcache
-  image: memcached:1.4.25
+version: '2'
 
-logjamdb:
-  container_name: logjamdb
-  image: mongo:3.0.11
+services:
+  memcache:
+    container_name: memcache
+    image: memcached:1.4.25
 
-demo:
-  container_name: logjam-demo
-  domainname: logjam-demo.local
-  image: stkaes/logjam-app
-  links:
-    - memcache:logjamcache
-    - logjamdb:logjamdb
-  ports:
-    - "80:80"
-    - "8080:8080"
-    - "9605:9605"
-    - "9705:9705"
-  tty: true
-  env_file:
-    - "logjam.env"
+  logjamdb:
+    container_name: logjamdb
+    image: mongo:3.0.11
+
+  demo:
+    container_name: logjam-demo
+    image: stkaes/logjam-app
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "9605:9605"
+      - "9705:9705"
+    tty: true
+    environment:
+      - LOGJAMDB_NAME=logjamdb
+      - MEMCACHE_NAME=memcache
+    env_file:
+      - "logjam.env"

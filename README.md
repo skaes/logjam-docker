@@ -15,8 +15,12 @@ docker-compose up -d
 docker-compose stop
 ````
 
-Note: you might want to change the `TZ` setting in `logjam.env`
+## Notes
 
+* you might want to change the `TZ` setting in `logjam.env`
+* if you're running on OS X and port forwarding doesn't work for you
+  anymore, open the virtual box manager and add port forwarding rules
+  for ports 80, 8080, and 9605.
 
 # Customization
 
