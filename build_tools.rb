@@ -1,5 +1,8 @@
-name "logjam-tools"
-version "0.2"
+prefix = ENV['LOGJAM_PREFIX']
+suffix = ENV['LOGJAM_SUFFIX']
+
+name "logjam-tools#{suffix}"
+version "0.3"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
@@ -7,8 +10,8 @@ vendor "skaes@railsexpress.de"
 source "https://github.com/skaes/logjam-tools.git"
 
 # plugin "exclude"
-# exclude "/opt/logjam/share/man"
-# exclude "/opt/logjam/share/doc"
+# exclude "#{prefix}/share/man"
+# exclude "#{prefix}/share/doc"
 # exclude "/usr/share/doc"
 # exclude "/usr/share/man"
 
@@ -22,22 +25,22 @@ build_depends "wget"
 build_depends "libssl-dev"
 build_depends "zlib1g-dev"
 
-depends "logjam-libs", "#{version}-#{iteration}"
+depends "logjam-libs#{suffix}", "#{version}-#{iteration}"
 
-package "logjam-libs" do
-  files "/opt/logjam/bin/[^l]*"
-  files "/opt/logjam/include/*"
-  files "/opt/logjam/lib/*"
-  files "/opt/logjam/share/*"
+package "logjam-libs#{suffix}" do
+  files "#{prefix}/bin/[^l]*"
+  files "#{prefix}/include/*"
+  files "#{prefix}/lib/*"
+  files "#{prefix}/share/*"
 
   depends "libc6"
   depends "zlib1g"
   depends "openssl"
 end
 
-files "/opt/logjam/bin/logjam-*"
+files "#{prefix}/bin/logjam-*"
 
-run "./bin/install-libs", "--prefix=/opt/logjam"
-run "./autogen.sh", "--prefix=/opt/logjam", "--with-opt-dir=/opt/logjam"
+run "./bin/install-libs", "--prefix=#{prefix}"
+run "./autogen.sh", "--prefix=#{prefix}"
 run "make", "-j4"
 run "make", "install"
