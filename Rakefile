@@ -265,17 +265,29 @@ task :certify do
 end
 
 UBUNTU_VERSION_NAME = { "14.04" => "trusty", "12.04" => "precise" }
+PACKAGES_BUILT_FOR_USR_LOCAL = [:tools]
+PACKAGES_BUILT_FOR_PRECISE = [:tools]
+PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
+SUFFIXES = { :opt => "", :local => "-local" }
 
 namespace :package do
   def system(cmd)
     raise "build failed!" unless Kernel.system cmd
   end
 
-  def cook(package, version, name)
+  def cook(package, version, name, location)
+    # puts "cooking(#{[package, version, name, location].join(',')})"
+    ENV['LOGJAM_PREFIX'] = PREFIXES[location]
+    ENV['LOGJAM_SUFFIX'] = SUFFIXES[location]
+
     system "fpm-dockery cook --keep --update=always ubuntu:#{version} build_#{package}.rb"
     system "mv *.deb packages/#{name}/"
     system "docker run -it -v `pwd`/packages/#{name}:/root/tmp stkaes/logjam-builder bash -c 'cd tmp && dpkg-scanpackages . /dev/null | gzip >Packages.gz'"
     system "rsync -vrlptDz -e ssh packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"
+  rescue => e
+    $stderr.puts e.message
+    ENV.delete['LOGJAM_PREFIX']
+    ENV.delete['LOGJAM_SUFFIX']
   end
 
   def packages
@@ -283,19 +295,44 @@ namespace :package do
   end
 
   UBUNTU_VERSION_NAME.each do |version, name|
-    packages.each do |package|
-      namespace name do
-        desc "build ubuntu #{version} logjam #{p} package"
-        task package do
-          begin
-            cook package, version, name
-          rescue => e
-            $stderr.puts e.message
+    namespace name do
+      packages.each do |package|
+        PREFIXES.each do |location, prefix|
+          next if location == :local && !PACKAGES_BUILT_FOR_USR_LOCAL.include?(package)
+          next if name == "precise" && !PACKAGES_BUILT_FOR_PRECISE.include?(package)
+          if location == :opt
+            desc "build package #{package} for ubuntu #{version} with install prefix #{prefix}"
+            task package do
+              cook package, version, name, location
+            end
+          else
+            namespace package do
+              desc "build package #{package} for ubuntu #{version} with install prefix #{prefix}"
+              task location do
+                cook package, version, name, location
+              end
+            end
           end
         end
       end
     end
   end
+
+  namespace :trusty do
+    desc "build all trusty packages"
+    task :all => packages + %w(trusty:tools:local)
+  end
+
+  namespace :precise do
+    desc "build all precise packages"
+    task :all => %w(precise:tools precise:tools:local)
+  end
+
+  desc "cook all packages which can install in /usr/local"
+  task :local => %w(trusty:tools:local precise:tools:local)
+
+  desc "cook all packages"
+  task :all => %w(trusty:all precise:all)
 
   desc "upload images to package host"
   task :upload do
@@ -306,16 +343,17 @@ namespace :package do
     desc "upload images to packagecloud.io"
     task :upload do
       packages.each do |package|
-        UBUNTU_VERSION_NAME.each do |version, name|
-          deb = `ls packages/#{name}/logjam-#{package}*.deb 2>/dev/null`.chomp.split("\n").last
-          system "package_cloud push stkaes/logjam/ubuntu/#{name} #{deb}" unless deb.nil?
+        PREFIXES.each do |location, prefix|
+          suffix = SUFFIXES[location]
+          UBUNTU_VERSION_NAME.each do |version, name|
+            deb = `ls packages/#{name}/logjam-#{package}#{suffix}*.deb 2>/dev/null`.chomp.split("\n").last
+            system "package_cloud push stkaes/logjam/ubuntu/#{name} #{deb}" unless deb.nil?
+          end
         end
       end
     end
   end
 
-  desc "cook all packages"
-  task :all => packages.map{|p| "trusty:#{p}"} + %w(precise:tools)
 end
 
 def get_latest_commit(repo)
