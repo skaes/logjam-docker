@@ -54,7 +54,7 @@ RUN /bin/bash -l -c /docker/install-logjam-libs.sh
 # ----------------------------
 # logjam - binaries
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION 644c6aea54b473c2a4739f7492a632ecff8fa2a4
+ENV LOGJAM_TOOLS_REVISION 6ff8847b5f1001da6a420c5376a7e3e418ed0fd3
 ADD ./install-logjam-tools.sh /docker/install-logjam-tools.sh
 RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 
