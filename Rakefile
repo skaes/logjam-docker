@@ -318,6 +318,11 @@ namespace :package do
     end
   end
 
+  namespace :tools do
+    desc "build all tools packages"
+    task :all => [:local] + %w(trusty:tools precise:tools)
+  end
+
   namespace :trusty do
     desc "build all trusty packages"
     task :all => packages + %w(trusty:tools:local)
