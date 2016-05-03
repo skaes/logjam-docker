@@ -268,7 +268,7 @@ UBUNTU_VERSION_NAME = { "14.04" => "trusty", "12.04" => "precise" }
 PACKAGES_BUILT_FOR_USR_LOCAL = [:tools]
 PACKAGES_BUILT_FOR_PRECISE = [:tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
-SUFFIXES = { :opt => "", :local => "-local" }
+SUFFIXES = { :opt => "", :local => "-usr-local" }
 
 namespace :package do
   def system(cmd)
