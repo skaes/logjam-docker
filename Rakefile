@@ -13,7 +13,9 @@ module LogSystemCommands
     puts
     puts ANSI.green{cmd}
     puts
-    Kernel.system cmd
+    unless Kernel.system cmd
+      raise "CMD failed!"
+    end
   end
 end
 class << self
@@ -271,10 +273,6 @@ PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
 
 namespace :package do
-  def system(cmd)
-    raise "build failed!" unless Kernel.system cmd
-  end
-
   def cook(package, version, name, location)
     # puts "cooking(#{[package, version, name, location].join(',')})"
     ENV['LOGJAM_PREFIX'] = PREFIXES[location]
@@ -292,6 +290,10 @@ namespace :package do
 
   def packages
     [:tools, :ruby, :code, :passenger, :app]
+  end
+
+  def debs
+    packages + [:libs]
   end
 
   UBUNTU_VERSION_NAME.each do |version, name|
@@ -347,7 +349,7 @@ namespace :package do
   namespace :cloud do
     desc "upload images to packagecloud.io"
     task :upload do
-      packages.each do |package|
+      debs.each do |package|
         PREFIXES.each do |location, prefix|
           suffix = SUFFIXES[location]
           UBUNTU_VERSION_NAME.each do |version, name|
@@ -359,6 +361,38 @@ namespace :package do
     end
   end
 
+  namespace :aptly do
+    def url
+      ENV['LOGJAM_APTLY_URL']
+    end
+
+    def upload(pkg, distribution)
+      puts "uploading #{pkg} for #{distribution} to #{url}"
+      system "curl -X POST -F 'file=@#{pkg}' #{url}/api/files/#{distribution}"
+    end
+
+    def publish(distribution)
+      puts "publishing uploaded packages for #{distribution} to #{url}"
+      system <<-"CMDS"
+      curl -X POST #{url}/api/repos/#{distribution}/file/#{distribution}
+      curl -X PUT -H 'Content-Type: application/json' --data '{}' #{url}/api/publish/#{distribution}/#{distribution}
+      CMDS
+    end
+
+    desc "upload packages to aptly server LOGJAM_APTLY_URL=#{url}"
+    task :upload do
+      UBUNTU_VERSION_NAME.each do |version, name|
+        debs.each do |package|
+          PREFIXES.each do |location, prefix|
+            suffix = SUFFIXES[location]
+            deb = `ls packages/#{name}/logjam-#{package}#{suffix}*.deb 2>/dev/null`.chomp.split("\n").last
+            upload(deb, name) unless deb.nil?
+          end
+        end
+        publish(name)
+      end
+    end
+  end
 end
 
 def get_latest_commit(repo)
