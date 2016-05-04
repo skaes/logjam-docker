@@ -13,8 +13,10 @@ module LogSystemCommands
     puts
     puts ANSI.green{cmd}
     puts
-    unless Kernel.system cmd
-      raise "CMD failed!"
+    if Kernel.system cmd
+      return true
+    else
+      raise "command failed: #{cmd}"
     end
   end
 end
@@ -36,10 +38,8 @@ end
 
 def build_image(name, options="")
   options += " --no-cache" if ENV["NOCACHE"]=='1'
-  Dir.chdir(image_dir(name)) do
-    unless system "docker build -t=#{image_name(name)} #{options} ."
-      fail "could not build #{image_name(name)}"
-    end
+  unless system "docker build -t=#{image_name(name)} #{options} #{image_dir(name)}"
+    fail "could not build #{image_name(name)}"
   end
 end
 
@@ -284,8 +284,8 @@ namespace :package do
     system "rsync -vrlptDz -e ssh packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"
   rescue => e
     $stderr.puts e.message
-    ENV.delete['LOGJAM_PREFIX']
-    ENV.delete['LOGJAM_SUFFIX']
+    ENV.delete('LOGJAM_PREFIX')
+    ENV.delete('LOGJAM_SUFFIX')
   end
 
   def packages
