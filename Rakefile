@@ -231,7 +231,7 @@ end
 desc "clean unused images and containers"
 task :clean do
   system "docker ps -a | awk '/Exited/ {print $1;}' | xargs docker rm"
-  system "docker images | awk '/none|fpm-dockery/ {print $3;}' | xargs docker rmi"
+  system "docker images | awk '/none|fpm-(fry|dockery)/ {print $3;}' | xargs docker rmi"
 end
 
 desc "clean, but also remove all stkaes containers"
@@ -278,7 +278,7 @@ namespace :package do
     ENV['LOGJAM_PREFIX'] = PREFIXES[location]
     ENV['LOGJAM_SUFFIX'] = SUFFIXES[location]
 
-    system "fpm-dockery cook --keep --update=always ubuntu:#{version} build_#{package}.rb"
+    system "fpm-fry cook --keep --update=always ubuntu:#{version} build_#{package}.rb"
     system "mv *.deb packages/#{name}/"
     system "docker run -it -v `pwd`/packages/#{name}:/root/tmp stkaes/logjam-builder bash -c 'cd tmp && dpkg-scanpackages . /dev/null | gzip >Packages.gz'"
     system "rsync -vrlptDz -e ssh packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"

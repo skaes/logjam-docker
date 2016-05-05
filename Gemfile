@@ -3,5 +3,5 @@ source 'https://rubygems.org'
 gem "rake", "~> 10.5.0"
 gem "ansi"
 gem "package_cloud"
-# gem "fpm-dockery", :git => "https://github.com/xing/fpm-dockery.git"
-gem "fpm-dockery", :path => "~/src/fpm-dockery"
+# gem "fpm-fry", :path => "~/src/fpm-fry"
+gem "fpm-fry", :git => "https://github.com/skaes/fpm-fry.git", :branch => "assorted-enhancements"
