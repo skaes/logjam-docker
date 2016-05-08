@@ -1,5 +1,5 @@
 name "logjam-passenger"
-version "0.2"
+version "0.4"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
@@ -23,7 +23,7 @@ build_depends "libyaml-dev"
 build_depends "pkg-config"
 build_depends "zlib1g-dev"
 
-depends "logjam-ruby"
+depends "logjam-ruby", ">= 2.3.1"
 depends "apache2"
 depends "apache2-mpm-worker"
 
