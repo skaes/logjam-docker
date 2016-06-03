@@ -267,8 +267,8 @@ task :certify do
 end
 
 UBUNTU_VERSION_NAME = { "14.04" => "trusty", "12.04" => "precise" }
-PACKAGES_BUILT_FOR_USR_LOCAL = [:tools]
-PACKAGES_BUILT_FOR_PRECISE = [:tools]
+PACKAGES_BUILT_FOR_USR_LOCAL = [:libs, :tools]
+PACKAGES_BUILT_FOR_PRECISE = [:libs, :tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
 
@@ -284,16 +284,17 @@ namespace :package do
     system "rsync -vrlptDz -e ssh packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"
   rescue => e
     $stderr.puts e.message
+  ensure
     ENV.delete('LOGJAM_PREFIX')
     ENV.delete('LOGJAM_SUFFIX')
   end
 
   def packages
-    [:tools, :ruby, :code, :passenger, :app]
+    [:libs, :tools, :ruby, :code, :passenger, :app]
   end
 
   def debs
-    packages + [:libs]
+    packages
   end
 
   UBUNTU_VERSION_NAME.each do |version, name|
@@ -322,21 +323,21 @@ namespace :package do
 
   namespace :tools do
     desc "build all tools packages"
-    task :all => [:local] + %w(trusty:tools precise:tools)
+    task :all => [:local] + %w(trusty:libs trusty:tools precise:libs precise:tools)
   end
 
   namespace :trusty do
     desc "build all trusty packages"
-    task :all => packages + %w(trusty:tools:local)
+    task :all => packages + %w(trusty:libss:local trusty:tools:local)
   end
 
   namespace :precise do
     desc "build all precise packages"
-    task :all => %w(precise:tools precise:tools:local)
+    task :all => %w(precise:libs precise:tools precise:libs:local precise:tools:local)
   end
 
   desc "cook all packages which can install in /usr/local"
-  task :local => %w(trusty:tools:local precise:tools:local)
+  task :local => %w(trusty:libs:local trusty:tools:local precise:libs:local precise:tools:local)
 
   desc "cook all packages"
   task :all => %w(trusty:all precise:all)

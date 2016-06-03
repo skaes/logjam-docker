@@ -1,7 +1,7 @@
 prefix = ENV['LOGJAM_PREFIX']
 suffix = ENV['LOGJAM_SUFFIX']
 
-name "logjam-tools#{suffix}"
+name "logjam-libs#{suffix}"
 version "0.3"
 iteration "4"
 
@@ -25,12 +25,13 @@ build_depends "wget"
 build_depends "libssl-dev"
 build_depends "zlib1g-dev"
 
-depends "logjam-libs#{suffix}", ">= 0.3-4"
+files "#{prefix}/bin/[^l]*"
+files "#{prefix}/include/*"
+files "#{prefix}/lib/*"
+files "#{prefix}/share/*"
 
-apt_setup "echo 'deb [trusted=yes] http://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
+depends "libc6"
+depends "zlib1g"
+depends "openssl"
 
-files "#{prefix}/bin/logjam-*"
-
-run "./autogen.sh", "--prefix=#{prefix}"
-run "make", "-j4"
-run "make", "install"
+run "./bin/install-libs", "--prefix=#{prefix}"
