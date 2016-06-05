@@ -294,7 +294,7 @@ namespace :package do
   end
 
   def packages
-    [:libs, :tools, :ruby, :code, :passenger, :app, :railsexpress_ruby]
+    [:libs, :tools, :ruby, :code, :passenger, :app]
   end
 
   def debs
@@ -338,15 +338,25 @@ namespace :package do
     task :upload do
       scan_and_upload("trusty")
     end
+
+    desc "build package railsexpress_ruby for ubuntu 14.04 with install prefix /usr/local"
+    task :railsexpress_ruby do
+      cook "railsexpress_ruby", "14.04", "trusty", :local
+    end
   end
 
   namespace :precise do
     desc "build all precise packages"
     task :all => %w(precise:libs precise:tools precise:libs:local precise:tools:local)
+
+    desc "upload all trusty packages"
+    task :upload do
+      scan_and_upload("precise")
+    end
   end
 
   desc "cook all packages which can install in /usr/local"
-  task :local => %w(trusty:libs:local trusty:tools:local precise:libs:local precise:tools:local)
+  task :local => %w(trusty:libs:local trusty:tools:local trusty:railsexpress_ruby precise:libs:local precise:tools:local)
 
   desc "cook all packages"
   task :all => %w(trusty:all precise:all)
