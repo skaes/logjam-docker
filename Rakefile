@@ -273,6 +273,11 @@ PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
 
 namespace :package do
+  def scan_and_upload(name)
+    system "docker run -it -v `pwd`/packages/#{name}:/root/tmp stkaes/logjam-builder bash -c 'cd tmp && dpkg-scanpackages . /dev/null | gzip >Packages.gz'"
+    system "rsync -vrlptDz -e ssh packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"
+  end
+
   def cook(package, version, name, location)
     # puts "cooking(#{[package, version, name, location].join(',')})"
     ENV['LOGJAM_PREFIX'] = PREFIXES[location]
@@ -280,8 +285,7 @@ namespace :package do
 
     system "fpm-fry cook --keep --update=always ubuntu:#{version} build_#{package}.rb"
     system "mv *.deb packages/#{name}/"
-    system "docker run -it -v `pwd`/packages/#{name}:/root/tmp stkaes/logjam-builder bash -c 'cd tmp && dpkg-scanpackages . /dev/null | gzip >Packages.gz'"
-    system "rsync -vrlptDz -e ssh packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"
+    scan_and_upload(name)
   rescue => e
     $stderr.puts e.message
   ensure
@@ -290,7 +294,7 @@ namespace :package do
   end
 
   def packages
-    [:libs, :tools, :ruby, :code, :passenger, :app]
+    [:libs, :tools, :ruby, :code, :passenger, :app, :railsexpress_ruby]
   end
 
   def debs
@@ -329,6 +333,11 @@ namespace :package do
   namespace :trusty do
     desc "build all trusty packages"
     task :all => packages + %w(trusty:libss:local trusty:tools:local)
+
+    desc "upload all trusty packages"
+    task :upload do
+      scan_and_upload("trusty")
+    end
   end
 
   namespace :precise do
