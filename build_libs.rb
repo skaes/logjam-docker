@@ -3,7 +3,7 @@ suffix = ENV['LOGJAM_SUFFIX']
 
 name "logjam-libs#{suffix}"
 version "0.3"
-iteration "4"
+iteration "5"
 
 vendor "skaes@railsexpress.de"
 
@@ -35,3 +35,8 @@ depends "zlib1g"
 depends "openssl"
 
 run "./bin/install-libs", "--prefix=#{prefix}"
+
+after_install <<-"EOS"
+#!/bin/bash
+ldconfig
+EOS
