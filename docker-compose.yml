@@ -21,5 +21,6 @@ services:
     environment:
       - LOGJAMDB_NAME=logjamdb
       - MEMCACHE_NAME=memcache
+      - LOGJAM_ENV=development
     env_file:
       - "logjam.env"
