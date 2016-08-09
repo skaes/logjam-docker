@@ -7,7 +7,8 @@ services:
 
   logjamdb:
     container_name: logjamdb
-    image: mongo:3.0.12
+    image: mongo:3.2.8
+    command: mongod --storageEngine mmapv1 --smallfiles
 
   demo:
     container_name: logjam-demo
