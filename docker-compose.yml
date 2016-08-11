@@ -7,8 +7,8 @@ services:
 
   logjamdb:
     container_name: logjamdb
-    image: mongo:3.2.8
-    command: mongod --storageEngine mmapv1 --smallfiles
+    image: percona/percona-server-mongodb:3.2.7
+    command: mongod --storageEngine=rocksdb
 
   demo:
     container_name: logjam-demo
