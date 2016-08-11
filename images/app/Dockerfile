@@ -64,6 +64,9 @@ CMD ["/docker/startapp.sh"]
 # application http socket port and websocket port
 EXPOSE 80 8080
 
+# importer zeromq ROUTER socket port
+EXPOSE 9604
+
 # importer zeromq pull socket port
 EXPOSE 9605
 
