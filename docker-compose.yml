@@ -13,9 +13,11 @@ services:
   demo:
     container_name: logjam-demo
     image: stkaes/logjam-app
+#    image: stkaes/logjam-develop
     ports:
       - "80:80"
       - "8080:8080"
+      - "9604:9604"
       - "9605:9605"
       - "9705:9705"
     tty: true
@@ -25,3 +27,4 @@ services:
       - LOGJAM_ENV=production
     env_file:
       - "logjam.env"
+#    privileged: true
