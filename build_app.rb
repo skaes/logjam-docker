@@ -1,13 +1,13 @@
 name "logjam-app"
-version "0.4"
-iteration "1"
+version "0.5"
+iteration "2"
 
 vendor "skaes@railsexpress.de"
 
 depends "logjam-tools"
 depends "logjam-ruby", ">= 2.3.1"
 depends "logjam-passenger", ">= 0.4_1"
-depends "logjam-code"
+depends "logjam-code", ">= 0.5_2"
 depends "apache2"
 depends "apache2-mpm-worker"
 depends "logrotate"

@@ -332,7 +332,7 @@ namespace :package do
 
   namespace :trusty do
     desc "build all trusty packages"
-    task :all => packages + %w(trusty:libss:local trusty:tools:local)
+    task :all => packages + %w(trusty:libs:local trusty:tools:local)
 
     desc "upload all trusty packages"
     task :upload do
