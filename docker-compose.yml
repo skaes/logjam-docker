@@ -9,6 +9,10 @@ services:
     container_name: logjamdb
     image: percona/percona-server-mongodb:3.2.7
     command: mongod --storageEngine=rocksdb
+    volumes:
+      - /data/db:/data/db
+    ports:
+      - "27017:27017"
 
   demo:
     container_name: logjam-demo
