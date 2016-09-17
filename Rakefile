@@ -373,8 +373,12 @@ namespace :package do
         PREFIXES.each do |location, prefix|
           suffix = SUFFIXES[location]
           UBUNTU_VERSION_NAME.each do |version, name|
-            deb = `ls packages/#{name}/logjam-#{package}#{suffix}*.deb 2>/dev/null`.chomp.split("\n").last
-            system "package_cloud push stkaes/logjam/ubuntu/#{name} #{deb}" unless deb.nil?
+            begin
+              deb = `ls packages/#{name}/logjam-#{package}#{suffix}*.deb 2>/dev/null`.chomp.split("\n").last
+              system "package_cloud push stkaes/logjam/ubuntu/#{name} #{deb}" unless deb.nil?
+            rescue => e
+              $stderr.puts e.message
+            end
           end
         end
       end
