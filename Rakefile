@@ -294,7 +294,7 @@ namespace :package do
   end
 
   def packages
-    [:libs, :tools, :ruby, :code, :passenger, :app]
+    [:libs, :tools, :ruby, :go, :code, :passenger, :app]
   end
 
   def debs
@@ -343,20 +343,30 @@ namespace :package do
     task :railsexpress_ruby do
       cook "railsexpress_ruby", "14.04", "trusty", :local
     end
+
+    desc "build package logjam-go for ubuntu 14.04 with install prefix /usr/local"
+    task :go do
+      cook "go", "14.04", "trusty", :local
+    end
   end
 
   namespace :precise do
     desc "build all precise packages"
-    task :all => %w(precise:libs precise:tools precise:libs:local precise:tools:local)
+    task :all => %w(precise:go precise:libs precise:tools precise:libs:local precise:tools:local)
 
-    desc "upload all trusty packages"
+    desc "build package go for ubuntu 14.04 with install prefix /usr/local"
+    task :go do
+      cook "go", "12.04", "precise", :local
+    end
+
+    desc "upload all precise packages"
     task :upload do
       scan_and_upload("precise")
     end
   end
 
   desc "cook all packages which can install in /usr/local"
-  task :local => %w(trusty:libs:local trusty:tools:local trusty:railsexpress_ruby precise:libs:local precise:tools:local)
+  task :local => %w(trusty:go trusty:libs:local trusty:tools:local trusty:railsexpress_ruby precise:go precise:libs:local precise:tools:local)
 
   desc "cook all packages"
   task :all => %w(trusty:all precise:all)

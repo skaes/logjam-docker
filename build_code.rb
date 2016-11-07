@@ -1,6 +1,6 @@
 name "logjam-code"
 version "0.5"
-iteration "2"
+iteration "3"
 
 vendor "skaes@railsexpress.de"
 
@@ -23,7 +23,7 @@ build_depends "pkg-config"
 build_depends "zlib1g-dev"
 
 depends "logjam-ruby", ">= 2.3.1"
-depends "logjam-libs", ">= 0.3_2"
+depends "logjam-libs", ">= 0.3-2"
 
 apt_setup "echo 'deb [trusted=yes] http://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
 

@@ -2,7 +2,7 @@ prefix = ENV['LOGJAM_PREFIX']
 suffix = ENV['LOGJAM_SUFFIX']
 
 name "logjam-tools#{suffix}"
-version "0.4"
+version "0.5"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
@@ -24,6 +24,8 @@ build_depends "git"
 build_depends "wget"
 build_depends "libssl-dev"
 build_depends "zlib1g-dev"
+
+build_depends "logjam-go", ">= 1.7.1"
 
 depends "logjam-libs#{suffix}", ">= 0.3-4"
 
