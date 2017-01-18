@@ -266,7 +266,7 @@ task :certify do
   system "docker-machine regenerate-certs default"
 end
 
-UBUNTU_VERSION_NAME = { "14.04" => "trusty", "12.04" => "precise" }
+UBUNTU_VERSION_NAME = { "14.04" => "trusty", "12.04" => "precise", "16.04" => "xenial" }
 PACKAGES_BUILT_FOR_USR_LOCAL = [:libs, :tools]
 PACKAGES_BUILT_FOR_PRECISE = [:libs, :tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
@@ -327,7 +327,27 @@ namespace :package do
 
   namespace :tools do
     desc "build all tools packages"
-    task :all => [:local] + %w(trusty:libs trusty:tools precise:libs precise:tools)
+    task :all => [:local] + %w(xenial:libs xenial:tools trusty:libs trusty:tools precise:libs precise:tools)
+  end
+
+  namespace :xenial do
+    desc "build all xenial packages"
+    task :all => packages + %w(xenial:libs:local xenial:tools:local)
+
+    desc "upload all xenial packages"
+    task :upload do
+      scan_and_upload("xenial")
+    end
+
+    desc "build package railsexpress_ruby for ubuntu 14.04 with install prefix /usr/local"
+    task :railsexpress_ruby do
+      cook "railsexpress_ruby", "16.04", "xenial", :local
+    end
+
+    desc "build package logjam-go for ubuntu 14.04 with install prefix /usr/local"
+    task :go do
+      cook "go", "16.04", "xenial", :local
+    end
   end
 
   namespace :trusty do
@@ -366,10 +386,11 @@ namespace :package do
   end
 
   desc "cook all packages which can install in /usr/local"
-  task :local => %w(trusty:go trusty:libs:local trusty:tools:local trusty:railsexpress_ruby precise:go precise:libs:local precise:tools:local)
+  task :local => %w(xenial:go xenial:libs:local xenial:tools:local xenial:railsexpress_ruby) +
+                 %w(trusty:go trusty:libs:local trusty:tools:local trusty:railsexpress_ruby precise:go precise:libs:local precise:tools:local)
 
   desc "cook all packages"
-  task :all => %w(trusty:all precise:all)
+  task :all => %w(xenial:all trusty:all precise:all)
 
   desc "upload images to package host"
   task :upload do
