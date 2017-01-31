@@ -339,12 +339,12 @@ namespace :package do
       scan_and_upload("xenial")
     end
 
-    desc "build package railsexpress_ruby for ubuntu 14.04 with install prefix /usr/local"
+    desc "build package railsexpress_ruby for ubuntu 16.04 with install prefix /usr/local"
     task :railsexpress_ruby do
       cook "railsexpress_ruby", "16.04", "xenial", :local
     end
 
-    desc "build package logjam-go for ubuntu 14.04 with install prefix /usr/local"
+    desc "build package logjam-go for ubuntu 16.04 with install prefix /usr/local"
     task :go do
       cook "go", "16.04", "xenial", :local
     end
