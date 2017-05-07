@@ -1,6 +1,6 @@
 name "logjam-app"
 version "0.5"
-iteration "4"
+iteration "5"
 
 vendor "skaes@railsexpress.de"
 
@@ -54,6 +54,6 @@ cd /opt/logjam/app
 bundle exec whenever --user logjam --update-crontab --roles cron,worker
 bundle exec rake logjam:daemons:install
 
-chown -R logjam.logjam /opt/logjam/app/service
+chown -R logjam.logjam /opt/logjam/
 echo logjam post-install completed
 EOS
