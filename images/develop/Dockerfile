@@ -28,7 +28,7 @@ RUN cd gperftools && sh autogen.sh && ./configure --prefix=/usr && make && make 
 # ----------------------------
 RUN apt-get install -y --no-install-recommends ruby
 ADD ./install-ruby.sh /docker/install-ruby.sh
-RUN /bin/bash -l -c '/docker/install-ruby.sh ruby-2.3.3-p222'
+RUN /bin/bash -l -c '/docker/install-ruby.sh ruby-2.4.1-p111'
 ADD ./gemrc /opt/logjam/etc/gemrc
 ENV PATH /opt/logjam/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN gem update -q --system
@@ -62,7 +62,7 @@ RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 # logjam - app
 # ----------------------------
 RUN apt-get -y --no-install-recommends install nodejs && apt-get clean
-ENV LOGJAM_REVISION ffc34033693f0507e666b157b139bcb165535b98
+ENV LOGJAM_REVISION b023707691916d609aaceb47ea2e1a38c5713b4e
 
 ADD ./install-code.sh /docker/install-code.sh
 RUN /bin/bash -l -c /docker/install-code.sh

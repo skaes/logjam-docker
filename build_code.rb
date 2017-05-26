@@ -1,6 +1,6 @@
 name "logjam-code"
-version "0.5"
-iteration "7"
+version "0.6"
+iteration "3"
 
 vendor "skaes@railsexpress.de"
 
@@ -22,11 +22,17 @@ build_depends "libyaml-dev"
 build_depends "pkg-config"
 build_depends "zlib1g-dev"
 
-depends "logjam-ruby", ">= 2.3.1"
-depends "logjam-libs", ">= 0.3-2"
+depends "logjam-ruby", ">= 2.4.1"
+depends "logjam-libs", ">= 0.4-1"
 
-apt_setup "echo 'deb [trusted=yes] http://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
+apt_setup "apt-get update -y && apt-get install apt-transport-https -y"
+apt_setup "echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
 
 add "images/code/install-code.sh", ".install-code.sh"
 
 run "./.install-code.sh"
+
+plugin "exclude"
+exclude "/root"
+exclude "/opt/logjam/**/.git*"
+exclude "/opt/logjam/app/tmp/cache/*"

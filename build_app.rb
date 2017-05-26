@@ -1,20 +1,21 @@
 name "logjam-app"
-version "0.5"
-iteration "6"
+version "0.6"
+iteration "3"
 
 vendor "skaes@railsexpress.de"
 
 depends "logjam-tools"
-depends "logjam-ruby", ">= 2.3.1"
-depends "logjam-passenger", ">= 0.4-1"
-depends "logjam-code", ">= 0.5-2"
+depends "logjam-ruby", ">= 2.4.1"
+depends "logjam-passenger", ">= 0.6-1"
+depends "logjam-code", ">= 0.6-3"
 depends "apache2"
 depends "apache2-mpm-worker"
 depends "logrotate"
 depends "runit"
 depends "adduser"
 
-apt_setup "echo 'deb [trusted=yes] http://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
+apt_setup "apt-get update -y && apt-get install apt-transport-https -y"
+apt_setup "echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
 
 add "images/app/etc/apache2/mods-available/passenger.conf", ".passenger.conf"
 run "cp", ".passenger.conf", "/etc/apache2/mods-available/passenger.conf"

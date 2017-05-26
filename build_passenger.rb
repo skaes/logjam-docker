@@ -1,5 +1,5 @@
 name "logjam-passenger"
-version "0.4"
+version "0.6"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
@@ -23,11 +23,12 @@ build_depends "libyaml-dev"
 build_depends "pkg-config"
 build_depends "zlib1g-dev"
 
-depends "logjam-ruby", ">= 2.3.3"
+depends "logjam-ruby", ">= 2.4.1"
 depends "apache2"
 depends "apache2-mpm-worker"
 
-apt_setup "echo 'deb [trusted=yes] http://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
+apt_setup "apt-get update -y && apt-get install apt-transport-https -y"
+apt_setup "echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
 
 add "images/passenger/install-passenger-apache2-module.sh", ".install-passenger-apache2-module.sh"
 add "images/passenger/minify-passenger-apache2-module.sh", ".minify-passenger-apache2-module.sh"
