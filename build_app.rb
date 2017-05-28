@@ -4,10 +4,10 @@ iteration "3"
 
 vendor "skaes@railsexpress.de"
 
-depends "logjam-tools"
+depends "logjam-tools", ">= 0.5-6"
 depends "logjam-ruby", ">= 2.4.1"
 depends "logjam-passenger", ">= 0.6-1"
-depends "logjam-code", ">= 0.6-3"
+depends "logjam-code", ">= 0.6-4"
 depends "apache2"
 depends "apache2-mpm-worker"
 depends "logrotate"

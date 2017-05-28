@@ -3,14 +3,14 @@ version: '2'
 services:
   memcache:
     container_name: memcache
-    image: memcached:1.4.25
+    image: memcached:1.4.36
 
   logjamdb:
     container_name: logjamdb
-    image: percona/percona-server-mongodb:3.2.7
+    image: percona/percona-server-mongodb:3.4.4
     command: mongod --storageEngine=rocksdb
     volumes:
-      - /data/db:/data/db
+      - /data/db.rocksdb:/data/db
     ports:
       - "27017:27017"
 
