@@ -211,7 +211,7 @@ namespace :memcache do
 end
 
 desc "build all end user images"
-task :runnables => %w[app:build develop:build]
+task :runnables => %w[app:build]
 
 desc "build all images"
 task :build => %w[code:build passenger:build tools:build] do
