@@ -1,6 +1,6 @@
 name "logjam-code"
 version "0.6"
-iteration "4"
+iteration "5"
 
 vendor "skaes@railsexpress.de"
 
@@ -22,7 +22,7 @@ build_depends "libyaml-dev"
 build_depends "pkg-config"
 build_depends "zlib1g-dev"
 
-depends "logjam-ruby", ">= 2.4.1"
+depends "logjam-ruby", ">= 2.4.2"
 depends "logjam-libs", ">= 0.4-1"
 
 apt_setup "apt-get update -y && apt-get install apt-transport-https -y"
