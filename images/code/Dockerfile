@@ -10,7 +10,7 @@ FROM stkaes/logjam-ruby
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get -y --no-install-recommends install nodejs && apt-get clean
+RUN apt-get -y --no-install-recommends install nodejs tzdata && apt-get clean
 
 ENV LOGJAM_REVISION 83c03fc8b89a5b877622b2c753b10bf5d9035540
 
