@@ -286,8 +286,6 @@ namespace :package do
     system "fpm-fry cook --keep --update=always ubuntu:#{version} build_#{package}.rb"
     system "mv *.deb packages/#{name}/"
     scan_and_upload(name)
-  rescue => e
-    $stderr.puts e.message
   ensure
     ENV.delete('LOGJAM_PREFIX')
     ENV.delete('LOGJAM_SUFFIX')
