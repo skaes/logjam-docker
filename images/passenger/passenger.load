@@ -1,5 +1,5 @@
-LoadModule passenger_module /opt/logjam/lib/ruby/gems/2.4.0/gems/passenger-4.0.60/buildout/apache2/mod_passenger.so
+LoadModule passenger_module /opt/logjam/lib/ruby/gems/2.4.0/gems/passenger-5.1.8/buildout/apache2/mod_passenger.so
 <IfModule mod_passenger.c>
-   PassengerRoot /opt/logjam/lib/ruby/gems/2.4.0/gems/passenger-4.0.60
+   PassengerRoot /opt/logjam/lib/ruby/gems/2.4.0/gems/passenger-5.1.8
    PassengerDefaultRuby /opt/logjam/bin/ruby
 </IfModule>

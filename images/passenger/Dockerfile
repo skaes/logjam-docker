@@ -15,6 +15,7 @@ ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin
 RUN apt-get update && \
     apt-get install -y apache2 apache2-mpm-worker apache2-threaded-dev libapr1-dev
 RUN gem install passenger -v 4.0.60
+RUN gem install passenger -v 5.1.8
 
 ADD ./install-passenger-apache2-module.sh /docker/install-passenger-apache2-module.sh
 RUN /docker/install-passenger-apache2-module.sh

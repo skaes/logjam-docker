@@ -119,7 +119,6 @@ namespace :passenger do
       /opt/logjam/bin/passenger*
       /opt/logjam/lib/ruby/gems/2.4.0/gems/passenger*
       /opt/logjam/lib/ruby/gems/2.4.0/gems/rack*
-      /opt/logjam/lib/ruby/gems/2.4.0/gems/daemon*
       /etc/apache2/mods-available/passenger.load
     )
     run_image("passenger", "tar czf /exports/opt-logjam-passenger.tar.gz #{exports.join(' ')}")
