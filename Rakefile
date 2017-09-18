@@ -9,14 +9,14 @@ ROOT = File.expand_path("..", __FILE__)
 LOGJAM_PACKAGE_HOST = ENV['LOGJAM_PACKAGE_HOST'].to_s
 
 module LogSystemCommands
-  def system(cmd)
+  def system(cmd, raise_on_error: true)
     puts
     puts ANSI.green{cmd}
     puts
     if Kernel.system cmd
       return true
     else
-      raise "command failed: #{cmd}"
+      raise "command failed: #{cmd}" if raise_on_error
     end
   end
 end
@@ -229,14 +229,14 @@ end
 
 desc "clean unused images and containers"
 task :clean do
-  system "docker ps -a | awk '/Exited/ {print $1;}' | xargs docker rm"
-  system "docker images | awk '/none|fpm-(fry|dockery)/ {print $3;}' | xargs docker rmi"
+  system "docker ps -a | awk '/Exited/ {print $1;}' | xargs docker rm", raise_on_error: false
+  system "docker images | awk '/none|fpm-(fry|dockery)/ {print $3;}' | xargs docker rmi", raise_on_error: false
 end
 
 desc "clean, but also remove all stkaes containers"
 task :realclean => :clean do
-  system "docker ps -a  | awk '/stkaes/ {print $1;}' | xargs docker rm"
-  system "docker images | awk '/stkaes/ {print $3;}' | xargs docker rmi"
+  system "docker ps -a  | awk '/stkaes/ {print $1;}' | xargs docker rm", raise_on_error: false
+  system "docker images | awk '/stkaes/ {print $3;}' | xargs docker rmi", raise_on_error: false
 end
 
 desc "delete all containers and images"
