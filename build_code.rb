@@ -22,6 +22,8 @@ build_depends "libyaml-dev"
 build_depends "pkg-config"
 build_depends "zlib1g-dev"
 
+# xenial base container does not have tzdata anymore
+depends "tzdata"
 depends "logjam-ruby", ">= 2.4.2"
 depends "logjam-libs", ">= 0.4-1"
 
