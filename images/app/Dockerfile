@@ -13,7 +13,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # ----------------------------
 # web server
 # ----------------------------
-RUN apt-get -y --no-install-recommends install apache2 && apt-get clean
+RUN apt-get update && apt-get -y --no-install-recommends install cron apache2 && apt-get clean
 RUN a2enmod expires headers rewrite
 
 # ----------------------------

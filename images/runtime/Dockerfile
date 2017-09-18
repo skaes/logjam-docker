@@ -6,7 +6,7 @@
 # TO_BUILD:            docker build -t=stkaes/runtime .
 # TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/runtime
 # ----------------------------
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER Stefan Kaes <skaes@railsexpress.de>
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -19,7 +19,7 @@ WORKDIR /root
 # ----------------------------
 # allow packages from the logjam package cloud repo
 # ----------------------------
-RUN apt-get update && apt-get install -y apt-transport-https curl
+RUN apt-get update && apt-get install -y apt-transport-https curl locales locales-all tzdata
 # if we don't install curl, https transport for apt won't work
 ADD packagecloud.gpg.key /etc/apt/packagecloud.gpg.key
 RUN apt-key add /etc/apt/packagecloud.gpg.key
@@ -44,7 +44,7 @@ RUN apt-get install -y --no-install-recommends \
     libffi6 \
     libgdbm3 \
     libgmp10 \
-    libicu52 \
+    libicu55 \
     libncurses5 \
     libreadline6 \
     libsqlite3-0 \
