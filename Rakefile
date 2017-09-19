@@ -241,8 +241,8 @@ end
 
 desc "delete all containers and images"
 task :ultraclean do
-  system "docker ps -a -q | xargs docker rm -f"
-  system "docker images -q | xargs docker rmi -f"
+  system "docker ps -a -q | xargs docker rm -f", raise_on_error: false
+  system "docker images -q | xargs docker rmi -f", raise_on_error: false
 end
 
 task :start do
