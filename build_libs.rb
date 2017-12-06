@@ -2,7 +2,7 @@ prefix = ENV['LOGJAM_PREFIX']
 suffix = ENV['LOGJAM_SUFFIX']
 
 name "logjam-libs#{suffix}"
-version "0.4"
+version "0.5"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
