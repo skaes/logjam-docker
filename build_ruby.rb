@@ -1,11 +1,11 @@
 name "logjam-ruby"
-version "2.4.2"
+version "2.4.3"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
 
-source "http://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.4.2-p198.tar.gz",
-       checksum: '83bcbdd8d6f5f23bbaa59cb843cab9dae33c9b5d3bacbf25534b81b4e346c32f'
+source "http://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.4.3-p205.tar.gz",
+       checksum: '8ca8805253084f8ae1a5f1b3c8cb4a2b064bad6274836e2b880013e38b8c28d2'
 
 build_depends "autoconf"
 build_depends "automake"
@@ -37,7 +37,7 @@ depends "zlib1g"
 
 add "images/ruby/gemrc", ".gemrc"
 
-run "cd", "ruby-2.4.2-p198"
+run "cd", "ruby-2.4.3-p205"
 run "./configure", "--prefix=/opt/logjam", "--with-opt-dir=/opt/logjam",
      "--with-out-ext=tcl", "--with-out-ext=tk", "--disable-install-doc", "--enable-shared"
 run "make", "-j4"
@@ -46,4 +46,3 @@ run "cd", ".."
 run "mkdir", "/opt/logjam/etc"
 run "cp", ".gemrc", "/opt/logjam/etc/gemrc"
 run "/opt/logjam/bin/gem", "update", "-q", "--system"
-run "/opt/logjam/bin/gem", "install", "-q", "bundler"

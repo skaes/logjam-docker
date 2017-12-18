@@ -19,7 +19,8 @@ WORKDIR /root
 # ----------------------------
 # update system
 # ----------------------------
-RUN apt-get update; apt-get -y upgrade; \
+RUN apt-get update && apt-get -y upgrade && \
+    apt-get install -y locales && \
     locale-gen en_US.UTF-8 && \
     update-locale LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8; \
     apt-get install -y \
@@ -55,9 +56,9 @@ RUN apt-get update; apt-get -y upgrade; \
         zlib1g-dev
 
 # install go compiler
-ENV GOLANG_VERSION 1.9
+ENV GOLANG_VERSION 1.9.2
 ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz
-ENV GOLANG_DOWNLOAD_SHA256 d70eadefce8e160638a9a6db97f7192d8463069ab33138893ad3bf31b0650a79
+ENV GOLANG_DOWNLOAD_SHA256 de874549d9a8d8d8062be05808509c09a88a248e77ec14eb77453530829ac02b
 RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
         && echo "$GOLANG_DOWNLOAD_SHA256  golang.tar.gz" | sha256sum -c - \
         && tar -C /usr/local -xzf golang.tar.gz \
