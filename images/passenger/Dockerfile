@@ -7,7 +7,7 @@
 # TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/passenger /bin/bash
 # ----------------------------
 FROM stkaes/logjam-ruby
-MAINTAINER Stefan Kaes <skaes@railsexpress.de>
+LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ENV DEBIAN_FRONTEND noninteractive
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

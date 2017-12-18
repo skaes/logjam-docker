@@ -7,7 +7,7 @@
 # TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/tools /bin/bash
 # ----------------------------
 FROM stkaes/logjam-libs
-MAINTAINER Stefan Kaes <skaes@railsexpress.de>
+LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ENV DEBIAN_FRONTEND noninteractive
 
 ENV LOGJAM_TOOLS_REVISION 22a7741a25d322c270bea1e046aa8fea3d48ff61

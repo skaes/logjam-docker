@@ -7,7 +7,7 @@
 # TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/builder
 # ----------------------------
 FROM ubuntu:16.04
-MAINTAINER Stefan Kaes <skaes@railsexpress.de>
+LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ENV DEBIAN_FRONTEND noninteractive
 
 # ----------------------------

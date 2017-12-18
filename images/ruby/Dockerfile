@@ -7,7 +7,7 @@
 # TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/ruby /bin/bash
 # ----------------------------
 FROM stkaes/logjam-builder
-MAINTAINER Stefan Kaes <skaes@railsexpress.de>
+LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get install -y --no-install-recommends ruby
