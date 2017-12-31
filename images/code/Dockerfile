@@ -12,7 +12,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -y --no-install-recommends install nodejs tzdata && apt-get clean
 
-ENV LOGJAM_REVISION 8b5bde8250508a78a929668c39015d9f60bd18dd
+ENV LOGJAM_REVISION d9c40e81b6774114d07e0cb4f07bc28b1a334971
 
 
 
