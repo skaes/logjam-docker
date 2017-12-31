@@ -1,3 +1,4 @@
 #!/bin/sh
 exec 2>&1
-exec /usr/sbin/apache2ctl -D FOREGROUND
+cd /opt/logjam/app
+exec passenger start --port 80 --log-file=/dev/stdout

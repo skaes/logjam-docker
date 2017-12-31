@@ -32,10 +32,6 @@ def image_dir(name)
   File.join(ROOT, 'images', name)
 end
 
-def export_dir
-  File.join(ROOT, 'exports')
-end
-
 def build_image(name, options="")
   options += " --no-cache" if ENV["NOCACHE"]=='1'
   unless system "docker build -t=#{image_name(name)} #{options} #{image_dir(name)}"
@@ -48,7 +44,7 @@ def test_image(name)
 end
 
 def run_image(name, arg)
-  unless system "docker run --rm -it -v #{export_dir}:/exports #{image_name(name)} /bin/bash -l -c '#{arg}'"
+  unless system "docker run --rm -it #{image_name(name)} /bin/bash -l -c '#{arg}'"
     fail "running image #{image_name(name)} failed"
   end
 end
@@ -78,9 +74,6 @@ namespace :tools do
   task :test do
     test_image("tools")
   end
-  task :export => :build do
-    run_image("tools", "tar czf /exports/opt-logjam-tools.tar.gz /opt/logjam")
-  end
 end
 
 namespace :ruby do
@@ -89,9 +82,6 @@ namespace :ruby do
   end
   task :test do
     test_image("ruby")
-  end
-  task :export => :build do
-    run_image("ruby", "tar czf /exports/opt-logjam-ruby.tar.gz /opt/logjam")
   end
 end
 
@@ -102,9 +92,6 @@ namespace :code do
   task :test do
     test_image("code")
   end
-  task :export => :build do
-    run_image("code", "tar czf /exports/opt-logjam-app.tar.gz /opt/logjam/app")
-  end
 end
 
 namespace :passenger do
@@ -113,15 +100,6 @@ namespace :passenger do
   end
   task :test do
     test_image("passenger")
-  end
-  task :export => :build do
-    exports = %w(
-      /opt/logjam/bin/passenger*
-      /opt/logjam/lib/ruby/gems/2.5.0/gems/passenger*
-      /opt/logjam/lib/ruby/gems/2.5.0/gems/rack*
-      /etc/apache2/mods-available/passenger.load
-    )
-    run_image("passenger", "tar czf /exports/opt-logjam-passenger.tar.gz #{exports.join(' ')}")
   end
   task :run do
     system "docker run --rm -it -P --name passenger #{image_name 'passenger'}"
@@ -153,7 +131,7 @@ namespace :app do
 
   desc "run a app container"
   task :run do
-    system "docker rm logjam"
+    system "docker rm logjam || true"
     system "docker run --rm -it -h logjam.local -p 80:80 -p 8080:8080 -p 9605:9605 -p 9705:9705 --link logjamdb:logjamdb --link memcache:logjamcache --name logjam #{image_name 'app'}"
   end
 
@@ -209,23 +187,8 @@ namespace :memcache do
   end
 end
 
-desc "build all end user images"
-task :runnables => %w[app:build]
-
 desc "build all images"
-task :build => %w[code:build passenger:build tools:build] do
-  Rake::Task[:export].invoke
-  Rake::Task[:import].invoke
-  Rake::Task[:runnables].invoke
-end
-
-desc "export libraries and ruby"
-task :export => %w(ruby:export tools:export code:export passenger:export)
-
-desc "import libraries and ruby into build context for app:build"
-task :import do
-  system "cp -p exports/*.gz images/app/"
-end
+task :build => %w[code:build passenger:build tools:build app:build]
 
 desc "clean unused images and containers"
 task :clean do

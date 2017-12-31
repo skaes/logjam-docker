@@ -10,20 +10,16 @@ FROM stkaes/logjam-ruby
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN apt-get -y install psmisc
+
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN apt-get update && \
-    apt-get install -y apache2 apache2-dev libapr1-dev tzdata
 RUN gem install passenger -v 5.1.12
+RUN passenger start --runtime-check-only
+# This will compile passenger native support in the backgound
+RUN passenger start -d ; sleep 5
 
-ADD ./install-passenger-apache2-module.sh /docker/install-passenger-apache2-module.sh
-RUN /docker/install-passenger-apache2-module.sh
-ADD ./minify-passenger-apache2-module.sh /docker/minify-passenger-apache2-module.sh
-RUN /docker/minify-passenger-apache2-module.sh
-
-ADD ./passenger.load /etc/apache2/mods-available/passenger.load
-
-CMD /usr/sbin/apachectl -D FOREGROUND
+CMD passenger start
 
 EXPOSE 80
 

@@ -35,9 +35,10 @@ RUN locale-gen en_US.UTF-8 && \
     update-locale LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
 # ----------------------------
-# development packages
+# runtime packages
 # ----------------------------
 RUN apt-get install -y --no-install-recommends \
+    ca-certificates \
     gawk \
     htop \
     libcurl3 \

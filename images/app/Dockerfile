@@ -6,25 +6,30 @@
 # TO_BUILD:            docker build -t=stkaes/logjam-app .
 # TO_RUN_INTERACTIVE:  docker run --rm -it -p 80:80 -p 8080:8080 --link some-mongo-instance:logjamdb --link some-memcache-instance:logjamcache stkaes/logjamdemo
 # ----------------------------
+FROM stkaes/logjam-tools as tools
+FROM stkaes/logjam-passenger as passenger
+FROM stkaes/logjam-code as code
 FROM stkaes/logjam-runtime
+
+ENV BLA 3
+
+COPY --from=tools /opt/logjam /opt/logjam
+COPY --from=passenger /opt/logjam/ /opt/logjam/
+COPY --from=passenger /opt/logjam/lib/ruby/gems/2.5.0/gems/ /opt/logjam/lib/ruby/gems/2.5.0/
+COPY --from=passenger /opt/logjam/lib/ruby/gems/2.5.0/specifications/ /opt/logjam/lib/ruby/gems/2.5.0/specifications/
+COPY --from=code /opt/logjam/app /opt/logjam/app
+
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ENV DEBIAN_FRONTEND noninteractive
 
 # ----------------------------
-# web server
+# services
 # ----------------------------
-RUN apt-get update && apt-get -y --no-install-recommends install cron apache2 && apt-get clean
-RUN a2enmod expires headers rewrite
+RUN apt-get update && apt-get -y --no-install-recommends install cron && apt-get clean
 
 # ----------------------------
 # logjam
 # ----------------------------
-
-# this install the code from local tar files we just extracted from containers:
-ADD ./opt-logjam-tools.tar.gz /
-ADD ./opt-logjam-ruby.tar.gz /
-ADD ./opt-logjam-app.tar.gz /
-ADD ./opt-logjam-passenger.tar.gz /
 
 # this installs packages from ubuntu packages:
 # RUN apt-get update && apt-get -y --no-install-recommends install \
@@ -39,9 +44,6 @@ ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin
 
 ADD ./etc /etc
 ADD ./root /root
-RUN a2enmod passenger
-RUN a2dissite 000-default
-RUN a2ensite logjam
 
 WORKDIR /opt/logjam/app
 ENV RAILS_ENV production

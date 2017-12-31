@@ -29,6 +29,7 @@ RUN apt-get update && apt-get -y upgrade && \
         bison \
         build-essential \
         checkinstall \
+        ca-certificates \
         curl \
         dpkg-dev \
         gawk \
