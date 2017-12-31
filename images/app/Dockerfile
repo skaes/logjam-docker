@@ -11,8 +11,6 @@ FROM stkaes/logjam-passenger as passenger
 FROM stkaes/logjam-code as code
 FROM stkaes/logjam-runtime
 
-ENV BLA 3
-
 COPY --from=tools /opt/logjam /opt/logjam
 COPY --from=passenger /opt/logjam/ /opt/logjam/
 COPY --from=passenger /opt/logjam/lib/ruby/gems/2.5.0/gems/ /opt/logjam/lib/ruby/gems/2.5.0/

@@ -1,0 +1,4 @@
+#!/bin/sh
+exec 2>&1
+cd /opt/logjam/app
+exec passenger start --port 80 --log-file=/dev/stdout --nginx-config-template /etc/service/passenger/nginx.conf.erb --ruby /opt/logjam/app/bin/passenger_ruby_wrapper
