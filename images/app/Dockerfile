@@ -13,8 +13,6 @@ FROM stkaes/logjam-runtime
 
 COPY --from=tools /opt/logjam /opt/logjam
 COPY --from=passenger /opt/logjam/ /opt/logjam/
-COPY --from=passenger /opt/logjam/lib/ruby/gems/2.5.0/gems/ /opt/logjam/lib/ruby/gems/2.5.0/
-COPY --from=passenger /opt/logjam/lib/ruby/gems/2.5.0/specifications/ /opt/logjam/lib/ruby/gems/2.5.0/specifications/
 COPY --from=code /opt/logjam/app /opt/logjam/app
 
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
