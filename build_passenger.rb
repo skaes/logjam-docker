@@ -1,6 +1,6 @@
 name "logjam-passenger"
 version "0.6"
-iteration "5"
+iteration "6"
 
 vendor "skaes@railsexpress.de"
 
@@ -41,7 +41,7 @@ add "images/passenger/install-passenger-apache2-module.sh", ".install-passenger-
 add "images/passenger/minify-passenger-install.sh", ".minify-passenger-install.sh"
 add "images/passenger/passenger.load", ".passenger.load"
 
-run "/opt/logjam/bin/gem", "install", "passenger", "-v", "5.1.12"
+run "/opt/logjam/bin/gem", "install", "passenger", "-v", "5.2.0"
 run "./.install-passenger-nginx-module.sh"
 run "./.install-passenger-apache2-module.sh"
 run "./.minify-passenger-install.sh"

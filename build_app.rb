@@ -1,12 +1,12 @@
 name "logjam-app"
 version "0.6"
-iteration "8"
+iteration "9"
 
 vendor "skaes@railsexpress.de"
 
 depends "logjam-tools", ">= 0.7-1"
 depends "logjam-ruby", ">= 2.5.0"
-depends "logjam-passenger", ">= 0.6-5"
+depends "logjam-passenger", ">= 0.6-6"
 depends "logjam-code", ">= 0.6-11"
 depends "logrotate"
 depends "runit"
