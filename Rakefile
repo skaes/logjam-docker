@@ -287,7 +287,7 @@ namespace :package do
 
   namespace :tools do
     desc "build all tools packages"
-    task :all => [:local] + %w(xenial:libs xenial:tools trusty:libs trusty:tools precise:libs precise:tools)
+    task :all => [:local] + %w(xenial:libs xenial:tools trusty:libs trusty:tools)
   end
 
   namespace :xenial do
@@ -347,13 +347,13 @@ namespace :package do
 
   desc "cook all packages which can install in /usr/local"
   task :local => %w(xenial:go xenial:libs:local xenial:tools:local xenial:railsexpress_ruby) +
-                 %w(trusty:go trusty:libs:local trusty:tools:local trusty:railsexpress_ruby precise:go precise:libs:local precise:tools:local)
+                 %w(trusty:go trusty:libs:local trusty:tools:local trusty:railsexpress_ruby)
 
   desc "build all go containers"
-  task :go => %w(xenial:go trusty:go precise:go)
+  task :go => %w(xenial:go trusty:go)
 
   desc "cook all packages"
-  task :all => %w(xenial:all trusty:all precise:all)
+  task :all => %w(xenial:all trusty:all)
 
   desc "upload images to package host"
   task :upload do
