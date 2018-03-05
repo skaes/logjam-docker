@@ -1,6 +1,6 @@
 name "logjam-code"
 version "0.6"
-iteration "11"
+iteration "12"
 
 vendor "skaes@railsexpress.de"
 
@@ -25,7 +25,7 @@ build_depends "zlib1g-dev"
 # xenial base container does not have tzdata anymore
 depends "tzdata"
 depends "logjam-ruby", ">= 2.5.0"
-depends "logjam-libs", ">= 0.5-1"
+depends "logjam-libs", ">= 0.6-1"
 
 apt_setup "apt-get update -y && apt-get install apt-transport-https -y"
 apt_setup "echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"

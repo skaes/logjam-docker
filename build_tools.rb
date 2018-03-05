@@ -3,7 +3,7 @@ suffix = ENV['LOGJAM_SUFFIX']
 
 name "logjam-tools#{suffix}"
 version "0.7"
-iteration "2"
+iteration "3"
 
 vendor "skaes@railsexpress.de"
 
@@ -27,7 +27,7 @@ build_depends "zlib1g-dev"
 
 build_depends "logjam-go", "1.9.4"
 
-depends "logjam-libs#{suffix}", ">= 0.5-1"
+depends "logjam-libs#{suffix}", ">= 0.6-1"
 
 apt_setup "apt-get update -y && apt-get install apt-transport-https -y"
 apt_setup "echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"

@@ -1,6 +1,6 @@
 name "logjam-passenger"
 version "0.6"
-iteration "6"
+iteration "7"
 
 vendor "skaes@railsexpress.de"
 
