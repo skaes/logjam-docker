@@ -1,6 +1,6 @@
 name "logjam-ruby"
 version "2.5.0"
-iteration "1"
+iteration "2"
 
 vendor "skaes@railsexpress.de"
 
