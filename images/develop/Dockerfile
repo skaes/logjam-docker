@@ -46,14 +46,14 @@ ADD ./passenger.load /etc/apache2/mods-available/passenger.load
 # ----------------------------
 # logjam - libraries
 # ----------------------------
-ENV LOGJAM_LIBS_REVISION 18abd1f4c45328e5016a07e7292b9d8acab3814d
+ENV LOGJAM_LIBS_REVISION 32470571f7845044f5281dc0de02fde3defa10ad
 ADD ./install-logjam-libs.sh /docker/install-logjam-libs.sh
 RUN /bin/bash -l -c /docker/install-logjam-libs.sh
 
 # ----------------------------
 # logjam - binaries
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION 18abd1f4c45328e5016a07e7292b9d8acab3814d
+ENV LOGJAM_TOOLS_REVISION 32470571f7845044f5281dc0de02fde3defa10ad
 ADD ./install-logjam-tools.sh /docker/install-logjam-tools.sh
 RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 
@@ -61,7 +61,7 @@ RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 # logjam - app
 # ----------------------------
 RUN apt-get -y --no-install-recommends install nodejs && apt-get clean
-ENV LOGJAM_REVISION 6b43410355c76a14abd33dbb1740f3aede67948a
+ENV LOGJAM_REVISION 1d9351b8f5364da5e27603d415e825d40ccd8b80
 
 ADD ./install-code.sh /docker/install-code.sh
 RUN /bin/bash -l -c /docker/install-code.sh

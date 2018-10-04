@@ -30,6 +30,7 @@ RUN apt-get update && apt-get -y upgrade && \
         build-essential \
         checkinstall \
         ca-certificates \
+        cmake \
         curl \
         dpkg-dev \
         gawk \
@@ -57,9 +58,9 @@ RUN apt-get update && apt-get -y upgrade && \
         zlib1g-dev
 
 # install go compiler
-ENV GOLANG_VERSION 1.9.4
+ENV GOLANG_VERSION 1.11.1
 ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz
-ENV GOLANG_DOWNLOAD_SHA256 15b0937615809f87321a457bb1265f946f9f6e736c563d6c5e0bd2c22e44f779
+ENV GOLANG_DOWNLOAD_SHA256 2871270d8ff0c8c69f161aaae42f9f28739855ff5c5204752a8d92a1c9f63993
 RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
         && echo "$GOLANG_DOWNLOAD_SHA256  golang.tar.gz" | sha256sum -c - \
         && tar -C /usr/local -xzf golang.tar.gz \
