@@ -8,7 +8,7 @@
 # ----------------------------
 FROM ubuntu:16.04
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
-ENV DEBIAN_FRONTEND noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 # ----------------------------
 # Environment (can be used in scripts)
@@ -59,6 +59,3 @@ RUN apt-get install -y --no-install-recommends \
     wget \
     zlib1g \
     && apt-get clean
-
-# restore DEBIAN_FRONTEND to default value
-ENV DEBIAN_FRONTEND newt

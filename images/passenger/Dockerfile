@@ -8,7 +8,7 @@
 # ----------------------------
 FROM stkaes/logjam-ruby
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
-ENV DEBIAN_FRONTEND noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
@@ -20,6 +20,3 @@ RUN passenger start -d ; sleep 5
 CMD passenger start
 
 EXPOSE 80
-
-# restore DEBIAN_FRONTEND to default value
-ENV DEBIAN_FRONTEND newt

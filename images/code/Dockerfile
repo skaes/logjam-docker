@@ -8,7 +8,7 @@
 # ----------------------------
 FROM stkaes/logjam-ruby
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
-ENV DEBIAN_FRONTEND noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -y --no-install-recommends install nodejs tzdata && apt-get clean
 
@@ -22,6 +22,3 @@ ADD ./install-code.sh /docker/install-code.sh
 RUN /bin/bash -l -c /docker/install-code.sh
 
 WORKDIR /opt/logjam/app
-
-# restore DEBIAN_FRONTEND to default value
-ENV DEBIAN_FRONTEND newt

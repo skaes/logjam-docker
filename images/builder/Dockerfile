@@ -8,7 +8,7 @@
 # ----------------------------
 FROM ubuntu:16.04
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
-ENV DEBIAN_FRONTEND noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 # ----------------------------
 # Environment (can be used in scripts)
@@ -66,6 +66,3 @@ RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
         && rm golang.tar.gz
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-
-# restore DEBIAN_FRONTEND to default value
-ENV DEBIAN_FRONTEND newt

@@ -8,7 +8,7 @@
 # ----------------------------
 FROM stkaes/logjam-builder
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
-ENV DEBIAN_FRONTEND noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get install -y --no-install-recommends ruby
 ADD ./install-ruby.sh /docker/install-ruby.sh
@@ -17,6 +17,3 @@ ADD ./gemrc /opt/logjam/etc/gemrc
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN gem update -q --system
-
-# restore DEBIAN_FRONTEND to default value
-ENV DEBIAN_FRONTEND newt
