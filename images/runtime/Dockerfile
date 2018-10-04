@@ -41,6 +41,7 @@ RUN apt-get install -y --no-install-recommends \
     ca-certificates \
     gawk \
     htop \
+    net-tools \
     libcurl3 \
     libffi6 \
     libgdbm3 \

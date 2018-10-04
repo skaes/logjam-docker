@@ -228,11 +228,11 @@ task :certify do
   system "docker-machine regenerate-certs default"
 end
 
-UBUNTU_VERSION_NAME = { "14.04" => "trusty", "12.04" => "precise", "16.04" => "xenial" }
+UBUNTU_VERSION_NAME = { "14.04" => "trusty", "16.04" => "xenial", "18.04" => "bionic"}
 PACKAGES_BUILT_FOR_USR_LOCAL = [:libs, :tools]
-PACKAGES_BUILT_FOR_PRECISE = [:libs, :tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
+KEEP = ENV['KEEP'] == "1" ? "--keep" : ""
 
 namespace :package do
   def scan_and_upload(name)
@@ -244,9 +244,10 @@ namespace :package do
     # puts "cooking(#{[package, version, name, location].join(',')})"
     ENV['LOGJAM_PREFIX'] = PREFIXES[location]
     ENV['LOGJAM_SUFFIX'] = SUFFIXES[location]
+    options = " --no-cache" if ENV["NOCACHE"]=='1'
 
-    system "fpm-fry cook --keep --update=always ubuntu:#{version} build_#{package}.rb"
-    system "mv *.deb packages/#{name}/"
+    system "fpm-fry cook #{KEEP} --update=always ubuntu:#{version} build_#{package}.rb"
+    system "mkdir -p packages/#{name} && mv *.deb packages/#{name}/"
     scan_and_upload(name)
   ensure
     ENV.delete('LOGJAM_PREFIX')
@@ -266,7 +267,6 @@ namespace :package do
       packages.each do |package|
         PREFIXES.each do |location, prefix|
           next if location == :local && !PACKAGES_BUILT_FOR_USR_LOCAL.include?(package)
-          next if name == "precise" && !PACKAGES_BUILT_FOR_PRECISE.include?(package)
           if location == :opt
             desc "build package #{package} for ubuntu #{version} with install prefix #{prefix}"
             task package do
@@ -287,7 +287,27 @@ namespace :package do
 
   namespace :tools do
     desc "build all tools packages"
-    task :all => [:local] + %w(xenial:libs xenial:tools trusty:libs trusty:tools)
+    task :all => %w(bionic:libs bionic:tools xenial:libs xenial:tools trusty:libs trusty:tools)
+  end
+
+  namespace :bionic do
+    desc "build all bionic packages"
+    task :all => packages + %w(bionic:libs:local bionic:tools:local)
+
+    desc "upload all bionic packages"
+    task :upload do
+      scan_and_upload("bionic")
+    end
+
+    desc "build package railsexpress_ruby for ubuntu 18.04 with install prefix /usr/local"
+    task :railsexpress_ruby do
+      cook "railsexpress_ruby", "18.04", "bionic", :local
+    end
+
+    desc "build package logjam-go for ubuntu 18.04 with install prefix /usr/local"
+    task :go do
+      cook "go", "18.04", "bionic", :local
+    end
   end
 
   namespace :xenial do
@@ -330,30 +350,16 @@ namespace :package do
     end
   end
 
-  namespace :precise do
-    desc "build all precise packages"
-    task :all => %w(precise:go precise:libs precise:tools precise:libs:local precise:tools:local)
-
-    desc "build package go for ubuntu 14.04 with install prefix /usr/local"
-    task :go do
-      cook "go", "12.04", "precise", :local
-    end
-
-    desc "upload all precise packages"
-    task :upload do
-      scan_and_upload("precise")
-    end
-  end
-
   desc "cook all packages which can install in /usr/local"
-  task :local => %w(xenial:go xenial:libs:local xenial:tools:local xenial:railsexpress_ruby) +
+  task :local => %w(bionic:go bionic:libs:local bionic:tools:local bionic:railsexpress_ruby) +
+                 %w(xenial:go xenial:libs:local xenial:tools:local xenial:railsexpress_ruby) +
                  %w(trusty:go trusty:libs:local trusty:tools:local trusty:railsexpress_ruby)
 
   desc "build all go containers"
-  task :go => %w(xenial:go trusty:go)
+  task :go => %w(bionic:go xenial:go trusty:go)
 
   desc "cook all packages"
-  task :all => %w(xenial:all trusty:all)
+  task :all => %w(bionic:all xenial:all trusty:all)
 
   desc "upload images to package host"
   task :upload do

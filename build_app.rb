@@ -1,19 +1,20 @@
 name "logjam-app"
 version "0.7"
-iteration "2"
+iteration "4"
 
 vendor "skaes@railsexpress.de"
 
-depends "logjam-tools", ">= 0.7-3"
-depends "logjam-ruby", ">= 2.5.0"
-depends "logjam-passenger", ">= 0.6-7"
-depends "logjam-code", ">= 0.6-12"
+depends "logjam-tools", ">= 0.7-4"
+depends "logjam-ruby", ">= 2.5.1-2"
+depends "logjam-passenger", ">= 0.6-8"
+depends "logjam-code", ">= 0.6-14"
 depends "logrotate"
 depends "runit"
 depends "adduser"
 
-apt_setup "apt-get update -y && apt-get install apt-transport-https -y"
+apt_setup "apt-get update -y && apt-get install apt-transport-https ca-certificates -y"
 apt_setup "echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
+apt_setup "DEBIAN_FRONTEND=noninteractive apt-get install tzdata -y"
 
 add "images/app/etc/apache2/mods-available/passenger.conf", ".passenger.conf"
 run "cp", ".passenger.conf", "/etc/apache2/mods-available/passenger.conf"

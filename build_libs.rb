@@ -24,6 +24,7 @@ build_depends "git"
 build_depends "wget"
 build_depends "libssl-dev"
 build_depends "zlib1g-dev"
+build_depends "cmake"
 
 files "#{prefix}/bin/[^l]*"
 files "#{prefix}/include/*"

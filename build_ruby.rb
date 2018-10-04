@@ -15,9 +15,16 @@ build_depends "curl"
 build_depends "gawk"
 build_depends "libffi-dev"
 build_depends "libgdbm-dev"
+if codename == "bionic"
+  build_depends "libgdbm-compat-dev"
+end
 build_depends "libgmp-dev"
 build_depends "libncurses5-dev"
-build_depends "libreadline6-dev"
+if codename == "bionic"
+  build_depends "libreadline-dev"
+else
+  build_depends "libreadline6-dev"
+end
 build_depends "libssl-dev"
 build_depends "libtool"
 build_depends "libyaml-dev"
@@ -28,9 +35,17 @@ build_depends "zlib1g-dev"
 
 depends "libc6"
 depends "libffi6"
-depends "libgdbm3"
+if codename == "bionic"
+  depends "libgdbm5"
+else
+  depends "libgdbm3"
+end
 depends "libgmp10"
-depends "libreadline6"
+if codename == "bionic"
+  depends "libreadline7"
+else
+  depends "libreadline6"
+end
 depends "libyaml-0-2"
 depends "openssl"
 depends "zlib1g"
