@@ -1,11 +1,3 @@
-# VERSION         0.1
-# DOCKER-VERSION  1.10.2
-# AUTHORS:        Stefan Kaes <skaes@railsexpress.de>
-# DESCRIPTION:    logjam code builder
-#
-# TO_BUILD:            docker build -t=stkaes/logjam-code .
-# TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/logjam-code /bin/bash
-# ----------------------------
 FROM stkaes/logjam-ruby
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ARG DEBIAN_FRONTEND=noninteractive

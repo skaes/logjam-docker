@@ -1,11 +1,3 @@
-# VERSION         0.1
-# DOCKER-VERSION  1.10.2
-# AUTHORS:        Stefan Kaes <skaes@railsexpress.de>
-# DESCRIPTION:    logjam base runtime package
-#
-# TO_BUILD:            docker build -t=stkaes/runtime .
-# TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/runtime
-# ----------------------------
 FROM ubuntu:16.04
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ARG DEBIAN_FRONTEND=noninteractive

@@ -1,11 +1,3 @@
-# VERSION         0.1
-# DOCKER-VERSION  1.10.2
-# AUTHORS:        Stefan Kaes <skaes@railsexpress.de>
-# DESCRIPTION:    logjam-ruby builder
-#
-# TO_BUILD:            docker build -t=stkaes/passenger .
-# TO_RUN_INTERACTIVE:  docker run --rm -it stkaes/passenger /bin/bash
-# ----------------------------
 FROM stkaes/logjam-ruby
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ARG DEBIAN_FRONTEND=noninteractive
