@@ -18,5 +18,7 @@ mkdir -p log
 mkdir -p tmp/sockets
 mkdir -p service
 
-export RAILS_ENV=production
-bundle exec rake assets:precompile
+# For now, no longer asset compilation is not necessary as we use local
+# pre-compilation and github. Uncomment if we reverse this decision.
+# export RAILS_ENV=production
+# bundle exec rake assets:precompile
