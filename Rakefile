@@ -76,6 +76,17 @@ namespace :tools do
   end
 end
 
+namespace 'utils' do
+  task :build => "tools:build" do
+    build_image("utils")
+  end
+
+  desc "upload logjam-utils to docker hub"
+  task :upload do
+    system "docker push stkaes/logjam-utils"
+  end
+end
+
 namespace :ruby do
   task :build => "builder:build" do
     build_image("ruby")
@@ -139,6 +150,12 @@ namespace :app do
   task :attach do
     system "docker exec -it logjam bash"
   end
+
+  desc "upload logjam-app to docker hub"
+  task :upload do
+    system "docker push stkaes/logjam-app"
+  end
+
 end
 
 namespace :develop do
@@ -219,9 +236,7 @@ end
 task :default => :build
 
 desc "upload images to registry"
-task :upload do
-  system "docker push stkaes/logjam-app"
-end
+task :upload => %w(utils:upload app:upload)
 
 desc "regenerate TLS certificates (e.g. after IP change)"
 task :certify do
