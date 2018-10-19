@@ -20,7 +20,7 @@ RUN cd gperftools && sh autogen.sh && ./configure --prefix=/usr && make && make 
 # ----------------------------
 RUN apt-get install -y --no-install-recommends ruby
 ADD ./install-ruby.sh /docker/install-ruby.sh
-RUN /bin/bash -l -c '/docker/install-ruby.sh ruby-2.5.1-p57'
+RUN /bin/bash -l -c '/docker/install-ruby.sh ruby-2.5.3-p105'
 ADD ./gemrc /opt/logjam/etc/gemrc
 ENV PATH /opt/logjam/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN gem update -q --system
