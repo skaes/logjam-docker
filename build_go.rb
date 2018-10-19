@@ -1,11 +1,11 @@
 name "logjam-go"
-version "1.11"
+version "1.11.1"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
 
 source "https://golang.org/dl/go#{version}.linux-amd64.tar.gz",
-       checksum: "b3fcf280ff86558e0559e185b601c9eade0fd24c900b4c63cd14d1d38613e499"
+       checksum: "2871270d8ff0c8c69f161aaae42f9f28739855ff5c5204752a8d92a1c9f63993"
 
 run "mv", "go", "/usr/local"
 run "ln", "-s", "/usr/local/go/bin/go", "/usr/local/bin/go"
