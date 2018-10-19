@@ -76,7 +76,7 @@ namespace :tools do
   end
 end
 
-namespace 'utils' do
+namespace :utils do
   task :build => "tools:build" do
     build_image("utils")
   end
@@ -205,7 +205,7 @@ namespace :memcache do
 end
 
 desc "build all images"
-task :build => %w[code:build passenger:build tools:build app:build]
+task :build => %w[code:build passenger:build tools:build utils:build app:build]
 
 desc "clean unused images and containers"
 task :clean do
