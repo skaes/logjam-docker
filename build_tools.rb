@@ -3,7 +3,7 @@ suffix = ENV['LOGJAM_SUFFIX']
 
 name "logjam-tools#{suffix}"
 version "0.7"
-iteration "5"
+iteration "6"
 
 vendor "skaes@railsexpress.de"
 
@@ -26,7 +26,7 @@ build_depends "wget"
 build_depends "libssl-dev"
 build_depends "zlib1g-dev"
 
-build_depends "logjam-go", "1.11.1"
+build_depends "logjam-go", "1.11.2"
 
 depends "logjam-libs#{suffix}", ">= 0.6-1"
 
