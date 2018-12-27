@@ -1,11 +1,11 @@
 name "logjam-ruby"
-version "2.5.3"
+version "2.6.0"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
 
-source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.5.3-p105.tar.gz",
-       checksum: '3be3319a6cae4f2184ea34188bc78f1ac522b755830e40774368755335e47f05'
+source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.6.0-p0.tar.gz",
+       checksum: 'ce9cdf89f18c6274162f1623b57b6ba403c1b99e014d0e850d019e38ee94ab4f'
 
 build_depends "autoconf"
 build_depends "automake"
@@ -52,7 +52,7 @@ depends "zlib1g"
 
 add "images/ruby/gemrc", ".gemrc"
 
-run "cd", "ruby-2.5.3-p105"
+run "cd", "ruby-2.6.0-p0"
 run "./configure", "--prefix=/opt/logjam", "--with-opt-dir=/opt/logjam",
      "--with-out-ext=tcl", "--with-out-ext=tk", "--disable-install-doc", "--enable-shared"
 run "make", "-j4"
@@ -60,5 +60,5 @@ run "make", "install"
 run "cd", ".."
 run "mkdir", "/opt/logjam/etc"
 run "cp", ".gemrc", "/opt/logjam/etc/gemrc"
-run "/opt/logjam/bin/gem", "install", "bundler", "-v", "1.16.3"
+run "/opt/logjam/bin/gem", "install", "bundler", "-v", "1.17.3"
 run "/opt/logjam/bin/gem", "update", "-q", "--system"

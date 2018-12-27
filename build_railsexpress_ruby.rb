@@ -1,11 +1,11 @@
 name "railsexpress-ruby"
-version "2.5.3"
+version "2.6.0"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
 
-source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.5.3-p105.tar.gz",
-       checksum: '3be3319a6cae4f2184ea34188bc78f1ac522b755830e40774368755335e47f05'
+source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.6.0-p0.tar.gz",
+       checksum: 'ce9cdf89f18c6274162f1623b57b6ba403c1b99e014d0e850d019e38ee94ab4f'
 
 build_depends "autoconf"
 build_depends "automake"
@@ -52,12 +52,12 @@ depends "zlib1g"
 
 add "images/ruby/gemrc", ".gemrc"
 
-run "cd", "ruby-2.5.3-p105"
+run "cd", "ruby-2.6.0-p0"
 run "./configure", "--with-out-ext=tcl", "--with-out-ext=tk", "--disable-install-doc", "--enable-shared"
 run "make", "-j4"
 run "make", "install"
 run "cd", ".."
 run "mkdir", "-p", "/usr/local/etc"
 run "cp", ".gemrc", "/usr/local/etc/gemrc"
-run "/usr/local/bin/gem", "install", "bundler", "-v", "1.16.3"
+run "/usr/local/bin/gem", "install", "bundler", "-v", "1.17.3"
 run "/usr/local/bin/gem", "update", "-q", "--system"
