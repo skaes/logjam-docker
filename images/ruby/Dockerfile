@@ -4,7 +4,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get install -y --no-install-recommends ruby
 ADD ./install-ruby.sh /docker/install-ruby.sh
-RUN /bin/bash -l -c '/docker/install-ruby.sh ruby-2.6.0-p0'
+RUN /bin/bash -l -c '/docker/install-ruby.sh ruby-2.6.1-p33'
 ADD ./gemrc /opt/logjam/etc/gemrc
 
 ADD ./install-bundler.sh /docker/install-bundler.sh
