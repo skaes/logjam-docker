@@ -1,6 +1,6 @@
 name "railsexpress-ruby"
 version "2.6.1"
-iteration "1"
+iteration "2"
 
 vendor "skaes@railsexpress.de"
 
@@ -60,4 +60,7 @@ run "cd", ".."
 run "mkdir", "-p", "/usr/local/etc"
 run "cp", ".gemrc", "/usr/local/etc/gemrc"
 run "/usr/local/bin/gem", "install", "bundler", "-v", "1.17.3"
-run "/usr/local/bin/gem", "update", "-q", "--system"
+run "/usr/local/bin/gem", "update", "-q", "--system", "3.0.3"
+
+plugin "exclude"
+exclude "/root/**"

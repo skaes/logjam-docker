@@ -11,4 +11,4 @@ ADD ./install-bundler.sh /docker/install-bundler.sh
 RUN /docker/install-bundler.sh
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-RUN gem update -q --system
+RUN gem update -q --system 3.0.3

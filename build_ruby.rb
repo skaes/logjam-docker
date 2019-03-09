@@ -1,6 +1,6 @@
 name "logjam-ruby"
 version "2.6.1"
-iteration "1"
+iteration "2"
 
 vendor "skaes@railsexpress.de"
 
@@ -61,4 +61,7 @@ run "cd", ".."
 run "mkdir", "/opt/logjam/etc"
 run "cp", ".gemrc", "/opt/logjam/etc/gemrc"
 run "/opt/logjam/bin/gem", "install", "bundler", "-v", "1.17.3"
-run "/opt/logjam/bin/gem", "update", "-q", "--system"
+run "/opt/logjam/bin/gem", "update", "-q", "--system", "3.0.3"
+
+plugin "exclude"
+exclude "/root/**"
