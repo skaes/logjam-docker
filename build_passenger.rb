@@ -41,7 +41,7 @@ add "images/passenger/install-passenger-apache2-module.sh", ".install-passenger-
 add "images/passenger/minify-passenger-install.sh", ".minify-passenger-install.sh"
 add "images/passenger/passenger.load", ".passenger.load"
 
-run "/opt/logjam/bin/gem", "install", "passenger", "-v", "5.3.7"
+run "/opt/logjam/bin/gem", "install", "passenger", "-v", "6.0.2"
 run "./.install-passenger-nginx-module.sh"
 run "./.install-passenger-apache2-module.sh"
 run "./.minify-passenger-install.sh"

@@ -26,7 +26,7 @@ build_depends "wget"
 build_depends "libssl-dev"
 build_depends "zlib1g-dev"
 
-build_depends "logjam-go", "1.11.2"
+build_depends "logjam-go", "1.12.4"
 
 depends "logjam-libs#{suffix}", ">= 0.7-1"
 

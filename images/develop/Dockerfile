@@ -20,7 +20,7 @@ RUN cd gperftools && sh autogen.sh && ./configure --prefix=/usr && make && make 
 # ----------------------------
 RUN apt-get install -y --no-install-recommends ruby
 ADD ./install-ruby.sh /docker/install-ruby.sh
-RUN /bin/bash -l -c '/docker/install-ruby.sh ruby-2.6.1-p33'
+RUN /bin/bash -l -c '/docker/install-ruby.sh ruby-2.6.2-p47'
 ADD ./gemrc /opt/logjam/etc/gemrc
 ENV PATH /opt/logjam/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN gem update -q --system
@@ -30,7 +30,7 @@ RUN gem update -q --system
 # ----------------------------
 RUN apt-get install -y --no-install-recommends \
     apache2 apache2-mpm-worker apache2-threaded-dev libapr1-dev
-RUN gem install passenger -v 5.3.7
+RUN gem install passenger -v 6.0.2
 ADD ./install-passenger-apache2-module.sh /docker/install-passenger-apache2-module.sh
 RUN /docker/install-passenger-apache2-module.sh
 ADD ./passenger.load /etc/apache2/mods-available/passenger.load
