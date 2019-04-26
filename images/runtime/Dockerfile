@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -11,12 +11,12 @@ WORKDIR /root
 # ----------------------------
 # allow packages from the logjam package cloud repo
 # ----------------------------
-RUN apt-get update && apt-get install -y apt-transport-https curl locales locales-all tzdata
+RUN apt-get update && apt-get install -y apt-transport-https curl gnupg locales locales-all tzdata
 # if we don't install curl, https transport for apt won't work
-ADD packagecloud.gpg.key /etc/apt/packagecloud.gpg.key
-RUN apt-key add /etc/apt/packagecloud.gpg.key
-ADD stkaes_logjam.list /etc/apt/sources.list.d/stkaes_logjam.list
-RUN apt-get update -y
+# ADD packagecloud.gpg.key /etc/apt/packagecloud.gpg.key
+# RUN apt-key add /etc/apt/packagecloud.gpg.key
+# ADD stkaes_logjam.list /etc/apt/sources.list.d/stkaes_logjam.list
+# RUN apt-get update -y
 # alternative which requires a bit more trust
 # RUN apt-get install -y curl && (curl -s https://packagecloud.io/install/repositories/stkaes/logjam/script.deb.sh | bash)
 
@@ -34,21 +34,22 @@ RUN apt-get install -y --no-install-recommends \
     gawk \
     htop \
     net-tools \
-    libcurl3 \
+    libcurl4 \
     libffi6 \
-    libgdbm3 \
+    libgdbm5 \
     libgmp10 \
-    libicu55 \
+    libicu60 \
     libncurses5 \
-    libreadline6 \
+    libreadline7 \
     libsqlite3-0 \
     libssl1.0.0 \
     libxml2 \
     libxslt1.1 \
     libyaml-0-2 \
     lsof \
+    less \
     runit \
-    sudo \
+    sudo  \
     wget \
     zlib1g \
     && apt-get clean

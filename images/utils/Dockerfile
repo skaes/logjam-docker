@@ -1,5 +1,5 @@
 FROM stkaes/logjam-tools as tools
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 COPY --from=tools /opt/logjam /opt/logjam
 
