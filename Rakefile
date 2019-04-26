@@ -451,3 +451,10 @@ task :update_refs do
     system "perl -p -i -e 's/LOGJAM_LIBS_REVISION .*$/LOGJAM_LIBS_REVISION #{tools_sha}/' #{files}"
   end
 end
+
+desc "update ubuntu base images with a fresh docker pull"
+task :update_base_images do
+  %w(14.04 16.04 18.04 trusty xenial bionic).each do |version|
+    sh "docker pull ubuntu:#{version}"
+  end
+end
