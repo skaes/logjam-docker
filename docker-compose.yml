@@ -27,7 +27,7 @@ services:
     tty: true
     environment:
       - LOGJAMDB_NAME=logjamdb
-      - MEMCACHE_NAME=memcache
+      - LOGJAMCACHE_NAME=memcache
       - LOGJAM_ENV=production
     env_file:
       - "logjam.env"
