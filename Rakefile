@@ -243,7 +243,7 @@ task :certify do
   system "docker-machine regenerate-certs default"
 end
 
-UBUNTU_VERSION_NAME = { "14.04" => "trusty", "16.04" => "xenial", "18.04" => "bionic"}
+UBUNTU_VERSION_NAME = { "16.04" => "xenial", "18.04" => "bionic"}
 PACKAGES_BUILT_FOR_USR_LOCAL = [:libs, :tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
@@ -302,7 +302,7 @@ namespace :package do
 
   namespace :tools do
     desc "build all tools packages"
-    task :all => %w(bionic:libs bionic:tools xenial:libs xenial:tools trusty:libs trusty:tools)
+    task :all => %w(bionic:libs bionic:tools xenial:libs xenial:tools)
   end
 
   namespace :bionic do
@@ -345,36 +345,15 @@ namespace :package do
     end
   end
 
-  namespace :trusty do
-    desc "build all trusty packages"
-    task :all => packages + %w(trusty:libs:local trusty:tools:local)
-
-    desc "upload all trusty packages"
-    task :upload do
-      scan_and_upload("trusty")
-    end
-
-    desc "build package railsexpress_ruby for ubuntu 14.04 with install prefix /usr/local"
-    task :railsexpress_ruby do
-      cook "railsexpress_ruby", "14.04", "trusty", :local
-    end
-
-    desc "build package logjam-go for ubuntu 14.04 with install prefix /usr/local"
-    task :go do
-      cook "go", "14.04", "trusty", :local
-    end
-  end
-
   desc "cook all packages which can install in /usr/local"
   task :local => %w(bionic:go bionic:libs:local bionic:tools:local bionic:railsexpress_ruby) +
-                 %w(xenial:go xenial:libs:local xenial:tools:local xenial:railsexpress_ruby) +
-                 %w(trusty:go trusty:libs:local trusty:tools:local trusty:railsexpress_ruby)
+                 %w(xenial:go xenial:libs:local xenial:tools:local xenial:railsexpress_ruby)
 
   desc "build all go containers"
-  task :go => %w(bionic:go xenial:go trusty:go)
+  task :go => %w(bionic:go xenial:go)
 
   desc "cook all packages"
-  task :all => %w(bionic:all xenial:all trusty:all)
+  task :all => %w(bionic:all xenial:all)
 
   desc "upload images to package host"
   task :upload do
@@ -454,7 +433,7 @@ end
 
 desc "update ubuntu base images with a fresh docker pull"
 task :update_base_images do
-  %w(14.04 16.04 18.04 trusty xenial bionic).each do |version|
+  %w(16.04 xenial 18.04 bionic).each do |version|
     sh "docker pull ubuntu:#{version}"
   end
 end

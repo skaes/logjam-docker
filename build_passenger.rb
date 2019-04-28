@@ -9,11 +9,7 @@ build_depends "curl"
 build_depends "git"
 build_depends "nodejs"
 
-if codename == "trusty"
-  build_depends "apache2-threaded-dev"
-else
-  build_depends "apache2-dev"
-end
+build_depends "apache2-dev"
 build_depends "libapr1-dev"
 build_depends "libcurl4-openssl-dev"
 build_depends "libffi-dev"
@@ -29,9 +25,6 @@ build_depends "zlib1g-dev"
 
 depends "logjam-ruby", ">= 2.6.0"
 depends "apache2"
-if codename == "trusty"
-  depends "apache2-mpm-worker"
-end
 
 apt_setup "apt-get update -y && apt-get install apt-transport-https ca-certificates -y"
 apt_setup "echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
