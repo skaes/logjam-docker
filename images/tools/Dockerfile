@@ -2,7 +2,7 @@ FROM stkaes/logjam-libs
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV LOGJAM_TOOLS_REVISION 937cf17f1ee0c6f9bf33d0a487d25c5899748148
+ENV LOGJAM_TOOLS_REVISION 5e6eb42e729e01989fed9ff1c7dd6b9c4b0206cb
 
 ADD ./install-logjam-tools.sh /docker/install-logjam-tools.sh
 RUN /bin/bash -l -c /docker/install-logjam-tools.sh
