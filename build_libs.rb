@@ -3,7 +3,7 @@ suffix = ENV['LOGJAM_SUFFIX']
 
 name "logjam-libs#{suffix}"
 version "0.7"
-iteration "1"
+iteration "2"
 
 vendor "skaes@railsexpress.de"
 
@@ -25,6 +25,7 @@ build_depends "wget"
 build_depends "libssl-dev"
 build_depends "zlib1g-dev"
 build_depends "cmake"
+build_depends "libcurl4-openssl-dev"
 
 files "#{prefix}/bin/[^l]*"
 files "#{prefix}/include/*"
@@ -34,6 +35,7 @@ files "#{prefix}/share/*"
 depends "libc6"
 depends "zlib1g"
 depends "openssl"
+depends "curl"
 
 run "./bin/install-libs", "--prefix=#{prefix}"
 

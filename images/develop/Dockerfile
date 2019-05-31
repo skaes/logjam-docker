@@ -38,14 +38,14 @@ ADD ./passenger.load /etc/apache2/mods-available/passenger.load
 # ----------------------------
 # logjam - libraries
 # ----------------------------
-ENV LOGJAM_LIBS_REVISION 57a6c4fee33c3ef87923f8780b8c2189d708b260
+ENV LOGJAM_LIBS_REVISION 34784fb8bb486c54098016c197b987bf5753edf7
 ADD ./install-logjam-libs.sh /docker/install-logjam-libs.sh
 RUN /bin/bash -l -c /docker/install-logjam-libs.sh
 
 # ----------------------------
 # logjam - binaries
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION 5e6eb42e729e01989fed9ff1c7dd6b9c4b0206cb
+ENV LOGJAM_TOOLS_REVISION 34784fb8bb486c54098016c197b987bf5753edf7
 ADD ./install-logjam-tools.sh /docker/install-logjam-tools.sh
 RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 
