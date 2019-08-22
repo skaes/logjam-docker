@@ -23,7 +23,7 @@ build_depends "libyaml-dev"
 build_depends "pkg-config"
 build_depends "zlib1g-dev"
 
-depends "logjam-ruby", ">= 2.6.0"
+depends "logjam-ruby", ">= 2.6.3"
 depends "apache2"
 
 apt_setup "apt-get update -y && apt-get install apt-transport-https ca-certificates -y"

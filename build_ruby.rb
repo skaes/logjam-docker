@@ -1,11 +1,11 @@
 name "logjam-ruby"
-version "2.6.2"
+version "2.6.3"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
 
-source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.6.2-p47.tar.gz",
-       checksum: '7e20e67bbd8c03e67ca25a4d3bc91046c0bb5763561bea1152b4e14120bfdda3'
+source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.6.3-p62.tar.gz",
+       checksum: '27641f4b75b7c17b20d5bf8290e4da4f03eca28a847238e3df9828691efa7e14'
 
 build_depends "autoconf"
 build_depends "automake"
@@ -52,7 +52,7 @@ depends "zlib1g"
 
 add "images/ruby/gemrc", ".gemrc"
 
-run "cd", "ruby-2.6.2-p47"
+run "cd", "ruby-2.6.3-p62"
 run "./configure", "--prefix=/opt/logjam", "--with-opt-dir=/opt/logjam",
      "--with-out-ext=tcl", "--with-out-ext=tk", "--disable-install-doc", "--enable-shared"
 run "make", "-j4"
