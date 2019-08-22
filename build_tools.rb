@@ -25,6 +25,7 @@ build_depends "git"
 build_depends "wget"
 build_depends "libssl-dev"
 build_depends "zlib1g-dev"
+build_depends "libcurl4-openssl-dev"
 
 build_depends "logjam-go", "1.12.9"
 
