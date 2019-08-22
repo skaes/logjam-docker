@@ -28,7 +28,7 @@ build_depends "zlib1g-dev"
 
 build_depends "logjam-go", "1.12.9"
 
-depends "logjam-libs#{suffix}", ">= 0.7-1"
+depends "logjam-libs#{suffix}", ">= 0.7-2"
 
 apt_setup "apt-get update -y && apt-get install apt-transport-https ca-certificates -y"
 apt_setup "echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
@@ -36,5 +36,6 @@ apt_setup "echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/#{cod
 files "#{prefix}/bin/logjam-*"
 
 run "./autogen.sh", "--prefix=#{prefix}"
+run "make", "all-local"
 run "make", "-j4"
 run "make", "install"
