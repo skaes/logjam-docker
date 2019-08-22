@@ -303,6 +303,9 @@ namespace :package do
   namespace :tools do
     desc "build all tools packages"
     task :all => %w(bionic:libs bionic:tools xenial:libs xenial:tools)
+
+    desc "build all tools packages for /usr/local"
+    task :local => %w(bionic:libs:local bionic:tools:local xenial:libs:local xenial:tools:local)
   end
 
   namespace :bionic do
