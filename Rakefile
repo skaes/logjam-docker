@@ -215,8 +215,8 @@ end
 
 desc "clean, but also remove all stkaes containers"
 task :realclean => :clean do
-  system "docker ps -a  | awk '/stkaes/ {print $1;}' | xargs docker rm", raise_on_error: false
-  system "docker images | awk '/stkaes/ {print $3;}' | xargs docker rmi", raise_on_error: false
+  system "docker ps -a  | awk '/stkaes/ {print $1;}' | xargs docker rm -f", raise_on_error: false
+  system "docker images -a | awk '/stkaes/ {print $3;}' | xargs docker rmi -f", raise_on_error: false
 end
 
 desc "delete all containers and images"
