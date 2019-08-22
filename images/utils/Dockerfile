@@ -6,7 +6,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y curl locales locales-all tzdata
 
-ENV LOGJAM_TOOLS_REVISION 9600a4fa6b46d89207f9090a5b194b6027c43693
+ENV LOGJAM_TOOLS_REVISION 07cb0f8a3c21185972a4cb58c997dc5c41afee2c
 COPY --from=tools /opt/logjam /opt/logjam
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
