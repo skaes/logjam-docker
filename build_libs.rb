@@ -35,8 +35,11 @@ files "#{prefix}/share/*"
 depends "libc6"
 depends "zlib1g"
 depends "openssl"
-depends "curl"
-
+if codename == "bionic"
+  depends "libcurl4"
+else
+  depends "libcurl3"
+end
 run "./bin/install-libs", "--prefix=#{prefix}"
 
 after_install <<-"EOS"
