@@ -29,6 +29,7 @@ services:
       - LOGJAMDB_NAME=logjamdb
       - LOGJAMCACHE_NAME=memcache
       - LOGJAM_ENV=production
+      - LOGJAM_USE_CACHE=1
     env_file:
       - "logjam.env"
 #    privileged: true
