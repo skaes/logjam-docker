@@ -1,11 +1,11 @@
 name "railsexpress-ruby"
-version "2.6.3"
+version "2.6.4"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
 
-source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.6.3-p62.tar.gz",
-       checksum: '27641f4b75b7c17b20d5bf8290e4da4f03eca28a847238e3df9828691efa7e14'
+source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.6.4-p104.tar.gz",
+       checksum: '2c0edc70cbbfb1642f057148c5c453d5500742d191a1a72d20236ea0f28b56b2'
 
 build_depends "autoconf"
 build_depends "automake"
@@ -52,7 +52,7 @@ depends "zlib1g"
 
 add "images/ruby/gemrc", ".gemrc"
 
-run "cd", "ruby-2.6.3-p62"
+run "cd", "ruby-2.6.4-p104"
 run "./configure", "--with-out-ext=tcl", "--with-out-ext=tk", "--disable-install-doc", "--enable-shared"
 run "make", "-j4"
 run "make", "install"
@@ -60,7 +60,7 @@ run "cd", ".."
 run "mkdir", "-p", "/usr/local/etc"
 run "cp", ".gemrc", "/usr/local/etc/gemrc"
 run "/usr/local/bin/gem", "install", "bundler", "-v", "1.17.3"
-run "/usr/local/bin/gem", "update", "-q", "--system", "3.0.3"
+run "/usr/local/bin/gem", "update", "-q", "--system", "3.0.6"
 
 plugin "exclude"
 exclude "/root/**"
