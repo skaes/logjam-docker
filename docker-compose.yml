@@ -3,21 +3,20 @@ version: '2'
 services:
   memcache:
     container_name: memcache
-    image: memcached:1.5.7
+    image: memcached:1.5.19
 
   logjamdb:
     container_name: logjamdb
-    image: percona/percona-server-mongodb:3.6.3
+    image: percona/percona-server-mongodb:4.2.0
     command: mongod
     volumes:
-      - /data/db.logjam.public:/data/db
+      - /data/db.logjam:/data/db
     ports:
       - "27017:27017"
 
   demo:
     container_name: logjam-demo
     image: stkaes/logjam-app
-#    image: stkaes/logjam-develop
     ports:
       - "80:80"
       - "8080:8080"
@@ -29,7 +28,6 @@ services:
       - LOGJAMDB_NAME=logjamdb
       - LOGJAMCACHE_NAME=memcache
       - LOGJAM_ENV=production
-      - LOGJAM_USE_CACHE=1
+      - LOGJAM_USE_CACHE=0
     env_file:
       - "logjam.env"
-#    privileged: true
