@@ -4,7 +4,7 @@ iteration "1"
 
 vendor "skaes@railsexpress.de"
 
-source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.6.4-p104.tar.gz",
+source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.6.5-p114.tar.gz",
        checksum: 'b51d4e8b2ebe761367017ad113ef6ee839ed407cb711aaf59773258615d6f38a'
 
 build_depends "autoconf"
