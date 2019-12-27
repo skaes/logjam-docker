@@ -12,7 +12,20 @@ git submodule init
 git submodule update
 
 export BUNDLE_SILENCE_ROOT_WARNING=1
-bundle install --jobs 4 --deployment --without='development test deployment'
+gem install bundler -v 1.17.3
+case $(bundle version | awk '{print $3}') in
+    1.*)
+        bundle install --jobs 4 --deployment --without='development test deployment'
+        ;;
+    2.*)
+        bundle config set deployment true
+        bundle install --jobs 4 --without='development test deployment'
+        ;;
+    *)
+        echo "unsupported bundler version" 1>&2
+        exit 1
+        ;;
+esac
 
 # remove compiled objects
 ruby_library_version=$(ruby -e 'puts RUBY_VERSION.sub(/\.\d\z/, ".0")')
@@ -26,7 +39,7 @@ mkdir -p log
 mkdir -p tmp/sockets
 mkdir -p service
 
-# For now, no longer asset compilation is not necessary as we use local
+# For now, asset compilation is not necessary as we use local
 # pre-compilation and github. Uncomment if we reverse this decision.
 # export RAILS_ENV=production
 # bundle exec rake assets:precompile

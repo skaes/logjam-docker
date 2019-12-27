@@ -4,7 +4,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN gem install passenger -v 6.0.2
+RUN gem install passenger -v 6.0.4
 RUN passenger start --runtime-check-only
 # This will compile passenger native support in the backgound
 RUN passenger start -d ; sleep 5

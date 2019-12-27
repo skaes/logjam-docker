@@ -1,11 +1,11 @@
 name "railsexpress-ruby"
-version "2.6.5"
+version "2.7.0"
 iteration "1"
 
 vendor "skaes@railsexpress.de"
 
-source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.6.5-p114.tar.gz",
-       checksum: 'b51d4e8b2ebe761367017ad113ef6ee839ed407cb711aaf59773258615d6f38a'
+source "https://#{ENV['LOGJAM_PACKAGE_HOST']}/downloads/ruby-2.7.0-p0.tar.gz",
+       checksum: '01a73f9a52973a78eb7040ba2d7969e7e9868105bfa8a9a14309a933d8c393ce'
 
 build_depends "autoconf"
 build_depends "automake"
@@ -52,15 +52,15 @@ depends "zlib1g"
 
 add "images/ruby/gemrc", ".gemrc"
 
-run "cd", "ruby-2.6.5-p114"
+run "cd", "ruby-2.7.0-p0"
 run "./configure", "--with-out-ext=tcl", "--with-out-ext=tk", "--disable-install-doc", "--enable-shared"
 run "make", "-j4"
 run "make", "install"
 run "cd", ".."
 run "mkdir", "-p", "/usr/local/etc"
 run "cp", ".gemrc", "/usr/local/etc/gemrc"
-run "/usr/local/bin/gem", "install", "bundler", "-v", "1.17.3"
-run "/usr/local/bin/gem", "update", "-q", "--system", "3.0.6"
+# run "/usr/local/bin/gem", "install", "bundler", "-v", "2.1.2"
+# run "/usr/local/bin/gem", "update", "-q", "--system", "3.1.2"
 
 plugin "exclude"
 exclude "/root/**"

@@ -1,6 +1,6 @@
 name "logjam-passenger"
 version "0.6"
-iteration "10"
+iteration "11"
 
 vendor "skaes@railsexpress.de"
 
@@ -27,7 +27,7 @@ build_depends "libyaml-dev"
 build_depends "pkg-config"
 build_depends "zlib1g-dev"
 
-depends "logjam-ruby", ">= 2.6.4"
+depends "logjam-ruby", ">= 2.7.0"
 depends "apache2"
 if codename == "trusty"
   depends "apache2-mpm-worker"
@@ -41,7 +41,7 @@ add "images/passenger/install-passenger-apache2-module.sh", ".install-passenger-
 add "images/passenger/minify-passenger-install.sh", ".minify-passenger-install.sh"
 add "images/passenger/passenger.load", ".passenger.load"
 
-run "/opt/logjam/bin/gem", "install", "passenger", "-v", "6.0.2"
+run "/opt/logjam/bin/gem", "install", "passenger", "-v", "6.0.4"
 run "./.install-passenger-nginx-module.sh"
 run "./.install-passenger-apache2-module.sh"
 run "./.minify-passenger-install.sh"

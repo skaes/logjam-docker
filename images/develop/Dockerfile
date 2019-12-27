@@ -20,17 +20,17 @@ RUN cd gperftools && sh autogen.sh && ./configure --prefix=/usr && make && make 
 # ----------------------------
 RUN apt-get install -y --no-install-recommends ruby
 ADD ./install-ruby.sh /docker/install-ruby.sh
-RUN /bin/bash -l -c '/docker/install-ruby.sh ruby-2.6.5-p114'
+RUN /bin/bash -l -c '/docker/install-ruby.sh ruby-2.7.0-p0'
 ADD ./gemrc /opt/logjam/etc/gemrc
 ENV PATH /opt/logjam/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-RUN gem update -q --system 3.0.6
+# RUN gem update -q --system 3.1.2
 
 # ----------------------------
 # web server
 # ----------------------------
 RUN apt-get install -y --no-install-recommends \
     apache2 apache2-mpm-worker apache2-threaded-dev libapr1-dev
-RUN gem install passenger -v 6.0.2
+RUN gem install passenger -v 6.0.4
 ADD ./install-passenger-apache2-module.sh /docker/install-passenger-apache2-module.sh
 RUN /docker/install-passenger-apache2-module.sh
 ADD ./passenger.load /etc/apache2/mods-available/passenger.load
@@ -45,7 +45,7 @@ RUN /bin/bash -l -c /docker/install-logjam-libs.sh
 # ----------------------------
 # logjam - binaries
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION 487d18cc3a7a9cde45acfb27863785dd5bb55a92
+ENV LOGJAM_TOOLS_REVISION dbb57875e3b9f298db0e1f3061a5b38bda6dcd62
 ADD ./install-logjam-tools.sh /docker/install-logjam-tools.sh
 RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 
@@ -53,7 +53,7 @@ RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 # logjam - app
 # ----------------------------
 RUN apt-get -y --no-install-recommends install nodejs && apt-get clean
-ENV LOGJAM_REVISION 59d44f637081ca95e049710fc1dabf5cdbfb5be0
+ENV LOGJAM_REVISION 9bb05c8539b4b5aeed71baf37d21ee463e1b4746
 
 ADD ./install-code.sh /docker/install-code.sh
 RUN /bin/bash -l -c /docker/install-code.sh
