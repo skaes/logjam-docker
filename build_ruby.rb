@@ -60,6 +60,8 @@ run "make", "install"
 run "cd", ".."
 run "mkdir", "/opt/logjam/etc"
 run "cp", ".gemrc", "/opt/logjam/etc/gemrc"
+# install 1.x version of bundler to allow older Gemfile.locks to work
+run "/opt/logjam/bin/gem", "install", "bundler", "-v", "1.17.3"
 # run "/opt/logjam/bin/gem", "install", "bundler", "-v", "2.1.2"
 # run "/opt/logjam/bin/gem", "update", "-q", "--system", "3.1.2"
 

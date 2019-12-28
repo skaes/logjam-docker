@@ -12,7 +12,6 @@ git submodule init
 git submodule update
 
 export BUNDLE_SILENCE_ROOT_WARNING=1
-gem install bundler -v 1.17.3
 case $(bundle version | awk '{print $3}') in
     1.*)
         bundle install --jobs 4 --deployment --without='development test deployment'
