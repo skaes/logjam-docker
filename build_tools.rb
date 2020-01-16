@@ -3,7 +3,7 @@ suffix = ENV['LOGJAM_SUFFIX']
 
 name "logjam-tools#{suffix}"
 version "0.7"
-iteration "14"
+iteration "15"
 
 vendor "skaes@railsexpress.de"
 
