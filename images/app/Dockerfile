@@ -1,32 +1,9 @@
-FROM stkaes/logjam-tools as tools
-FROM stkaes/logjam-passenger as passenger
 FROM stkaes/logjam-code as code
 FROM stkaes/logjam-runtime
-
-COPY --from=tools /opt/logjam /opt/logjam
-COPY --from=passenger /opt/logjam/ /opt/logjam/
-COPY --from=code /opt/logjam/app /opt/logjam/app
+# this copies ruby, gems and app code on top of all the libs and tools installed in the runtime image
+COPY --from=code /opt/logjam /opt/logjam
 
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
-ARG DEBIAN_FRONTEND=noninteractive
-
-# ----------------------------
-# services
-# ----------------------------
-RUN apt-get update && apt-get -y --no-install-recommends install cron && apt-get clean
-
-# ----------------------------
-# logjam
-# ----------------------------
-
-# this installs packages from ubuntu packages:
-# RUN apt-get update && apt-get -y --no-install-recommends install \
-#     logjam-libs \
-#     logjam-tools \
-#     logjam-ruby \
-#     logjam-code \
-#     logjam-passenger \
-#     && apt-get clean
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 

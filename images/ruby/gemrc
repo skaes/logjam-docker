@@ -1,4 +1,0 @@
-update: --no-rdoc --no-ri --no-document
-install: --no-rdoc --no-ri --no-document
-gem: --no-rdoc --no-ri --no-document
-search: --remote

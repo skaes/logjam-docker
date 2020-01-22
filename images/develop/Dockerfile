@@ -45,7 +45,7 @@ RUN /bin/bash -l -c /docker/install-logjam-libs.sh
 # ----------------------------
 # logjam - binaries
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION 03ec85dfcd0fbb61178ed1a84b0916ee2653db14
+ENV LOGJAM_TOOLS_REVISION b927596e93ada677a232355561c34492e4e096b5
 ADD ./install-logjam-tools.sh /docker/install-logjam-tools.sh
 RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 
@@ -53,7 +53,7 @@ RUN /bin/bash -l -c /docker/install-logjam-tools.sh
 # logjam - app
 # ----------------------------
 RUN apt-get -y --no-install-recommends install nodejs && apt-get clean
-ENV LOGJAM_REVISION ba711417b2cd6060cb3c016d3afc135dbc15b5e5
+ENV LOGJAM_REVISION e0db21447e0813465e5e2757b858ec1af1e4866a
 
 ADD ./install-code.sh /docker/install-code.sh
 RUN /bin/bash -l -c /docker/install-code.sh

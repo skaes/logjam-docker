@@ -9,6 +9,12 @@ ENV HOME /root
 WORKDIR /root
 
 # ----------------------------
+# Add railsepxess package source
+# ----------------------------
+RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y && \
+    echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/bionic ./' >> /etc/apt/sources.list
+
+# ----------------------------
 # update system
 # ----------------------------
 RUN apt-get update && apt-get -y upgrade && \

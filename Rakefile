@@ -58,66 +58,12 @@ namespace :builder do
   end
 end
 
-namespace :libs do
-  task :build => "builder:build" do
-    build_image("libs")
-  end
-  task :test do
-    test_image("libs")
-  end
-end
-
-namespace :tools do
-  task :build => "libs:build" do
-    build_image("tools")
-  end
-  task :test do
-    test_image("tools")
-  end
-end
-
-namespace :utils do
-  task :build => "tools:build" do
-    build_image("utils")
-  end
-
-  desc "upload logjam-utils to docker hub"
-  task :upload do
-    system "docker push stkaes/logjam-utils"
-  end
-end
-
-namespace :ruby do
-  task :build => "builder:build" do
-    build_image("ruby")
-  end
-  task :test do
-    test_image("ruby")
-  end
-end
-
 namespace :code do
-  task :build => "ruby:build" do
+  task :build => "builder:build" do
     build_image("code")
   end
   task :test do
     test_image("code")
-  end
-end
-
-namespace :passenger do
-  task :build => "ruby:build" do
-    build_image("passenger")
-  end
-  task :test do
-    test_image("passenger")
-  end
-  task :run do
-    system "docker run --rm -it -P --name passenger #{image_name 'passenger'}"
-  end
-  desc "attach to running passenger container"
-  task :attach do
-    system "docker exec -it passenger bash"
   end
 end
 
@@ -205,7 +151,7 @@ namespace :memcache do
 end
 
 desc "build all images"
-task :build => %w[code:build passenger:build tools:build utils:build app:build]
+task :build => %w[code:build app:build]
 
 desc "clean unused images and containers"
 task :clean do
@@ -236,7 +182,7 @@ end
 task :default => :build
 
 desc "upload images to registry"
-task :upload => %w(utils:upload app:upload)
+task :upload => %w(app:upload)
 
 desc "regenerate TLS certificates (e.g. after IP change)"
 task :certify do
@@ -270,7 +216,7 @@ namespace :package do
   end
 
   def packages
-    [:libs, :tools, :ruby, :go, :code, :passenger, :app]
+    [:code, :app]
   end
 
   def debs
@@ -300,81 +246,25 @@ namespace :package do
     end
   end
 
-  namespace :tools do
-    desc "build all tools packages"
-    task :all => %w(bionic:libs bionic:tools xenial:libs xenial:tools trusty:libs trusty:tools)
-
-    desc "build all tools packages for /usr/local"
-    task :local => %w(bionic:libs:local bionic:tools:local xenial:libs:local xenial:tools:local)
-  end
-
   namespace :bionic do
     desc "build all bionic packages"
-    task :all => packages + %w(bionic:libs:local bionic:tools:local)
+    task :all => packages
 
     desc "upload all bionic packages"
     task :upload do
       scan_and_upload("bionic")
     end
-
-    desc "build package railsexpress_ruby for ubuntu 18.04 with install prefix /usr/local"
-    task :railsexpress_ruby do
-      cook "railsexpress_ruby", "18.04", "bionic", :local
-    end
-
-    desc "build package logjam-go for ubuntu 18.04 with install prefix /usr/local"
-    task :go do
-      cook "go", "18.04", "bionic", :local
-    end
   end
 
   namespace :xenial do
     desc "build all xenial packages"
-    task :all => packages + %w(xenial:libs:local xenial:tools:local)
+    task :all => packages
 
     desc "upload all xenial packages"
     task :upload do
       scan_and_upload("xenial")
     end
-
-    desc "build package railsexpress_ruby for ubuntu 16.04 with install prefix /usr/local"
-    task :railsexpress_ruby do
-      cook "railsexpress_ruby", "16.04", "xenial", :local
-    end
-
-    desc "build package logjam-go for ubuntu 16.04 with install prefix /usr/local"
-    task :go do
-      cook "go", "16.04", "xenial", :local
-    end
   end
-
-  namespace :trusty do
-    desc "build all trusty packages"
-    task :all => packages + %w(trusty:libs:local trusty:tools:local)
-
-    desc "upload all trusty packages"
-    task :upload do
-      scan_and_upload("trusty")
-    end
-
-    desc "build package railsexpress_ruby for ubuntu 14.04 with install prefix /usr/local"
-    task :railsexpress_ruby do
-      cook "railsexpress_ruby", "14.04", "trusty", :local
-    end
-
-    desc "build package logjam-go for ubuntu 14.04 with install prefix /usr/local"
-    task :go do
-      cook "go", "14.04", "trusty", :local
-    end
-  end
-
-  desc "cook all packages which can install in /usr/local"
-  task :local => %w(bionic:go bionic:libs:local bionic:tools:local bionic:railsexpress_ruby) +
-                 %w(xenial:go xenial:libs:local xenial:tools:local xenial:railsexpress_ruby) +
-                 %w(trusty:go trusty:libs:local trusty:tools:local trusty:railsexpress_ruby)
-
-  desc "build all go containers"
-  task :go => %w(bionic:go xenial:go trusty:go)
 
   desc "cook all packages"
   task :all => %w(bionic:all xenial:all trusty:all)
