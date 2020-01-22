@@ -17,10 +17,10 @@ jobs:
   include:
     - script:
         - docker pull ubuntu:bionic
-        - bundle exec rake package:bionic
+        - bundle exec rake package:bionic:all package:bionic:upload
     - script:
         - docker pull ubuntu:xenial
-        - bundle exec rake package:xenial
+        - bundle exec rake package:xenial:all package:xenial:upload
     - script:
         # build docker images and upload them to docker hub
         - bundle exec rake build upload
