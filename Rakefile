@@ -6,7 +6,8 @@ end
 require "ansi"
 
 ROOT = File.expand_path("..", __FILE__)
-LOGJAM_PACKAGE_HOST = ENV['LOGJAM_PACKAGE_HOST'].to_s
+LOGJAM_PACKAGE_HOST = (ENV['LOGJAM_PACKAGE_HOST'] || "railsexpress.de") .to_s
+LOGJAM_PACKAGE_USER = (ENV['LOGJAM_PACKAGE_USER'] || "uploader").to_s
 
 module LogSystemCommands
   def system(cmd, raise_on_error: true)
@@ -197,8 +198,8 @@ KEEP = ENV['KEEP'] == "1" ? "--keep" : ""
 
 namespace :package do
   def scan_and_upload(name)
-    system "docker run -it -v `pwd`/packages/#{name}:/root/tmp stkaes/logjam-builder bash -c 'cd tmp && dpkg-scanpackages . /dev/null | gzip >Packages.gz'"
     system "rsync -vrlptDz -e ssh packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"
+    system "ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} 'cd /var/www/packages/ubuntu/bionic && f=`tempfile` && (dpkg-scanpackages . /dev/null | gzip >$f.gz) && mv $f.gz Packages.gz'"
   end
 
   def cook(package, version, name, location)
