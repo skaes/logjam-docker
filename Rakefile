@@ -198,8 +198,7 @@ KEEP = ENV['KEEP'] == "1" ? "--keep" : ""
 
 namespace :package do
   def scan_and_upload(name)
-    system "rsync -vrlptDz -e ssh packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"
-    system "ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} 'cd /var/www/packages/ubuntu/bionic && f=`tempfile` && (dpkg-scanpackages . /dev/null | gzip >$f.gz) && mv $f.gz Packages.gz'"
+    system "rsync -vrlptDz -e 'ssh -l #{LOGJAM_PACKAGE_USER}' packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"
   end
 
   def cook(package, version, name, location)
