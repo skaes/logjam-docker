@@ -16,9 +16,11 @@ before_install:
 jobs:
   include:
     - script:
-        - rake package:bionic
+        - docker pull ubuntu:bionic
+        - bundle exec rake package:bionic
     - script:
-        - rake package:xenial
+        - docker pull ubuntu:xenial
+        - bundle exec rake package:xenial
     - script:
         # build docker images and upload them to docker hub
-        - rake build upload
+        - bundle exec rake build upload
