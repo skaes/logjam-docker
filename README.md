@@ -1,7 +1,7 @@
 # logjam-docker
 
 A collection of docker files and support scripts to build and run a
-dockerized instance of logjam_app
+dockerized instance of logjam_app. Also builds Ubuntu packages.
 
 # Running dockerized logjam
 
