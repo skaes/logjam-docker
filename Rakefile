@@ -190,7 +190,7 @@ task :certify do
   system "docker-machine regenerate-certs default"
 end
 
-UBUNTU_VERSION_NAME = { "14.04" => "trusty", "16.04" => "xenial", "18.04" => "bionic"}
+UBUNTU_VERSION_NAME = { "16.04" => "xenial", "18.04" => "bionic"}
 PACKAGES_BUILT_FOR_USR_LOCAL = [:libs, :tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
@@ -269,7 +269,7 @@ namespace :package do
   end
 
   desc "cook all packages"
-  task :all => %w(bionic:all xenial:all trusty:all)
+  task :all => %w(bionic:all xenial:all)
 
   desc "upload images to package host"
   task :upload do
@@ -349,7 +349,7 @@ end
 
 desc "update ubuntu base images with a fresh docker pull"
 task :update_base_images do
-  %w(14.04 16.04 18.04 trusty xenial bionic).each do |version|
+  %w(16.04 18.04 xenial bionic).each do |version|
     sh "docker pull ubuntu:#{version}"
   end
 end
