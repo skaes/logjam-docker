@@ -198,8 +198,9 @@ KEEP = ENV['KEEP'] == "1" ? "--keep" : ""
 
 namespace :package do
   def scan_and_upload(name)
-    system "rsync -vrlptDz -e 'ssh -l #{LOGJAM_PACKAGE_USER}' packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu/#{name}/"
-    system "ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} make -C /var/www/packages/ubuntu/#{name}"
+    upload_dir=`ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} mktemp -d`.chomp
+    system "rsync -vrlptDz -e 'ssh -l #{LOGJAM_PACKAGE_USER}' packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:#{upload_dir}/"
+    system "ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} /usr/local/bin/add-new-debian-packages #{name} #{upload_dir}"
   end
 
   def cook(package, version, name, location)
