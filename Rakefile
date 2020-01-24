@@ -199,8 +199,14 @@ KEEP = ENV['KEEP'] == "1" ? "--keep" : ""
 namespace :package do
   def scan_and_upload(name)
     upload_dir=`ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} mktemp -d`.chomp
-    system "rsync -vrlptDz -e 'ssh -l #{LOGJAM_PACKAGE_USER}' packages/#{name}/* #{LOGJAM_PACKAGE_HOST}:#{upload_dir}/"
-    system "ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} /usr/local/bin/add-new-debian-packages #{name} #{upload_dir}"
+    Dir.glob("*.deb", base: "packages/#{name}").each do |package|
+      if Kernel.system "ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} debian-package-exists #{name} #{package}"
+        puts "package #{name}/#{package} already exists on server"
+      else
+        system "rsync -vrlptDz -e 'ssh -l #{LOGJAM_PACKAGE_USER}' packages/#{name}/#{package} #{LOGJAM_PACKAGE_HOST}:#{upload_dir}/"
+        system "ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} add-new-debian-packages #{name} #{upload_dir}"
+      end
+    end
   end
 
   def cook(package, version, name, location)
@@ -272,9 +278,7 @@ namespace :package do
   task :all => %w(bionic:all xenial:all)
 
   desc "upload images to package host"
-  task :upload do
-    system "rsync -vrlptDz -e ssh packages/* #{LOGJAM_PACKAGE_HOST}:/var/www/packages/ubuntu"
-  end
+  task :upload => %w(bionic:upload xenial:upload)
 
   namespace :cloud do
     desc "upload images to packagecloud.io"
