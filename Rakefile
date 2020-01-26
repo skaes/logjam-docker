@@ -357,3 +357,23 @@ task :update_base_images do
     sh "docker pull ubuntu:#{version}"
   end
 end
+
+desc "bump iteration component of package versions"
+task :increment_iterations do
+  def increment_iteration(file_name)
+    content = File.read(file_name)
+    File.open(file_name, "w") do |f|
+      content.each_line do |line|
+        if line =~ /\Aiteration "(\d+)"/
+          version = $1.to_i
+          line = "iteration \"#{version+1}\""
+        end
+        f.puts line
+      end
+    end
+  end
+
+  increment_iteration("build_code.rb")
+  increment_iteration("build_app.rb")
+
+end
