@@ -17,8 +17,10 @@ case $(bundle version | awk '{print $3}') in
         bundle install --jobs 4 --deployment --without='development test deployment'
         ;;
     2.*)
-        bundle config set deployment true
-        bundle install --jobs 4 --without='development test deployment'
+        bundle config --local deployment true
+        bundle config --local path /opt/logjam/app/vendor/bundle
+        bundle config --local without development test deployment
+        bundle install --jobs 4
         ;;
     *)
         echo "unsupported bundler version" 1>&2
