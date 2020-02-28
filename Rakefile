@@ -156,14 +156,15 @@ task :build => %w[code:build app:build]
 
 desc "clean unused images and containers"
 task :clean do
-  system "docker ps -a | awk '/Exited/ {print $1;}' | xargs docker rm", raise_on_error: false
-  system "docker images | awk '/none|fpm-(fry|dockery)/ {print $3;}' | xargs docker rmi", raise_on_error: false
+  system "docker ps -a | awk '/Exited|Created/ {print $1;}' | xargs docker rm", raise_on_error: false
+  system "docker images | awk '/<none>/ {print $3;}' | xargs docker rmi", raise_on_error: false
+  system "docker images | awk '/(fpm-(fry|dockery))|([a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+)|(.*-v[0-9]+-stefankaes)/ {print $1 \":\" $2;}' | xargs docker rmi", raise_on_error: false
 end
 
 desc "clean, but also remove all stkaes containers"
 task :realclean => :clean do
   system "docker ps -a  | awk '/stkaes/ {print $1;}' | xargs docker rm -f", raise_on_error: false
-  system "docker images -a | awk '/stkaes/ {print $3;}' | xargs docker rmi -f", raise_on_error: false
+  system "docker images -a | awk '/stkaes/ {print $1 \":\" $2;}' | xargs docker rmi -f", raise_on_error: false
 end
 
 desc "delete all containers and images"
