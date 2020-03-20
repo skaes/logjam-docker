@@ -15,6 +15,8 @@ docker-compose up -d
 docker-compose stop
 ````
 
+You will need to create a data directory `~/data` beforehand though.
+
 ## Notes
 
 * you might want to change the `TZ` setting in `logjam.env`

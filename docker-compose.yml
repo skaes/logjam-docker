@@ -7,10 +7,10 @@ services:
 
   logjamdb:
     container_name: logjamdb
-    image: percona/percona-server-mongodb:4.2.0
+    image: percona/percona-server-mongodb:4.2.3
     command: mongod
     volumes:
-      - /data/db.logjam:/data/db
+      - ~/data/db.logjam:/data/db
     ports:
       - "27017:27017"
 
