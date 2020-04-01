@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "rake", "~> 10.5.0"
+gem "rake", ">= 13.0.0"
 gem "ansi"
 gem "package_cloud"
 # gem "fpm-fry", :path => "~/src/fpm-fry"
