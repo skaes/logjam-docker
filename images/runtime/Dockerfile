@@ -22,7 +22,7 @@ WORKDIR /root
 # ----------------------------
 # runtime packages
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION 47def6f830e4aaf25395ffbcbd963330336cc90b
+ENV LOGJAM_TOOLS_REVISION 43589c5f5579db14a46df160e5808e2c4166a68e
 
 RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y && \
     echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/bionic ./' >> /etc/apt/sources.list && \
