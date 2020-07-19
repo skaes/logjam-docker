@@ -15,12 +15,19 @@ before_install:
 - tar xvf secrets.tar
 jobs:
   include:
-    - script:
+    - name: package-focal
+      script:
+        - docker pull ubuntu:20.04
+        - bundle exec rake package:focal:all
+    - name: package-bionic
+      script:
         - docker pull ubuntu:18.04
         - bundle exec rake package:bionic:all
-    - script:
+    - name: package-xenial
+      script:
         - docker pull ubuntu:16.04
         - bundle exec rake package:xenial:all
-    - script:
+    - name: docker-images
+      script:
         # build docker images and upload them to docker hub
         - bundle exec rake build upload

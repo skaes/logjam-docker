@@ -191,7 +191,7 @@ task :certify do
   system "docker-machine regenerate-certs default"
 end
 
-UBUNTU_VERSION_NAME = { "16.04" => "xenial", "18.04" => "bionic"}
+UBUNTU_VERSION_NAME = { "16.04" => "xenial", "18.04" => "bionic", "20.04" => "focal"}
 PACKAGES_BUILT_FOR_USR_LOCAL = [:libs, :tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
@@ -255,6 +255,16 @@ namespace :package do
     end
   end
 
+  namespace :focal do
+    desc "build all focal packages"
+    task :all => packages
+
+    desc "upload all focal packages"
+    task :upload do
+      scan_and_upload("focal")
+    end
+  end
+
   namespace :bionic do
     desc "build all bionic packages"
     task :all => packages
@@ -276,10 +286,10 @@ namespace :package do
   end
 
   desc "cook all packages"
-  task :all => %w(bionic:all xenial:all)
+  task :all => %w(focal:all bionic:all xenial:all)
 
   desc "upload images to package host"
-  task :upload => %w(bionic:upload xenial:upload)
+  task :upload => %w(focal:upload bionic:upload xenial:upload)
 
   namespace :cloud do
     desc "upload images to packagecloud.io"
@@ -354,7 +364,7 @@ end
 
 desc "update ubuntu base images with a fresh docker pull"
 task :update_base_images do
-  %w(16.04 18.04 xenial bionic).each do |version|
+  %w(16.04 18.04 20.04 xenial bionic focal).each do |version|
     sh "docker pull ubuntu:#{version}"
   end
 end

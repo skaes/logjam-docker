@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 
 # ----------------------------
@@ -25,7 +25,7 @@ WORKDIR /root
 ENV LOGJAM_TOOLS_REVISION 43589c5f5579db14a46df160e5808e2c4166a68e
 
 RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y && \
-    echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/bionic ./' >> /etc/apt/sources.list && \
+    echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/focal ./' >> /etc/apt/sources.list && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         cron \
@@ -33,14 +33,14 @@ RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y 
         htop \
         less \
         libcurl4 \
-        libffi6 \
-        libgdbm5 \
+        libffi7 \
+        libgdbm6 \
         libgmp10 \
-        libicu60 \
+        libicu66 \
         libncurses5 \
-        libreadline7 \
+        libreadline8 \
         libsqlite3-0 \
-        libssl1.0.0 \
+        libssl1.1 \
         libxml2 \
         libxslt1.1 \
         libyaml-0-2 \
