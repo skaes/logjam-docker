@@ -1,6 +1,6 @@
 name "logjam-code"
-version "0.8"
-iteration "11"
+version "0.10"
+iteration "1"
 
 vendor "skaes@railsexpress.de"
 
