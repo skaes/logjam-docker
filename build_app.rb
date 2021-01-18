@@ -5,7 +5,7 @@ iteration "11"
 vendor "skaes@railsexpress.de"
 
 depends "logjam-tools", ">= 0.9-5"
-depends "logjam-ruby", ">= 2.7.2"
+depends "logjam-ruby", ">= 3.0.0"
 depends "logjam-passenger", ">= 0.6-16"
 depends "logjam-code", ">= 0.10-1"
 depends "logrotate"

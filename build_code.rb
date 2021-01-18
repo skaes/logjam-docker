@@ -24,7 +24,7 @@ build_depends "zlib1g-dev"
 
 # xenial and bionic base container does not have tzdata anymore
 depends "tzdata"
-depends "logjam-ruby", ">= 2.7.2"
+depends "logjam-ruby", ">= 3.0.0"
 depends "logjam-libs", ">= 0.8-0"
 
 apt_setup "apt-get update -y && apt-get install apt-transport-https ca-certificates -y"
