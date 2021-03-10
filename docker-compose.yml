@@ -23,11 +23,13 @@ services:
       - "9604:9604"
       - "9605:9605"
       - "9705:9705"
+      - "9651:9651"
     tty: true
     environment:
       - LOGJAMDB_NAME=logjamdb
       - LOGJAMCACHE_NAME=memcache
       - LOGJAM_ENV=production
       - LOGJAM_USE_CACHE=0
+      - LOGJAM_REPLAY=1
     env_file:
       - "logjam.env"
