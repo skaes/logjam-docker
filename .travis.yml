@@ -17,15 +17,15 @@ jobs:
   include:
     - name: package-focal
       script:
-        - docker pull ubuntu:20.04
+        - docker pull ubuntu:focal
         - bundle exec rake package:focal:all
     - name: package-bionic
       script:
-        - docker pull ubuntu:18.04
+        - docker pull ubuntu:bionic
         - bundle exec rake package:bionic:all
     - name: package-xenial
       script:
-        - docker pull ubuntu:16.04
+        - docker pull ubuntu:xenial
         - bundle exec rake package:xenial:all
     - name: docker-images
       script:
