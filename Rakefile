@@ -191,7 +191,7 @@ task :certify do
   system "docker-machine regenerate-certs default"
 end
 
-UBUNTU_VERSION_NAME = { "16.04" => "xenial", "18.04" => "bionic", "20.04" => "focal"}
+UBUNTU_VERSIONS = %w(xenial bionic focal)
 PACKAGES_BUILT_FOR_USR_LOCAL = [:libs, :tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
@@ -210,13 +210,13 @@ namespace :package do
     end
   end
 
-  def cook(package, version, name, location)
+  def cook(package, name, location)
     # puts "cooking(#{[package, version, name, location].join(',')})"
     ENV['LOGJAM_PREFIX'] = PREFIXES[location]
     ENV['LOGJAM_SUFFIX'] = SUFFIXES[location]
     options = " --no-cache" if ENV["NOCACHE"]=='1'
 
-    system "fpm-fry cook #{KEEP} --update=always ubuntu:#{version} build_#{package}.rb"
+    system "fpm-fry cook #{KEEP} --update=always ubuntu:#{name} build_#{package}.rb"
     system "mkdir -p packages/#{name} && mv *.deb packages/#{name}/"
     scan_and_upload(name)
   ensure
@@ -232,21 +232,21 @@ namespace :package do
     packages
   end
 
-  UBUNTU_VERSION_NAME.each do |version, name|
+  UBUNTU_VERSIONS.each do |name|
     namespace name do
       packages.each do |package|
         PREFIXES.each do |location, prefix|
           next if location == :local && !PACKAGES_BUILT_FOR_USR_LOCAL.include?(package)
           if location == :opt
-            desc "build package #{package} for ubuntu #{version} with install prefix #{prefix}"
+            desc "build package #{package} for ubuntu #{name} with install prefix #{prefix}"
             task package do
-              cook package, version, name, location
+              cook package, name, location
             end
           else
             namespace package do
-              desc "build package #{package} for ubuntu #{version} with install prefix #{prefix}"
+              desc "build package #{package} for ubuntu #{name} with install prefix #{prefix}"
               task location do
-                cook package, version, name, location
+                cook package, name, location
               end
             end
           end
@@ -297,7 +297,7 @@ namespace :package do
       debs.each do |package|
         PREFIXES.each do |location, prefix|
           suffix = SUFFIXES[location]
-          UBUNTU_VERSION_NAME.each do |version, name|
+          UBUNTU_VERSIONS.each do |name|
             begin
               deb = `ls packages/#{name}/logjam-#{package}#{suffix}*.deb 2>/dev/null`.chomp.split("\n").last
               system "package_cloud push stkaes/logjam/ubuntu/#{name} #{deb}" unless deb.nil?
