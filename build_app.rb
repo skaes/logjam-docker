@@ -4,9 +4,9 @@ iteration "9"
 
 vendor "skaes@railsexpress.de"
 
-depends "logjam-tools", ">= 0.11-3"
-depends "logjam-ruby", ">= 3.0.1"
-depends "logjam-passenger", ">= 0.8-1"
+depends "logjam-tools", ">= 0.13-0"
+depends "logjam-ruby", ">= 3.0.2"
+depends "logjam-passenger", ">= 0.9-1"
 depends "logjam-code", ">= 0.11-1"
 depends "logrotate"
 depends "runit"
