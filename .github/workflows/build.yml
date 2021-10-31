@@ -1,0 +1,68 @@
+name: build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7.4"
+
+      - name: Install gems
+        run: bundle install
+
+      - name: Build docker images
+        run: bundle exec rake build
+
+      - name: Setup docker credentials
+        run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u stkaes --password-stdin
+
+      - name: Push container to docker registry
+        run: bundle exec rake upload
+
+  package:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [xenial, bionic, focal]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup SSH credentials
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/railsexpress.key
+          chmod 600 ~/.ssh/railsexpress.key
+          cat >>~/.ssh/config <<END
+          Host railsexpress.de
+            HostName railsexpress.de
+            User uploader
+            IdentityFile ~/.ssh/railsexpress.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_KEY: ${{ secrets.RAILSEXPRESS_SSH_KEY }}
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.6.8"
+
+      - name: Install gems
+        run: bundle install
+
+      - name: Pull base image
+        run: docker pull ubuntu:${{ matrix.os }}
+
+      - name: Build package
+        run: bundle exec rake package:${{ matrix.os }}:all
