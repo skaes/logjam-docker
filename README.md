@@ -3,6 +3,8 @@
 A collection of docker files and support scripts to build and run a
 dockerized instance of logjam_app. Also builds Ubuntu packages.
 
+[![build](https://github.com/skaes/logjam-docker/actions/workflows/build.yml/badge.svg)](https://github.com/skaes/logjam-docker/actions/workflows/build.yml)
+
 # Running dockerized logjam
 
 Assuming you have `docker` and `docker-compose` installed on your
