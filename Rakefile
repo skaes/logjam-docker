@@ -290,58 +290,6 @@ namespace :package do
 
   desc "upload images to package host"
   task :upload => %w(focal:upload bionic:upload xenial:upload)
-
-  namespace :cloud do
-    desc "upload images to packagecloud.io"
-    task :upload do
-      debs.each do |package|
-        PREFIXES.each do |location, prefix|
-          suffix = SUFFIXES[location]
-          UBUNTU_VERSIONS.each do |name|
-            begin
-              deb = `ls packages/#{name}/logjam-#{package}#{suffix}*.deb 2>/dev/null`.chomp.split("\n").last
-              system "package_cloud push stkaes/logjam/ubuntu/#{name} #{deb}" unless deb.nil?
-            rescue => e
-              $stderr.puts e.message
-            end
-          end
-        end
-      end
-    end
-  end
-
-  namespace :aptly do
-    def url
-      ENV['LOGJAM_APTLY_URL']
-    end
-
-    def upload(pkg, distribution)
-      puts "uploading #{pkg} for #{distribution} to #{url}"
-      system "curl -X POST -F 'file=@#{pkg}' #{url}/api/files/#{distribution}"
-    end
-
-    def publish(distribution)
-      puts "publishing uploaded packages for #{distribution} to #{url}"
-      system <<-"CMDS"
-      curl -X POST #{url}/api/repos/#{distribution}/file/#{distribution}
-      curl -X PUT -H 'Content-Type: application/json' --data '{}' #{url}/api/publish/#{distribution}/#{distribution}
-      CMDS
-    end
-
-    desc "upload packages to aptly server LOGJAM_APTLY_URL=#{url}"
-    task :upload do
-      UBUNTU_VERSION_NAME.each do |version, name|
-        debs.each do |package|
-          PREFIXES.each do |location, prefix|
-            suffix = SUFFIXES[location]
-            deb = `ls packages/#{name}/logjam-#{package}#{suffix}*.deb 2>/dev/null`.chomp.split("\n").last
-            upload(deb, name) unless deb.nil?
-          end
-        end
-        publish(name)
-      end
-    end
-  end
 end
 
 def get_latest_commit(repo)
