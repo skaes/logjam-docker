@@ -197,6 +197,8 @@ PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
 KEEP = ENV['KEEP'] == "1" ? "--keep" : ""
 
+LOGJAM_REVISION = `awk -F' ' '/LOGJAM_REVISION/ {print $3};' images/code/Dockerfile`.chomp
+
 namespace :package do
   def scan_and_upload(name)
     upload_dir=`ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} mktemp -d`.chomp
@@ -211,10 +213,10 @@ namespace :package do
   end
 
   def cook(package, name, location)
-    # puts "cooking(#{[package, version, name, location].join(',')})"
+    # puts "cooking(#{[package, name, location].join(',')}) LOGJAM_REVISION=#{LOGJAM_REVISION}"
     ENV['LOGJAM_PREFIX'] = PREFIXES[location]
     ENV['LOGJAM_SUFFIX'] = SUFFIXES[location]
-    options = " --no-cache" if ENV["NOCACHE"]=='1'
+    ENV['LOGJAM_REVISION'] = LOGJAM_REVISION
 
     system "fpm-fry cook #{KEEP} --update=always ubuntu:#{name} build_#{package}.rb"
     system "mkdir -p packages/#{name} && mv *.deb packages/#{name}/"

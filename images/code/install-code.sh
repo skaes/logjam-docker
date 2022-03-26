@@ -8,6 +8,9 @@ cd /opt/logjam
 
 git clone https://github.com/skaes/logjam_app.git app
 cd app
+sed -i -e 's/url = git:/url = https:/' .gitmodules
+
+git checkout ${LOGJAM_REVISION}
 git submodule init
 git submodule update
 
