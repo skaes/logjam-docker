@@ -49,6 +49,7 @@ RUN apt-get update && apt-get -y upgrade && \
         libxslt-dev \
         libyaml-dev \
         lsof \
+        nodejs \
         patch \
         pkg-config \
         sudo \

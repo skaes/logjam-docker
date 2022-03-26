@@ -48,6 +48,7 @@ RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y 
         locales-all \
         lsof \
         net-tools \
+        nodejs \
         runit \
         sudo  \
         tzdata \
