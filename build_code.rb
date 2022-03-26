@@ -9,7 +9,6 @@ vendor "skaes@railsexpress.de"
 build_depends "build-essential"
 build_depends "curl"
 build_depends "git"
-build_depends "nodejs"
 
 build_depends "libffi-dev"
 build_depends "libgdbm-dev"
@@ -24,6 +23,7 @@ build_depends "zlib1g-dev"
 
 # xenial and bionic base container does not have tzdata anymore
 depends "tzdata"
+depends "nodejs"
 depends "logjam-ruby", ">= 3.1.1"
 depends "logjam-libs", ">= 0.9-2"
 
