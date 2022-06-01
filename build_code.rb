@@ -4,8 +4,6 @@ iteration "7"
 
 vendor "skaes@railsexpress.de"
 
-# source "https://github.com/skaes/logjam_app.git"
-
 build_depends "build-essential"
 build_depends "curl"
 build_depends "git"
@@ -36,6 +34,7 @@ add "images/code/install-code.sh", ".install-code.sh"
 run "./.install-code.sh"
 
 plugin "exclude"
+exclude "/root/**"
 exclude "/root"
 exclude "/opt/logjam/**/.git*"
 exclude "/opt/logjam/app/tmp/cache/*"

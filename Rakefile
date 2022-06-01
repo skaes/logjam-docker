@@ -217,6 +217,7 @@ namespace :package do
     ENV['LOGJAM_PREFIX'] = PREFIXES[location]
     ENV['LOGJAM_SUFFIX'] = SUFFIXES[location]
     ENV['LOGJAM_REVISION'] = LOGJAM_REVISION
+    ENV['RUBYOPT'] = '-W0'
 
     system "fpm-fry cook #{KEEP} --update=always ubuntu:#{name} build_#{package}.rb"
     system "mkdir -p packages/#{name} && mv *.deb packages/#{name}/"
