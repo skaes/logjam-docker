@@ -8,7 +8,7 @@ RUN apt-get update -y && apt-get -y --no-install-recommends install \
         tzdata \
         && apt-get clean
 
-ENV LOGJAM_REVISION 944289d1cc71146516e94e530960a4363d59ed92
+ENV LOGJAM_REVISION d10f5e9b9676e1c0948573a2d9c8b2457ccde7b4
 
 ENV PATH /opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
