@@ -320,22 +320,20 @@ task :update_base_images do
   end
 end
 
-desc "bump iteration component of package versions"
-task :increment_iterations do
-  def increment_iteration(file_name)
-    content = File.read(file_name)
-    File.open(file_name, "w") do |f|
-      content.each_line do |line|
-        if line =~ /\Aiteration "(\d+)"/
-          version = $1.to_i
-          line = "iteration \"#{version+1}\""
-        end
-        f.puts line
+desc "increment package versions"
+task :increment_versions do
+  file_name = Pathname.new(__dir__)+"versions.yml"
+  content = File.read(file_name)
+  File.open(file_name, "w") do |f|
+    content.each_line do |line|
+      line.chomp!
+      puts line.inspect
+      if line =~ /\A[a-z]+: [\d\.]+\.(\d+)\z/
+        puts "match: #{$1}"
+        version = $1.to_i
+        line.sub!(/#{$1}\z/, (version+1).to_s)
       end
+      f.puts line
     end
   end
-
-  increment_iteration("build_code.rb")
-  increment_iteration("build_app.rb")
-
 end

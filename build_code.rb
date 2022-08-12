@@ -1,7 +1,5 @@
 name "logjam-code"
-version "0.13"
-iteration "12"
-
+version YAML.load_file(Pathname.new(__dir__)+"versions.yml")["code"]
 vendor "skaes@railsexpress.de"
 
 build_depends "build-essential"
