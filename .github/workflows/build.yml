@@ -3,6 +3,8 @@ name: build
 on:
   push:
     branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   images:
@@ -24,9 +26,11 @@ jobs:
 
       - name: Setup docker credentials
         run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u stkaes --password-stdin
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
       - name: Push container to docker registry
         run: bundle exec rake upload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
   package:
     runs-on: ubuntu-latest
@@ -52,6 +56,7 @@ jobs:
           END
         env:
           SSH_KEY: ${{ secrets.RAILSEXPRESS_SSH_KEY }}
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -64,5 +69,7 @@ jobs:
       - name: Pull base image
         run: docker pull ubuntu:${{ matrix.os }}
 
-      - name: Build package
+      - name: Build package and upload
         run: bundle exec rake package:${{ matrix.os }}:all
+        env:
+          LOGJAM_PACKAGE_UPLOAD: ${{ github.ref == 'refs/heads/master' && '1' || '0' }}

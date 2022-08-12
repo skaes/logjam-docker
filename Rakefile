@@ -8,6 +8,7 @@ require "ansi"
 ROOT = File.expand_path("..", __FILE__)
 LOGJAM_PACKAGE_HOST = (ENV['LOGJAM_PACKAGE_HOST'] || "railsexpress.de") .to_s
 LOGJAM_PACKAGE_USER = (ENV['LOGJAM_PACKAGE_USER'] || "uploader").to_s
+LOGJAM_PACKAGE_UPLOAD = ENV['LOGJAM_PACKAGE_UPLOAD'] != '0'
 
 module LogSystemCommands
   def system(cmd, raise_on_error: true)
@@ -196,11 +197,11 @@ PACKAGES_BUILT_FOR_USR_LOCAL = [:libs, :tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
 KEEP = ENV['KEEP'] == "1" ? "--keep" : ""
-
 LOGJAM_REVISION = `awk -F' ' '/LOGJAM_REVISION/ {print $3};' images/code/Dockerfile`.chomp
 
 namespace :package do
   def scan_and_upload(name)
+    return unless LOGJAM_PACKAGE_UPLOAD
     upload_dir=`ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} mktemp -d`.chomp
     Dir.glob("*.deb", base: "packages/#{name}").each do |package|
       if Kernel.system "ssh #{LOGJAM_PACKAGE_USER}@#{LOGJAM_PACKAGE_HOST} debian-package-exists #{name} #{package}"
