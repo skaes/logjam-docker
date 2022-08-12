@@ -22,7 +22,7 @@ WORKDIR /root
 # ----------------------------
 # runtime packages
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION 8aaa8486747aacd48cb82dbe48bad19c2ceb88e9
+ENV LOGJAM_TOOLS_REVISION bf131012ac6201e76db530d6d453dd029479bd75
 
 RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y && \
     echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/focal ./' >> /etc/apt/sources.list && \
