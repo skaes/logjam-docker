@@ -328,9 +328,7 @@ task :increment_versions do
   File.open(file_name, "w") do |f|
     content.each_line do |line|
       line.chomp!
-      puts line.inspect
       if line =~ /\A[a-z]+: [\d\.]+\.(\d+)\z/
-        puts "match: #{$1}"
         version = $1.to_i
         line.sub!(/#{$1}\z/, (version+1).to_s)
       end
