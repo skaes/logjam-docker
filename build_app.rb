@@ -2,7 +2,7 @@ name "logjam-app"
 version YAML.load_file(Pathname.new(__dir__)+"versions.yml")["appl"]
 vendor "skaes@railsexpress.de"
 
-depends "logjam-tools", ">= 0.16.3"
+depends "logjam-tools", ">= 0.16.4"
 depends "logjam-passenger", ">= 0.15-1"
 depends "logjam-code", "= #{version}"
 depends "logrotate"
