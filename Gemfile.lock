@@ -16,8 +16,8 @@ GEM
       pleaserun (~> 0.0.29)
       rexml
       stud
-    fpm-fry (0.5.1)
-      excon (~> 0.71.0)
+    fpm-fry (0.6.0)
+      excon (~> 0.71)
       fpm (~> 1.13)
     insist (1.0.0)
     mustache (0.99.8)
@@ -37,7 +37,7 @@ PLATFORMS
 
 DEPENDENCIES
   ansi
-  fpm-fry (= 0.5.1)
+  fpm-fry
   rake (>= 13.0.0)
 
 BUNDLED WITH
