@@ -37,7 +37,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [xenial, bionic, focal]
+        os: [bionic, focal, jammy]
 
     steps:
       - uses: actions/checkout@v3
