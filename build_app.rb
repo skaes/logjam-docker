@@ -49,7 +49,7 @@ export RAILS_ENV=production
 export PATH=/opt/logjam/bin:$PATH
 cd /opt/logjam/app
 bundle exec whenever --user logjam --update-crontab --roles cron,worker
-bundle exec rake logjam:daemons:install
+env LOGJAM_DEVICES="localhost:9606,localhost:9706" bundle exec rake logjam:daemons:install
 
 chown -R logjam.logjam /opt/logjam/
 echo logjam post-install completed
