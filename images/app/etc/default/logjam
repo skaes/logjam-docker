@@ -1,2 +1,2 @@
 LOGJAMDB_INDEXER_OPTS=${LOGJAMDB_INDEXER_OPTS:-3}
-LOGJAM_DEVICES="tcp://localhost:9606,tcp://localhost:9706"
+LOGJAM_DEVICES="localhost:9606,localhost:9706"
