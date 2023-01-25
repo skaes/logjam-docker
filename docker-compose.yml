@@ -18,18 +18,30 @@ services:
     container_name: logjam-demo
     image: stkaes/logjam-app
     ports:
+      # logjam web ui
       - "80:80"
+      # logjam live stramd data
       - "8080:8080"
+      # logjam msgs router port
       - "9604:9604"
+      # logjam msgs pull port
       - "9605:9605"
+      # logjam device pub port
+      - "9606:9606"
+      # logjam frontend data port
       - "9705:9705"
-      - "9651:9651"
+      # importer prometheus metrics
+      - "9610:9610"
+      # exporter prometheus metrics
+      - "8081:8081"
+      # device prometheus exporter
+      - "8082:8082"
     tty: true
     environment:
       - LOGJAMDB_NAME=logjamdb
       - LOGJAMCACHE_NAME=memcache
       - LOGJAM_ENV=production
       - LOGJAM_USE_CACHE=0
-      - LOGJAM_REPLAY=1
+      - LOGJAM_EXPORTER_INSTALL=0
     env_file:
       - "logjam.env"

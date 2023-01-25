@@ -28,6 +28,17 @@ You will need to create a data directory `~/data` beforehand though.
 
 # Customization
 
+## Daemons
+
+By default, the logjam container runs the logjam web ui, the data
+importer, a logjam device, a frontend data endpoint and a promethues
+exporter.
+
+You can disable the prometheus exporter by passing
+`LOGJAM_EXPORTER_INSTALL=0` when running the container.
+
+## Applications
+
 There are currently two ways to add applications to be monitored to logjam.
 
 If you set `LOGJAM_USER_STREAMS` to a comma separated list of stream
