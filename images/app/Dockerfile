@@ -40,7 +40,10 @@ CMD ["/docker/startapp.sh"]
 EXPOSE 80 8080
 
 # importer zeromq device ports
-EXPOSE 9604 9605 9606
+EXPOSE 9604 9605 9606 9621
 
 # logjam frontend timings collector
-EXPOSE 9705
+EXPOSE 9705 9706
+
+# prometheus ports
+EXPOSE 8081 8082 9610

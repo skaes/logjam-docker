@@ -28,6 +28,8 @@ services:
       - "9605:9605"
       # logjam device pub port
       - "9606:9606"
+      # logjam device stats port
+      - "9621:9621"
       # logjam frontend data port
       - "9705:9705"
       # importer prometheus metrics
