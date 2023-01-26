@@ -3,7 +3,7 @@ version: '2'
 services:
   memcache:
     container_name: memcache
-    image: memcached:1.6.8
+    image: memcached:1.6
 
   logjamdb:
     container_name: logjamdb
