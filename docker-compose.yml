@@ -20,7 +20,7 @@ services:
     ports:
       # logjam web ui
       - "80:80"
-      # logjam live stramd data
+      # logjam live stream data
       - "8080:8080"
       # logjam msgs router port
       - "9604:9604"
@@ -36,7 +36,7 @@ services:
       - "9610:9610"
       # exporter prometheus metrics
       - "8081:8081"
-      # device prometheus exporter
+      # device prometheus metrics
       - "8082:8082"
     tty: true
     environment:
