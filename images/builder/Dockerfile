@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:jammy
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -12,7 +12,7 @@ WORKDIR /root
 # Add railsepxess package source
 # ----------------------------
 RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y && \
-    echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/focal ./' >> /etc/apt/sources.list
+    echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/jammy ./' >> /etc/apt/sources.list
 
 # ----------------------------
 # update system

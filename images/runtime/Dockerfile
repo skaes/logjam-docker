@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:jammy
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 
 # ----------------------------
@@ -25,7 +25,7 @@ WORKDIR /root
 ENV LOGJAM_TOOLS_REVISION b1a2749adb0cef55c49d74d768863ce6fc8c29c9
 
 RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y && \
-    echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/focal ./' >> /etc/apt/sources.list && \
+    echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/jammy ./' >> /etc/apt/sources.list && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         cron \
@@ -36,11 +36,11 @@ RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y 
         libffi7 \
         libgdbm6 \
         libgmp10 \
-        libicu66 \
+        libicu70 \
         libncurses5 \
         libreadline8 \
         libsqlite3-0 \
-        libssl1.1 \
+        libssl3 \
         libxml2 \
         libxslt1.1 \
         libyaml-0-2 \
