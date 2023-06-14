@@ -198,6 +198,9 @@ PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
 KEEP = ENV['KEEP'] == "1" ? "--keep" : ""
 LOGJAM_REVISION = `awk -F' ' '/LOGJAM_REVISION/ {print $3};' images/code/Dockerfile`.chomp
+ARCH = ENV['ARCH'] || "amd64"
+PLATFORM = "--platform #{ARCH}"
+LIBARCH = ARCH.sub('arm64', 'arm64v8') + "/"
 
 namespace :package do
   def scan_and_upload(name)
@@ -220,7 +223,8 @@ namespace :package do
     ENV['LOGJAM_REVISION'] = LOGJAM_REVISION
     ENV['RUBYOPT'] = '-W0'
 
-    system "fpm-fry cook #{KEEP} --update=always ubuntu:#{name} build_#{package}.rb"
+    system "docker pull #{PLATFORM} #{LIBARCH}ubuntu:#{name}"
+    system "fpm-fry cook #{KEEP} #{PLATFORM} --update=always #{LIBARCH}ubuntu:#{name} build_#{package}.rb"
     system "mkdir -p packages/#{name} && mv *.deb packages/#{name}/"
     scan_and_upload(name)
   ensure
