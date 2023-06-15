@@ -106,32 +106,6 @@ namespace :app do
 
 end
 
-namespace :develop do
-  desc "copy build scripts"
-  task :scripts do
-    system "tar cp `find images -type f | egrep -v 'Dockerfile|develop|.tar.gz'` | tar xpf - -C images/develop --strip-components 2"
-  end
-
-  desc "build the develop image"
-  task :build => ["builder:build", :scripts] do
-    build_image("develop")
-  end
-
-  task :test do
-    test_image("develop")
-  end
-
-  desc "run a develop container"
-  task :run do
-    system "docker run --rm -it -p 80:80 -p 8080:8080 -p 9605:9605 -p 9705:9705 --link logjamdb:logjamdb --link memcache:logjamcache --name develop -h develop.local #{image_name 'develop'}"
-  end
-
-  desc "attach to running develop container"
-  task :attach do
-    system "docker exec -it develop bash"
-  end
-end
-
 namespace :logjamdb do
   desc "start a logjamdb instance"
   task :run do
