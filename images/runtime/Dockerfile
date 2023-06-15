@@ -57,7 +57,7 @@ RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y 
         logjam-libs \
         logjam-tools \
         logjam-passenger \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* && rm /etc/service
 
 # ----------------------------
 # set locale
