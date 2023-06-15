@@ -1,3 +1,4 @@
+ARG TARGETARCH
 FROM stkaes/logjam-builder:latest-${TARGETARCH}
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 

@@ -40,7 +40,7 @@ end
 
 def build_image(name, options="")
   options += " --no-cache" if ENV["NOCACHE"]=='1'
-  unless system "docker build #{PLATFORM} -t=#{image_name(name)} #{options} #{image_dir(name)}"
+  unless system "docker build #{PLATFORM} --build-arg TARGETARCH=#{ARCH} -t=#{image_name(name)} #{options} #{image_dir(name)}"
     fail "could not build #{image_name(name)}"
   end
 end
