@@ -1,5 +1,5 @@
-FROM stkaes/logjam-code as code
-FROM stkaes/logjam-runtime
+FROM stkaes/logjam-code:latest-${TARGETARCH} as code
+FROM stkaes/logjam-runtime:latest-${TARGETARCH}
 # this copies ruby, gems and app code on top of all the libs and tools installed in the runtime image
 COPY --from=code /opt/logjam /opt/logjam
 

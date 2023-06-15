@@ -10,6 +10,10 @@ LOGJAM_PACKAGE_HOST = (ENV['LOGJAM_PACKAGE_HOST'] || "railsexpress.de") .to_s
 LOGJAM_PACKAGE_USER = (ENV['LOGJAM_PACKAGE_USER'] || "uploader").to_s
 LOGJAM_PACKAGE_UPLOAD = ENV['LOGJAM_PACKAGE_UPLOAD'] != '0'
 
+ARCH = ENV['ARCH'] || "amd64"
+PLATFORM = "--platform linux/#{ARCH}"
+LIBARCH = ARCH.sub('arm64', 'arm64v8') + "/"
+
 module LogSystemCommands
   def system(cmd, raise_on_error: true)
     puts
@@ -27,7 +31,7 @@ class << self
 end
 
 def image_name(name)
-  "stkaes/logjam-#{name}"
+  "stkaes/logjam-#{name}:latest-#{ARCH}"
 end
 
 def image_dir(name)
@@ -36,7 +40,7 @@ end
 
 def build_image(name, options="")
   options += " --no-cache" if ENV["NOCACHE"]=='1'
-  unless system "docker build -t=#{image_name(name)} #{options} #{image_dir(name)}"
+  unless system "docker build #{PLATFORM} -t=#{image_name(name)} #{options} #{image_dir(name)}"
     fail "could not build #{image_name(name)}"
   end
 end
@@ -101,9 +105,8 @@ namespace :app do
 
   desc "upload logjam-app to docker hub"
   task :upload do
-    system "docker push stkaes/logjam-app"
+    system "docker push stkaes/logjam-app:latest-#{ARCH}"
   end
-
 end
 
 namespace :logjamdb do
@@ -161,6 +164,14 @@ task :default => :build
 desc "upload images to registry"
 task :upload => %w(app:upload)
 
+desc "create multi platform manifest"
+task :manifest do
+  repo = "stkaes/logjam-app"
+  system "docker manifest rm #{repo}:latest 2>/dev/null || true"
+  system "docker manifest create #{repo}:latest --amend #{repo}:latest-amd64 --amend #{repo}:latest-arm64"
+  system "docker manifest push --purge #{repo}:latest"
+end
+
 desc "regenerate TLS certificates (e.g. after IP change)"
 task :certify do
   system "docker-machine regenerate-certs default"
@@ -172,9 +183,6 @@ PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
 KEEP = ENV['KEEP'] == "1" ? "--keep" : ""
 LOGJAM_REVISION = `awk -F' ' '/LOGJAM_REVISION/ {print $3};' images/code/Dockerfile`.chomp
-ARCH = ENV['ARCH'] || "amd64"
-PLATFORM = "--platform #{ARCH}"
-LIBARCH = ARCH.sub('arm64', 'arm64v8') + "/"
 
 namespace :package do
   def scan_and_upload(name)

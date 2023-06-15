@@ -1,4 +1,4 @@
-FROM stkaes/logjam-builder
+FROM stkaes/logjam-builder:latest-${TARGETARCH}
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 
 ARG DEBIAN_FRONTEND=noninteractive
