@@ -24,11 +24,7 @@ RUN bundle exec whenever --user logjam --update-crontab --roles cron,worker
 # add script to install daemons. will be run by startapp.sh
 ADD ./install-daemons.sh /docker/install-daemons.sh
 
-# download passenger support binaries and build native support runtime
-RUN passenger-config install-standalone-runtime
-RUN passenger-config build-native-support
-
-# now prohibit passenger compiles/downloads
+# prohibit passenger compiles/downloads
 ENV PASSENGER_COMPILE_NATIVE_SUPPORT_BINARY=0
 ENV PASSENGER_DOWNLOAD_NATIVE_SUPPORT_BINARY=0
 
