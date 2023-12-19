@@ -47,3 +47,14 @@ mkdir -p service
 # pre-compilation and github. Uncomment if we reverse this decision.
 # export RAILS_ENV=production
 # bundle exec rake assets:precompile
+
+
+# Hack: install base64 gem that is part of the bundle into system
+# gems, because passenger will load it before it executes
+# require 'bundle/setup' and that leads to gem activation errors.
+
+bundled_base64_version=`bundle list | grep base64 | sed 's/^.*(\(.*\))$/\1/'`
+installed_base64_version=`gem list | grep base64 | sed -e 's/default://' -e 's/^.*(\(.*\))$/\1/'`
+if [ "$bundled_base64_version" != "$installed_base64_version" ]; then
+    gem install base64 -v $bundled_base64_version
+fi
