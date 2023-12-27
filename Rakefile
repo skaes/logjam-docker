@@ -13,6 +13,7 @@ LOGJAM_PACKAGE_UPLOAD = ENV['LOGJAM_PACKAGE_UPLOAD'] != '0'
 ARCH = ENV['ARCH'] || "amd64"
 PLATFORM = "--platform linux/#{ARCH}"
 LIBARCH = ARCH.sub('arm64', 'arm64v8') + "/"
+PROGRESS = "--progress #{ENV['PROGRESS'] || 'plain'}"
 
 module LogSystemCommands
   def system(cmd, raise_on_error: true)
@@ -40,7 +41,7 @@ end
 
 def build_image(name, options="")
   options += " --no-cache" if ENV["NOCACHE"]=='1'
-  unless system "docker build #{PLATFORM} --build-arg TARGETARCH=#{ARCH} -t=#{image_name(name)} #{options} #{image_dir(name)}"
+  unless system "docker build #{PROGRESS} #{PLATFORM} --build-arg TARGETARCH=#{ARCH} -t=#{image_name(name)} #{options} #{image_dir(name)}"
     fail "could not build #{image_name(name)}"
   end
 end
