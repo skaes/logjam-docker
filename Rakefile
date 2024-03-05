@@ -178,7 +178,7 @@ task :certify do
   system "docker-machine regenerate-certs default"
 end
 
-UBUNTU_VERSIONS = %w(bionic focal jammy)
+UBUNTU_VERSIONS = %w(focal jammy)
 PACKAGES_BUILT_FOR_USR_LOCAL = [:libs, :tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
@@ -266,21 +266,11 @@ namespace :package do
     end
   end
 
-  namespace :bionic do
-    desc "build all bionic packages"
-    task :all => packages
-
-    desc "upload all bionic packages"
-    task :upload do
-      scan_and_upload("bionic")
-    end
-  end
-
   desc "cook all packages"
-  task :all => %w(jammy:all focal:all bionic:all)
+  task :all => %w(jammy:all focal:all)
 
   desc "upload images to package host"
-  task :upload => %w(jammy:upload focal:upload bionic:upload)
+  task :upload => %w(jammy:upload focal:upload)
 end
 
 def get_latest_commit(repo)
@@ -303,7 +293,7 @@ end
 
 desc "update ubuntu base images with a fresh docker pull"
 task :update_base_images do
-  %w(18.04 20.04 22.04 bionic focal jammy).each do |version|
+  %w(20.04 22.04 focal jammy).each do |version|
     sh "docker pull ubuntu:#{version}"
   end
 end
