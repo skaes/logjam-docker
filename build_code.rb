@@ -17,7 +17,6 @@ build_depends "libyaml-dev"
 build_depends "pkg-config"
 build_depends "zlib1g-dev"
 
-# xenial and bionic base container does not have tzdata anymore
 depends "tzdata"
 depends "nodejs"
 depends "logjam-ruby", ">= 3.3.0-2"

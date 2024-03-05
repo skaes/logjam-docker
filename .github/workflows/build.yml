@@ -67,7 +67,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [bionic, focal, jammy]
+        os: [focal, jammy]
         arch: ["amd64", "arm64"]
 
     steps:

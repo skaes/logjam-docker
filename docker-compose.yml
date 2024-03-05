@@ -7,7 +7,7 @@ services:
 
   logjamdb:
     container_name: logjamdb
-    image: mongo:4.4-bionic
+    image: mongo:4.4-focal
     command: mongod
     volumes:
       - ~/data/db.logjam:/data/db
