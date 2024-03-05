@@ -206,8 +206,7 @@ namespace :package do
     ENV['LOGJAM_REVISION'] = LOGJAM_REVISION
     ENV['RUBYOPT'] = '-W0'
 
-    system "docker pull #{PLATFORM} #{LIBARCH}ubuntu:#{name}"
-    system "fpm-fry cook #{KEEP} #{PLATFORM} --update=always #{LIBARCH}ubuntu:#{name} build_#{package}.rb"
+    system "fpm-fry cook #{KEEP} #{PLATFORM} --pull --update=always #{LIBARCH}ubuntu:#{name} build_#{package}.rb"
     system "mkdir -p packages/#{name} && mv *.deb packages/#{name}/"
     scan_and_upload(name)
   ensure
