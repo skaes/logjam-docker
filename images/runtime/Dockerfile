@@ -22,7 +22,7 @@ WORKDIR /root
 # ----------------------------
 # runtime packages
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION 2fcd073086c2d545ba7d6f07ce7b493ad4297b77
+ENV LOGJAM_TOOLS_REVISION 7d8a9c09e3c8196dff6c96c587f34ac1c7cfb731
 
 RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y && \
     echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/jammy ./' >> /etc/apt/sources.list && \
