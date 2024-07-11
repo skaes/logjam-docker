@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:noble
 LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
 
 # ----------------------------
@@ -25,7 +25,7 @@ WORKDIR /root
 ENV LOGJAM_TOOLS_REVISION 2b5a3ba95150787ef3dd08e2efbb90078f3bd52e
 
 RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y && \
-    echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/jammy ./' >> /etc/apt/sources.list && \
+    echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/noble ./' >> /etc/apt/sources.list && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         cron \
@@ -33,14 +33,14 @@ RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y 
         htop \
         less \
         libcurl4 \
-        libffi7 \
-        libgdbm6 \
+        libffi8 \
+        libgdbm6t64 \
         libgmp10 \
-        libicu70 \
-        libncurses5 \
-        libreadline8 \
+        libicu74 \
+        libncurses6 \
+        libreadline8t64 \
         libsqlite3-0 \
-        libssl3 \
+        libssl3t64 \
         libxml2 \
         libxslt1.1 \
         libyaml-0-2 \

@@ -178,7 +178,7 @@ task :certify do
   system "docker-machine regenerate-certs default"
 end
 
-UBUNTU_VERSIONS = %w(focal jammy)
+UBUNTU_VERSIONS = %w(focal jammy noble)
 PACKAGES_BUILT_FOR_USR_LOCAL = [:libs, :tools]
 PREFIXES = { :opt => "/opt/logjam", :local => "/usr/local" }
 SUFFIXES = { :opt => "", :local => "-usr-local" }
@@ -245,6 +245,16 @@ namespace :package do
     end
   end
 
+  namespace :noble do
+    desc "build all noble packages"
+    task :all => packages
+
+    desc "upload all noble packages"
+    task :upload do
+      scan_and_upload("noble")
+    end
+  end
+
   namespace :jammy do
     desc "build all jammy packages"
     task :all => packages
@@ -266,10 +276,10 @@ namespace :package do
   end
 
   desc "cook all packages"
-  task :all => %w(jammy:all focal:all)
+  task :all => %w(noble:all jammy:all focal:all)
 
   desc "upload images to package host"
-  task :upload => %w(jammy:upload focal:upload)
+  task :upload => %w(noble:upload jammy:upload focal:upload)
 end
 
 def get_latest_commit(repo)
@@ -292,7 +302,7 @@ end
 
 desc "update ubuntu base images with a fresh docker pull"
 task :update_base_images do
-  %w(20.04 22.04 focal jammy).each do |version|
+  %w(20.04 22.04 24.04 focal jammy noble).each do |version|
     sh "docker pull ubuntu:#{version}"
   end
 end

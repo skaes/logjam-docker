@@ -67,7 +67,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [focal, jammy]
+        os: [focal, jammy, noble]
         arch: ["amd64", "arm64"]
 
     steps:
