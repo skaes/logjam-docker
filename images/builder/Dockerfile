@@ -1,11 +1,11 @@
 FROM ubuntu:noble
-LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
+LABEL maintainer="Stefan Kaes <skaes@railsexpress.de>"
 ARG DEBIAN_FRONTEND=noninteractive
 
 # ----------------------------
 # Environment (can be used in scripts)
 # ----------------------------
-ENV HOME /root
+ENV HOME=/root
 WORKDIR /root
 
 # ----------------------------

@@ -1,10 +1,10 @@
 FROM ubuntu:noble
-LABEL maintainer "Stefan Kaes <skaes@railsexpress.de>"
+LABEL maintainer="Stefan Kaes <skaes@railsexpress.de>"
 
 # ----------------------------
 # Environment (can be used in scripts)
 # ----------------------------
-ENV HOME /root
+ENV HOME=/root
 WORKDIR /root
 
 # ----------------------------
@@ -22,7 +22,7 @@ WORKDIR /root
 # ----------------------------
 # runtime packages
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION 2b5a3ba95150787ef3dd08e2efbb90078f3bd52e
+ENV LOGJAM_TOOLS_REVISION=2b5a3ba95150787ef3dd08e2efbb90078f3bd52e
 
 RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y && \
     echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/noble ./' >> /etc/apt/sources.list && \
