@@ -288,15 +288,15 @@ end
 
 desc "update commit references for logjam app and tools and optionally LIBS=0|1"
 task :update_refs do
-  files = `grep -rl _REVISION images`.gsub("\n", " ")
+  files = `grep -rl '_REVISION=' images`.gsub("\n", " ")
   logjam_sha = get_latest_commit("logjam_app")
   # puts "logjam_sha: #{logjam_sha}"
-  system "perl -p -i -e 's/LOGJAM_REVISION .*$/LOGJAM_REVISION #{logjam_sha}/' #{files}"
+  system "perl -p -i -e 's/LOGJAM_REVISION=.*$/LOGJAM_REVISION=#{logjam_sha}/' #{files}"
   tools_sha = get_latest_commit("logjam-tools")
   # puts "tools_sha:  #{tools_sha}"
-  system "perl -p -i -e 's/LOGJAM_TOOLS_REVISION .*$/LOGJAM_TOOLS_REVISION #{tools_sha}/' #{files}"
+  system "perl -p -i -e 's/LOGJAM_TOOLS_REVISION=.*$/LOGJAM_TOOLS_REVISION=#{tools_sha}/' #{files}"
   if ENV['LIBS'] == "1"
-    system "perl -p -i -e 's/LOGJAM_LIBS_REVISION .*$/LOGJAM_LIBS_REVISION #{tools_sha}/' #{files}"
+    system "perl -p -i -e 's/LOGJAM_LIBS_REVISION=.*$/LOGJAM_LIBS_REVISION=#{tools_sha}/' #{files}"
   end
 end
 
