@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -x
 
 PATH=/opt/logjam/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
