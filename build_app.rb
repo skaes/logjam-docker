@@ -42,8 +42,8 @@ a2dissite 000-default
 a2ensite logjam
 
 adduser --gecos '' --no-create-home --home /opt/logjam/app --disabled-login --disabled-password logjam
-chown logjam.logjam /opt/logjam/app/config.ru
-chown -R logjam.logjam /opt/logjam/app/tmp /opt/logjam/app/log
+chown logjam:logjam /opt/logjam/app/config.ru
+chown -R logjam:logjam /opt/logjam/app/tmp /opt/logjam/app/log
 
 export RAILS_ENV=production
 export PATH=/opt/logjam/bin:$PATH
@@ -51,6 +51,6 @@ cd /opt/logjam/app
 bundle exec whenever --user logjam --update-crontab --roles cron,worker
 env LOGJAM_DEVICES="localhost:9606,localhost:9706" bundle exec rake logjam:daemons:install
 
-chown -R logjam.logjam /opt/logjam/
+chown -R logjam:logjam /opt/logjam/
 echo logjam post-install completed
 EOS

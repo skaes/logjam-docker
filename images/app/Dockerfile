@@ -16,8 +16,8 @@ ENV RAILS_ENV=production
 
 # we want to run passenger as user logjam, so fix permissions
 RUN adduser --gecos '' --no-create-home --home /opt/logjam/app --disabled-login --disabled-password logjam; \
-    chown logjam.logjam /opt/logjam/app/config.ru; \
-    chown -R logjam.logjam /opt/logjam/app/tmp /opt/logjam/app/log
+    chown logjam:logjam /opt/logjam/app/config.ru; \
+    chown -R logjam:logjam /opt/logjam/app/tmp /opt/logjam/app/log
 
 # setup cron jobs
 RUN bundle exec whenever --user logjam --update-crontab --roles cron,worker
