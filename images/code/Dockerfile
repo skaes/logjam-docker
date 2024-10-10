@@ -4,7 +4,7 @@ LABEL maintainer="Stefan Kaes <skaes@railsexpress.de>"
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y && apt-get -y --no-install-recommends install \
-        logjam-ruby=3.3.1* \
+        logjam-ruby=3.3.5* \
         nodejs \
         tzdata \
         && apt-get clean
