@@ -165,12 +165,20 @@ task :default => :build
 desc "upload images to registry"
 task :upload => %w(app:upload)
 
-desc "create multi platform manifest"
+desc "create latest multi platform manifest"
 task :manifest do
   repo = "stkaes/logjam-app"
   system "docker manifest rm #{repo}:latest 2>/dev/null || true"
   system "docker manifest create #{repo}:latest --amend #{repo}:latest-amd64 --amend #{repo}:latest-arm64"
   system "docker manifest push --purge #{repo}:latest"
+end
+
+desc "create stable multi platform manifest"
+task :stable do
+  repo = "stkaes/logjam-app"
+  system "docker manifest rm #{repo}:stable 2>/dev/null || true"
+  system "docker manifest create #{repo}:stable --amend #{repo}:latest-amd64 --amend #{repo}:latest-arm64"
+  system "docker manifest push --purge #{repo}:stable"
 end
 
 desc "regenerate TLS certificates (e.g. after IP change)"
