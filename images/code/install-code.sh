@@ -49,12 +49,18 @@ mkdir -p service
 # bundle exec rake assets:precompile
 
 
-# Hack: install base64 gem that is part of the bundle into system
-# gems, because passenger will load it before it executes
-# require 'bundle/setup' and that leads to gem activation errors.
+# Hack: make sure that base64 and stringio gem versions that are part
+# of the bundle are also installed as system gems, because passenger
+# will load them before it executes `require 'bundle/setup'` and that
+# leads to gem activation errors that prevent passenger from starting
+# the app.
 
-bundled_base64_version=`bundle list | grep base64 | sed 's/^.*(\(.*\))$/\1/'`
-installed_base64_version=`gem list | grep base64 | sed -e 's/default://' -e 's/^.*(\(.*\))$/\1/'`
-if [ "$bundled_base64_version" != "$installed_base64_version" ]; then
-    gem install base64 -v $bundled_base64_version
-fi
+base_gems="base64 stringio"
+
+for gem in $base_gems; do
+    bundled_gem_version=`bundle list | grep $gem | sed 's/^.*(\(.*\))$/\1/'`
+    installed_gem_version=`gem list | grep $gem | sed -e 's/default://' -e 's/^.*(\(.*\))$/\1/'`
+    if [ "$bundled_gem_version" != "$installed_gem_version" ]; then
+        gem install $gem -v $bundled_gem_version
+    fi
+done
