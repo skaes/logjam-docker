@@ -8,11 +8,17 @@ on:
 
 jobs:
   images:
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
         arch: ["amd64", "arm64"]
+        runner: ["ubuntu-24.04", "ubuntu-24.04-arm"]
+        exclude:
+          - arch: arm64
+            runner: ubuntu-24.04
+          - arch: amd64
+            runner: ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.runner }}
 
     steps:
       - uses: actions/checkout@v4
@@ -22,8 +28,8 @@ jobs:
         with:
           ruby-version: "3.3.6"
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v3
 
       - name: Install gems
         run: bundle install
@@ -63,12 +69,18 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
   package:
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
         os: [focal, jammy, noble]
         arch: ["amd64", "arm64"]
+        runner: ["ubuntu-24.04", "ubuntu-24.04-arm"]
+        exclude:
+          - arch: arm64
+            runner: ubuntu-24.04
+          - arch: amd64
+            runner: ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.runner }}
 
     steps:
       - uses: actions/checkout@v4
@@ -94,8 +106,8 @@ jobs:
         with:
           ruby-version: "3.3.6"
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v3
 
       - name: Install gems
         run: bundle install
