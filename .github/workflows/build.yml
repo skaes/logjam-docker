@@ -20,7 +20,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3.5"
+          ruby-version: "3.3.6"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -49,7 +49,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3.5"
+          ruby-version: "3.3.6"
 
       - name: Install gems
         run: bundle install
@@ -92,7 +92,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3.5"
+          ruby-version: "3.3.6"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
