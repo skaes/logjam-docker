@@ -30,6 +30,16 @@ add "images/app/etc/service/logjam/run", ".logjam.run"
 run "cp", ".logjam.run", "/etc/service/logjam/run"
 run "chmod", "755", "/etc/service/logjam/run"
 
+# The next line prevents a buggy docker behavior on arm64 where the
+# docker daemon fails to send the closing empty line in a chunked
+# transfer encoding of the log stream. fpm-fry attaches to the
+# container a sends the log stream to stdout, but whithout the closing
+# empty line it will wait forever, preventing successful package
+# builds. It seems to be some race condition in the docker
+# daemon. This is of course not a reliable fix but I don't see any
+# better option.
+run "sleep", "1"
+
 files "/etc/apache2/mods-available/passenger.conf"
 files "/etc/apache2/sites-available/logjam.conf"
 files "/etc/service/logjam/run"
