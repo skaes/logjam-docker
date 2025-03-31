@@ -19,8 +19,8 @@ build_depends "zlib1g-dev"
 
 depends "tzdata"
 depends "nodejs"
-depends "logjam-ruby", ">= 3.3.5-2"
-depends "logjam-libs", ">= 0.12.0"
+depends "logjam-ruby", ">= 3.3.7-1"
+depends "logjam-libs", ">= 0.13.0"
 
 apt_setup "apt-get update -y && apt-get install apt-transport-https ca-certificates -y"
 apt_setup "echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/#{codename} ./' >> /etc/apt/sources.list"
