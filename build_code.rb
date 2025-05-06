@@ -19,7 +19,7 @@ build_depends "zlib1g-dev"
 
 depends "tzdata"
 depends "nodejs"
-depends "logjam-ruby", ">= 3.3.7-1"
+depends "logjam-ruby", ">= 3.3.8-1"
 depends "logjam-libs", ">= 0.13.0"
 
 apt_setup "apt-get update -y && apt-get install apt-transport-https ca-certificates -y"
