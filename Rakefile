@@ -10,7 +10,7 @@ LOGJAM_PACKAGE_HOST = (ENV['LOGJAM_PACKAGE_HOST'] || "railsexpress.de") .to_s
 LOGJAM_PACKAGE_USER = (ENV['LOGJAM_PACKAGE_USER'] || "uploader").to_s
 LOGJAM_PACKAGE_UPLOAD = ENV['LOGJAM_PACKAGE_UPLOAD'] != '0'
 
-ARCH = ENV['ARCH'] || "amd64"
+ARCH = ENV['ARCH'] || RUBY_PLATFORM.split('-').first.sub('x86_64','amd64')
 PLATFORM = "--platform linux/#{ARCH}"
 LIBARCH = ARCH.sub('arm64', 'arm64v8') + "/"
 PROGRESS = "--progress #{ENV['PROGRESS'] || 'plain'}"
