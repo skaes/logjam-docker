@@ -153,11 +153,16 @@ task :ultraclean do
 end
 
 task :start do
+  system("docker tag stkaes/logjam-app:latest-#{ARCH} stkaes/logjam-app:latest")
   system("docker-compose up -d")
 end
 
 task :stop do
   system("docker-compose stop")
+end
+
+task :down do
+  system("docker-compose down")
 end
 
 task :default => :build
