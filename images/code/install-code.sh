@@ -49,13 +49,13 @@ mkdir -p service
 # bundle exec rake assets:precompile
 
 
-# Hack: make sure that base64 and stringio gem versions that are part
-# of the bundle are also installed as system gems, because passenger
-# will load them before it executes `require 'bundle/setup'` and that
-# leads to gem activation errors that prevent passenger from starting
-# the app.
+# Hack: make sure that logger, base64 and stringio gem versions that
+# are part of the bundle are also installed as system gems, because
+# passenger will load them before it executes `require 'bundle/setup'`
+# and that leads to gem activation errors that prevent passenger from
+# starting the app.
 
-base_gems="base64 stringio"
+base_gems="base64 stringio logger"
 
 for gem in $base_gems; do
     bundled_gem_version=`bundle list | grep $gem | sed 's/^.*(\(.*\))$/\1/'`
