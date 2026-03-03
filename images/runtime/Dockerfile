@@ -22,7 +22,7 @@ WORKDIR /root
 # ----------------------------
 # runtime packages
 # ----------------------------
-ENV LOGJAM_TOOLS_REVISION=184b727eb57ee3cfeb76a6d6837a3b6d36c91cc6
+ENV LOGJAM_TOOLS_REVISION=994b6f518fbb829fa4a6ada930a5334210a517e5
 
 RUN apt-get update -y && apt-get install apt-transport-https ca-certificates -y && \
     echo 'deb [trusted=yes] https://railsexpress.de/packages/ubuntu/noble ./' >> /etc/apt/sources.list && \
